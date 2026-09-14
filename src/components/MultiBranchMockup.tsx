@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Network, Globe2, Building2, Check, RefreshCw, Cpu } from 'lucide-react';
+import { Globe2, Check, RefreshCw } from 'lucide-react';
 import { BranchInfo } from '../types';
 import { playClick, playConfirm, playHover } from '../audio/soundEffects';
 
 const BRANCH_DATA: BranchInfo[] = [
   {
     id: 'indiranagar',
-    name: 'BLR_01 // INDIRANAGAR',
+    name: 'Indiranagar',
     city: 'Bengaluru',
     totalPcs: 40,
     activePcs: 36,
@@ -17,7 +17,7 @@ const BRANCH_DATA: BranchInfo[] = [
   },
   {
     id: 'koramangala',
-    name: 'BLR_02 // KORAMANGALA',
+    name: 'Koramangala',
     city: 'Bengaluru',
     totalPcs: 32,
     activePcs: 28,
@@ -28,7 +28,7 @@ const BRANCH_DATA: BranchInfo[] = [
   },
   {
     id: 'bandra',
-    name: 'BOM_01 // BANDRA WEST',
+    name: 'Bandra West',
     city: 'Mumbai',
     totalPcs: 24,
     activePcs: 22,
@@ -39,7 +39,7 @@ const BRANCH_DATA: BranchInfo[] = [
   },
   {
     id: 'cyberhub',
-    name: 'DEL_01 // CYBERHUB',
+    name: 'Cyberhub',
     city: 'Gurugram',
     totalPcs: 30,
     activePcs: 26,
@@ -63,21 +63,21 @@ export const MultiBranchMockup: React.FC = () => {
   };
 
   return (
-    <div className="bg-[#0B0D14] border border-white/15 rounded-xl overflow-hidden shadow-2xl font-mono text-xs">
+    <div className="bg-[#111114] border border-white/10 rounded-xl overflow-hidden">
       {/* Top Bar */}
-      <div className="bg-[#12141F] px-4 py-2.5 border-b border-white/10 flex items-center justify-between text-arena-muted">
+      <div className="bg-[#161619] px-4 py-2.5 border-b border-white/10 flex items-center justify-between text-sm text-arena-muted">
         <div className="flex items-center gap-2">
           <Globe2 className="w-4 h-4 text-arena-lime" />
-          <span className="text-white font-semibold">MULTI-BRANCH FLEET COMMAND // CENTRAL HQ</span>
+          <span className="text-white font-medium">Multi-branch fleet command</span>
         </div>
-        <div className="flex items-center gap-3 text-[10px]">
-          <span className="text-arena-lime">GLOBAL NODES: 4 ONLINE</span>
-          <span className="text-arena-subtle">TOTAL RIGS: 126 ACTIVE</span>
+        <div className="flex items-center gap-3 text-xs">
+          <span className="text-arena-lime">4 nodes online</span>
+          <span className="text-arena-subtle">126 rigs active</span>
         </div>
       </div>
 
-      <div className="p-6 md:p-8 bg-gradient-to-b from-[#0B0D14] to-[#07080C] min-h-[360px] flex flex-col justify-between">
-        
+      <div className="p-6 md:p-8 bg-[#0D0D0F] min-h-[360px] flex flex-col justify-between">
+
         {/* Branch Selector Tabs */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6">
           {BRANCH_DATA.map(branch => {
@@ -90,68 +90,68 @@ export const MultiBranchMockup: React.FC = () => {
                   setSelectedBranchId(branch.id);
                 }}
                 onMouseEnter={() => playHover()}
-                className={`p-3 rounded text-left border transition-all ${
+                className={`p-3 rounded-lg text-left border transition-colors ${
                   isSelected
-                    ? 'bg-arena-lime/10 border-arena-lime text-white shadow-lime-sm'
-                    : 'bg-[#11131E] border-white/10 text-arena-muted hover:border-white/30'
+                    ? 'bg-arena-lime/10 border-arena-lime/60 text-white'
+                    : 'bg-white/[0.01] border-white/10 text-arena-muted hover:border-white/25'
                 }`}
               >
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-[10px] text-arena-subtle">{branch.city}</span>
-                  <span className={`w-2 h-2 rounded-full ${isSelected ? 'bg-arena-lime' : 'bg-white/20'}`} />
+                  <span className="text-xs text-arena-subtle">{branch.city}</span>
+                  <span className={`w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-arena-lime' : 'bg-white/20'}`} />
                 </div>
-                <div className="font-bold text-xs truncate text-white">{branch.name.split('//')[1]}</div>
-                <div className="text-[10px] text-arena-lime mt-1 font-mono">{branch.occupancy}% FULL</div>
+                <div className="font-medium text-sm truncate text-white">{branch.name}</div>
+                <div className="text-xs text-arena-lime mt-1">{branch.occupancy}% full</div>
               </button>
             );
           })}
         </div>
 
         {/* Selected Branch Real-time Deep Dive */}
-        <div className="p-6 bg-[#131623] border border-white/10 rounded-xl mb-6">
+        <div className="p-6 bg-white/[0.02] border border-white/10 rounded-xl mb-6">
           <div className="flex flex-wrap justify-between items-center gap-4 mb-4 pb-4 border-b border-white/10">
             <div>
-              <div className="text-xs text-arena-lime font-bold uppercase">{activeBranch.name}</div>
-              <div className="text-2xl font-display font-black text-white mt-0.5">
+              <div className="text-xs text-arena-lime">{activeBranch.name}</div>
+              <div className="text-2xl font-semibold text-white mt-0.5">
                 ₹{activeBranch.revenueToday.toLocaleString('en-IN')}
-                <span className="text-xs font-mono text-arena-muted ml-2 font-normal">TODAY'S GROSS</span>
+                <span className="text-xs text-arena-muted ml-2 font-normal">today's gross</span>
               </div>
             </div>
 
             <button
               onClick={handleGlobalSync}
               onMouseEnter={() => playHover()}
-              className="px-4 py-2 bg-white/10 hover:bg-arena-lime hover:text-black rounded font-mono font-bold text-xs uppercase tracking-wider text-white transition-all flex items-center gap-2"
+              className="px-4 py-2 bg-white/10 hover:bg-arena-lime hover:text-black rounded-md font-medium text-sm text-white transition-colors flex items-center gap-2"
             >
-              {synced ? <Check className="w-3.5 h-3.5 text-black" /> : <RefreshCw className="w-3.5 h-3.5" />}
-              <span>{synced ? 'RATES PUSHED TO 4 BRANCHES' : 'PUSH GLOBAL TARIFF UPDATE'}</span>
+              {synced ? <Check className="w-3.5 h-3.5" /> : <RefreshCw className="w-3.5 h-3.5" />}
+              <span>{synced ? 'Rates pushed to 4 branches' : 'Push global tariff update'}</span>
             </button>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 font-mono text-[11px]">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
             <div>
-              <div className="text-arena-subtle">RIG UTILIZATION:</div>
-              <div className="text-white font-bold text-sm">{activeBranch.activePcs} / {activeBranch.totalPcs} PCs</div>
+              <div className="text-arena-subtle text-xs">Rig utilization</div>
+              <div className="text-white font-medium">{activeBranch.activePcs} / {activeBranch.totalPcs} PCs</div>
             </div>
             <div>
-              <div className="text-arena-subtle">SIGNALR PING:</div>
-              <div className="text-arena-lime font-bold text-sm">{activeBranch.pingMs}ms TLS</div>
+              <div className="text-arena-subtle text-xs">Network ping</div>
+              <div className="text-arena-lime font-medium">{activeBranch.pingMs}ms</div>
             </div>
             <div>
-              <div className="text-arena-subtle">ZONE PROFILES:</div>
-              <div className="text-white font-bold text-sm">{activeBranch.zones.length} TARIFFS</div>
+              <div className="text-arena-subtle text-xs">Zone profiles</div>
+              <div className="text-white font-medium">{activeBranch.zones.length} tariffs</div>
             </div>
             <div>
-              <div className="text-arena-subtle">EOD AUDIT STATUS:</div>
-              <div className="text-arena-lime font-bold text-sm">IN-SYNC [0 ERRORS]</div>
+              <div className="text-arena-subtle text-xs">EOD audit status</div>
+              <div className="text-arena-lime font-medium">In sync, 0 errors</div>
             </div>
           </div>
         </div>
 
         {/* Bottom Tag */}
-        <div className="pt-4 border-t border-white/10 flex justify-between items-center text-[10px] text-arena-subtle">
-          <div>CENTRALIZED MEMBER ROAMING: GAMER PASS CREDITS WORK ACROSS ALL VENUES</div>
-          <div className="text-arena-lime">ONE FINANCIAL AUDIT FOR THE ENTIRE CHAIN</div>
+        <div className="pt-4 border-t border-white/10 flex justify-between items-center text-xs text-arena-subtle">
+          <div>Centralized member roaming — gamer pass credits work across all venues</div>
+          <div className="text-arena-lime">One financial audit for the entire chain</div>
         </div>
 
       </div>

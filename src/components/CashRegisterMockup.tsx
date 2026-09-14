@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Printer, ShieldCheck, DollarSign, Check, KeySquare, HardDrive } from 'lucide-react';
+import { Printer, KeySquare, HardDrive } from 'lucide-react';
 import { playClick, playConfirm, playHover } from '../audio/soundEffects';
 
 export const CashRegisterMockup: React.FC = () => {
@@ -19,48 +19,48 @@ export const CashRegisterMockup: React.FC = () => {
   };
 
   return (
-    <div className="bg-[#0B0D14] border border-white/15 rounded-xl overflow-hidden shadow-2xl font-mono text-xs">
+    <div className="bg-[#111114] border border-white/10 rounded-xl overflow-hidden">
       {/* Top Header */}
-      <div className="bg-[#12141F] px-4 py-2.5 border-b border-white/10 flex items-center justify-between text-arena-muted">
+      <div className="bg-[#161619] px-4 py-2.5 border-b border-white/10 flex items-center justify-between text-sm text-arena-muted">
         <div className="flex items-center gap-2">
           <KeySquare className="w-4 h-4 text-arena-lime" />
-          <span className="text-white font-semibold">HARDWARE POS & CASH DRAWER INTERFACE</span>
+          <span className="text-white font-medium">Hardware POS & cash drawer</span>
         </div>
-        <div className="flex items-center gap-3 text-[10px]">
-          <span className="text-arena-lime">HARDWARE: EPSON TM-T88VI + CASH_BOX_01</span>
-          <span className="text-arena-subtle">DESK_01</span>
+        <div className="flex items-center gap-3 text-xs">
+          <span className="text-arena-lime">Epson TM-T88VI</span>
+          <span className="text-arena-subtle">Desk 01</span>
         </div>
       </div>
 
-      <div className="p-6 md:p-8 bg-gradient-to-b from-[#0B0D14] to-[#07080C] min-h-[360px] flex flex-col justify-between">
-        
+      <div className="p-6 md:p-8 bg-[#0D0D0F] min-h-[360px] flex flex-col justify-between">
+
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-          
+
           {/* Left: Terminal POS Bill & Split Breakdown */}
           <div className="md:col-span-7 space-y-4">
             <div className="flex justify-between items-center">
-              <span className="text-white font-bold">INVOICE #AR-2026-8941</span>
-              <span className="text-arena-lime bg-arena-lime/10 px-2 py-0.5 rounded text-[10px]">
-                STATION 07 · VIP LOUNGE
+              <span className="text-white font-medium text-sm">Invoice #AR-2026-8941</span>
+              <span className="text-arena-lime bg-arena-lime/10 px-2 py-0.5 rounded-md text-xs">
+                Station 07 · VIP lounge
               </span>
             </div>
 
-            <div className="p-4 bg-[#131522] border border-white/10 rounded space-y-2">
+            <div className="p-4 bg-white/[0.02] border border-white/10 rounded-lg space-y-2 text-sm">
               <div className="flex justify-between text-arena-muted">
-                <span>VIP Gaming (3.5 hrs @ ₹160/hr)</span>
-                <span className="text-white font-mono">₹560.00</span>
+                <span>VIP gaming (3.5 hrs @ ₹160/hr)</span>
+                <span className="text-white">₹560.00</span>
               </div>
               <div className="flex justify-between text-arena-muted">
-                <span>In-Seat F&B (Monster + Loaded Nachos)</span>
-                <span className="text-white font-mono">₹270.00</span>
+                <span>In-seat F&amp;B (Monster + loaded nachos)</span>
+                <span className="text-white">₹270.00</span>
               </div>
               <div className="flex justify-between text-arena-muted">
                 <span>Platform GST (18% inclusive)</span>
-                <span className="text-white font-mono">₹149.40</span>
+                <span className="text-white">₹149.40</span>
               </div>
-              <div className="pt-2 border-t border-white/10 flex justify-between text-base font-bold">
-                <span className="text-white">NET INVOICE DUE:</span>
-                <span className="text-arena-lime font-display font-black text-xl">₹830.00</span>
+              <div className="pt-2 border-t border-white/10 flex justify-between">
+                <span className="text-white">Net invoice due</span>
+                <span className="text-arena-lime font-semibold text-lg">₹830.00</span>
               </div>
             </div>
 
@@ -69,29 +69,29 @@ export const CashRegisterMockup: React.FC = () => {
               <button
                 onClick={triggerDrawerKick}
                 onMouseEnter={() => playHover()}
-                className={`p-3 rounded border font-mono font-bold uppercase transition-all flex items-center justify-center gap-2 ${
+                className={`p-3 rounded-md border font-medium text-sm transition-colors flex items-center justify-center gap-2 ${
                   drawerOpen
-                    ? 'bg-amber-500/20 border-amber-400 text-amber-300'
-                    : 'bg-[#12141F] border-white/15 hover:border-arena-lime text-white'
+                    ? 'bg-amber-500/10 border-amber-400/40 text-amber-300'
+                    : 'bg-white/[0.02] border-white/10 hover:border-white/25 text-white'
                 }`}
               >
                 <HardDrive className="w-4 h-4" />
-                <span>{drawerOpen ? 'DRAWER POPPED (LOGGED)' : 'TEST DRAWER POP'}</span>
+                <span>{drawerOpen ? 'Drawer popped (logged)' : 'Test drawer pop'}</span>
               </button>
 
               <button
                 onClick={handlePrintSlip}
                 onMouseEnter={() => playHover()}
-                className="p-3 bg-arena-lime text-black font-mono font-bold uppercase rounded hover:bg-arena-limeBright shadow-lime-sm transition-all flex items-center justify-center gap-2"
+                className="p-3 bg-arena-lime text-black font-medium text-sm rounded-md hover:bg-arena-limeBright transition-colors flex items-center justify-center gap-2"
               >
                 <Printer className="w-4 h-4" />
-                <span>{printed ? 'PRINTED SLIP' : 'PRINT THERMAL SLIP'}</span>
+                <span>{printed ? 'Printed slip' : 'Print thermal slip'}</span>
               </button>
             </div>
           </div>
 
           {/* Right: Thermal Receipt Slip Simulation */}
-          <div className="md:col-span-5 bg-[#F4F4F2] text-black font-mono text-[10px] p-4 rounded shadow-2xl space-y-1.5 select-none border border-white/40">
+          <div className="md:col-span-5 bg-[#F4F4F2] text-black font-mono text-[10px] p-4 rounded-lg space-y-1.5 select-none">
             <div className="text-center font-bold text-xs pb-1 border-b border-black/20">
               *** ARENA ESPORTS BLR_01 ***
             </div>
@@ -129,16 +129,16 @@ export const CashRegisterMockup: React.FC = () => {
               <span>₹830.00</span>
             </div>
             <div className="text-center text-[8px] text-neutral-600 pt-2">
-              POWERED BY ARENAOS // ZERO LEAKAGE PLATFORM
+              POWERED BY ARENAOS
             </div>
           </div>
 
         </div>
 
         {/* Bottom Tag */}
-        <div className="pt-4 border-t border-white/10 flex justify-between items-center text-[10px] text-arena-subtle">
-          <div>PHYSICAL DRAWER ELECTRONIC PULSE AUDITED VIA LOG STREAM</div>
-          <div className="text-arena-lime">NO MANUAL RECEIPT DELETIONS ALLOWED</div>
+        <div className="pt-4 border-t border-white/10 flex justify-between items-center text-xs text-arena-subtle">
+          <div>Physical drawer pulses are audited via log stream</div>
+          <div className="text-arena-lime">No manual receipt deletions allowed</div>
         </div>
 
       </div>

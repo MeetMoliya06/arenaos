@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Lenis from 'lenis';
 import { Preloader } from './components/Preloader';
-import { Cursor } from './components/Cursor';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ProblemFraming } from './components/ProblemFraming';
@@ -43,11 +42,8 @@ export function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#08080A] text-[#F4F4F2] selection:bg-[#CCFF00] selection:text-black relative">
-      {/* Custom Morphing Cursor */}
-      <Cursor />
-
-      {/* Preloader / System Bootloader HUD */}
+    <div className="min-h-screen bg-[#0A0A0B] text-[#EDEDEF] selection:bg-[#CCFF00] selection:text-black relative">
+      {/* Preloader */}
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 
       {/* Main Architectural Navigation */}

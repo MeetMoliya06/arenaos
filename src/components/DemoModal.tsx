@@ -39,24 +39,24 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
       />
 
       {/* Modal Window */}
-      <div className="relative z-10 w-full max-w-5xl max-h-[90vh] overflow-y-auto bg-[#090A0E] border border-white/20 rounded-2xl shadow-2xl p-6 md:p-8 animate-scaleUp">
+      <div className="relative z-10 w-full max-w-5xl max-h-[90vh] overflow-y-auto bg-[#0D0D0F] border border-white/10 rounded-2xl shadow-2xl p-6 md:p-8 animate-scaleUp">
         {/* Close Button */}
         <button
           onClick={() => {
             playClick();
             onClose();
           }}
-          className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full bg-white/10 hover:bg-arena-lime hover:text-black text-white transition-all z-20"
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full bg-white/10 hover:bg-arena-lime hover:text-black text-white transition-colors z-20"
         >
           <X className="w-5 h-5" />
         </button>
 
         <div className="mb-6 pb-4 border-b border-white/10">
-          <div className="text-arena-lime font-mono text-xs uppercase font-bold tracking-widest mb-1">
-            // ON-SITE HARDWARE AUDIT
+          <div className="text-arena-lime text-xs mb-1">
+            On-site hardware audit
           </div>
-          <h2 className="font-display font-black text-2xl sm:text-3xl text-white uppercase">
-            Deploy ArenaOS To Your Arena Fleet
+          <h2 className="font-semibold text-2xl sm:text-3xl text-white">
+            Deploy ArenaOS to your arena fleet
           </h2>
         </div>
 

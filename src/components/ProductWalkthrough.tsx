@@ -108,28 +108,28 @@ export const ProductWalkthrough: React.FC = () => {
   };
 
   return (
-    <section id="modules" className="py-20 md:py-32 bg-[#08090E] border-t border-white/10 relative">
+    <section id="modules" className="py-20 md:py-32 bg-[#08080A] border-t border-white/10 relative">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        
+
         {/* Section Header */}
         <div className="mb-14">
-          <div className="font-mono text-xs text-arena-lime uppercase tracking-widest mb-3 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-arena-lime" />
-            <span>THE CORE ENGINE ARCHITECTURE</span>
+          <div className="text-xs text-arena-lime mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-arena-lime" />
+            <span>The core engine architecture</span>
           </div>
-          <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl tracking-tight text-white uppercase max-w-3xl leading-tight">
-            6 MISSION-CRITICAL MODULES. ZERO ROOM FOR ERROR.
+          <h2 className="font-semibold text-3xl sm:text-4xl md:text-5xl tracking-tight text-white max-w-3xl leading-tight">
+            Six mission-critical modules. Zero room for error.
           </h2>
-          <p className="font-sans text-arena-muted text-base max-w-2xl mt-4">
+          <p className="text-arena-muted text-base max-w-2xl mt-4">
             Every module is designed specifically for high-velocity gaming arenas where seconds count and cash discrepancies ruin owner peace of mind.
           </p>
         </div>
 
         {/* Console Layout: Left Selector vs Right Live Interactive Mockup */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+
           {/* Left: Module Switcher List */}
-          <div className="lg:col-span-4 space-y-2 font-mono">
+          <div className="lg:col-span-4 space-y-2">
             {MODULES.map(module => {
               const isActive = module.id === activeModuleId;
               return (
@@ -140,26 +140,22 @@ export const ProductWalkthrough: React.FC = () => {
                     setActiveModuleId(module.id);
                   }}
                   onMouseEnter={() => playHover()}
-                  className={`w-full p-4 rounded-lg text-left transition-all border flex items-center justify-between group ${
+                  className={`w-full p-4 rounded-lg text-left transition-colors border flex items-center justify-between group ${
                     isActive
-                      ? 'bg-[#12141F] border-arena-lime text-white shadow-lime-sm'
-                      : 'bg-[#0B0C12] border-white/10 text-arena-muted hover:border-white/20 hover:text-white'
+                      ? 'bg-white/[0.04] border-arena-lime/60 text-white'
+                      : 'bg-white/[0.01] border-white/10 text-arena-muted hover:border-white/20 hover:text-white'
                   }`}
-                  data-cursor="SELECT"
                 >
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <span className={`text-[10px] font-bold ${isActive ? 'text-arena-lime' : 'text-arena-subtle'}`}>
+                      <span className={`text-xs ${isActive ? 'text-arena-lime' : 'text-arena-subtle'}`}>
                         {module.code}
                       </span>
-                      {isActive && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-arena-lime animate-ping" />
-                      )}
                     </div>
-                    <div className="font-display font-bold text-sm tracking-tight text-white">
+                    <div className="font-semibold text-sm tracking-tight text-white">
                       {module.title}
                     </div>
-                    <div className="text-[11px] text-arena-muted line-clamp-1 mt-0.5 font-sans">
+                    <div className="text-xs text-arena-muted line-clamp-1 mt-0.5">
                       {module.tagline}
                     </div>
                   </div>
@@ -172,18 +168,18 @@ export const ProductWalkthrough: React.FC = () => {
             })}
 
             {/* Quick Summary Box */}
-            <div className="mt-6 p-5 bg-[#0D0F18] border border-white/10 rounded-lg font-mono text-xs">
-              <div className="text-arena-lime font-bold uppercase text-[11px] mb-2 flex items-center gap-2">
-                <span>{activeModule.code} OVERVIEW</span>
+            <div className="mt-6 p-5 bg-white/[0.02] border border-white/10 rounded-lg">
+              <div className="text-arena-lime text-xs mb-2">
+                <span>{activeModule.code} overview</span>
               </div>
-              <p className="text-arena-muted text-xs font-sans leading-relaxed mb-4">
+              <p className="text-arena-muted text-xs leading-relaxed mb-4">
                 {activeModule.description}
               </p>
               <div className="grid grid-cols-2 gap-2 pt-3 border-t border-white/10">
                 {activeModule.stats.map((stat, i) => (
                   <div key={i}>
-                    <div className="text-white font-bold text-sm">{stat.value}</div>
-                    <div className="text-[9px] text-arena-subtle uppercase">{stat.label}</div>
+                    <div className="text-white font-semibold text-sm">{stat.value}</div>
+                    <div className="text-xs text-arena-subtle">{stat.label}</div>
                   </div>
                 ))}
               </div>

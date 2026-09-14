@@ -55,7 +55,7 @@ export const Hero3DScene: React.FC = () => {
     scene.add(arenaGroup);
 
     // Grid Floor
-    const gridHelper = new THREE.GridHelper(30, 30, 0xCCFF00, 0x1A1B22);
+    const gridHelper = new THREE.GridHelper(30, 30, 0x3A3F2E, 0x1A1B22);
     gridHelper.position.y = -0.5;
     arenaGroup.add(gridHelper);
 
@@ -192,7 +192,7 @@ export const Hero3DScene: React.FC = () => {
     dirLight.position.set(10, 20, 10);
     scene.add(dirLight);
 
-    const pointLight = new THREE.PointLight(0xCCFF00, 3, 20);
+    const pointLight = new THREE.PointLight(0xCCFF00, 1.2, 20);
     pointLight.position.set(0, 4, 0);
     scene.add(pointLight);
 
@@ -245,10 +245,11 @@ export const Hero3DScene: React.FC = () => {
 
     // Render loop
     let animationFrameId: number;
-    const startTime = performance.now();
+    let clock = new THREE.Clock();
 
     const animate = () => {
-      const elapsedTime = (performance.now() - startTime) * 0.001;
+      const delta = clock.getDelta();
+      const elapsedTime = clock.getElapsedTime();
 
       // Slow orbital drift
       arenaGroup.rotation.y = elapsedTime * 0.07;
@@ -297,8 +298,8 @@ export const Hero3DScene: React.FC = () => {
 
   if (!webGlSupported) {
     return (
-      <div className="w-full h-full flex items-center justify-center bg-arena-card border border-white/10 rounded-lg p-6 font-mono text-xs text-arena-muted">
-        [WEBGL_FALLBACK: HARDWARE ACCELERATION DISABLED — SYSTEM CONTINUES]
+      <div className="w-full h-full flex items-center justify-center bg-arena-card border border-white/10 rounded-lg p-6 text-sm text-arena-muted">
+        3D preview unavailable — hardware acceleration disabled
       </div>
     );
   }
@@ -306,77 +307,61 @@ export const Hero3DScene: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[450px] lg:h-[620px] rounded-xl overflow-hidden cursor-crosshair border border-white/10 bg-[#08080A]/60 backdrop-blur-sm"
-      data-cursor="DRAG 3D"
+      className="relative w-full h-[450px] lg:h-[620px] rounded-xl overflow-hidden border border-white/10 bg-[#0A0A0B]/60 backdrop-blur-sm"
     >
-      {/* HUD Telemetry Overlays */}
-      <div className="absolute top-4 left-4 z-10 pointer-events-none flex flex-col gap-1 font-mono text-[10px] text-arena-muted">
-        <div className="flex items-center gap-2 text-arena-lime font-bold">
-          <span className="w-1.5 h-1.5 rounded-full bg-arena-lime animate-ping" />
-          <span>WEBGL RIG TELEMETRY // REAL-TIME 60FPS</span>
-        </div>
-        <div className="text-white">NODE MATRIX: 12 BATTLESTATIONS</div>
-        <div className="text-arena-subtle">ROTATION: PARALLAX LERP</div>
-      </div>
-
-      <div className="absolute top-4 right-4 z-10 pointer-events-none text-right font-mono text-[10px] text-arena-subtle">
-        <div>SIGNALR WS: CONNECTED</div>
-        <div className="text-arena-lime">LATENCY: 3.8ms</div>
+      {/* Live status */}
+      <div className="absolute top-4 left-4 z-10 pointer-events-none flex items-center gap-2 text-xs text-arena-muted">
+        <span className="w-1.5 h-1.5 rounded-full bg-arena-lime" />
+        <span>12 rigs, live</span>
       </div>
 
       {/* Node Inspector Card when hovering a 3D station */}
       {hoveredNode && (
         <div
-          className="absolute bottom-4 left-4 right-4 sm:right-auto sm:w-80 z-20 bg-[#0E1017]/95 border border-arena-lime/80 rounded-lg p-4 shadow-lime-md backdrop-blur-md transition-all duration-200 animate-fadeIn"
+          className="absolute bottom-4 left-4 right-4 sm:right-auto sm:w-80 z-20 bg-[#111114]/95 border border-white/10 rounded-lg p-4 backdrop-blur-md transition-all duration-200 animate-fadeIn"
           onClick={() => playClick()}
         >
           <div className="flex justify-between items-start border-b border-white/10 pb-2 mb-2">
             <div>
-              <div className="text-[10px] font-mono text-arena-lime uppercase font-semibold">
+              <div className="text-[10px] text-arena-muted font-medium">
                 {hoveredNode.zone}
               </div>
-              <div className="font-display font-bold text-white text-base">
+              <div className="font-semibold text-white text-base">
                 {hoveredNode.name}
               </div>
             </div>
             <span
-              className={`text-[9px] font-mono px-2 py-0.5 rounded font-bold uppercase ${
-                hoveredNode.status === 'IN_SESSION'
-                  ? 'bg-arena-lime/20 text-arena-lime border border-arena-lime/30'
+              className={`text-[10px] px-2 py-0.5 rounded font-medium ${hoveredNode.status === 'IN_SESSION'
+                  ? 'bg-arena-lime/10 text-arena-lime'
                   : hoveredNode.status === 'AVAILABLE'
-                  ? 'bg-arena-cyan/20 text-arena-cyan border border-arena-cyan/30'
-                  : 'bg-orange-500/20 text-orange-400 border border-orange-500/30'
-              }`}
+                    ? 'bg-arena-cyan/10 text-arena-cyan'
+                    : 'bg-orange-500/10 text-orange-400'
+                }`}
             >
-              {hoveredNode.status}
+              {hoveredNode.status.replace('_', ' ').toLowerCase()}
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 text-[11px] font-mono">
+          <div className="grid grid-cols-2 gap-2 text-xs">
             <div>
-              <div className="text-arena-subtle">SPECS:</div>
-              <div className="text-white text-[10px] truncate">{hoveredNode.gpu}</div>
+              <div className="text-arena-subtle">Specs</div>
+              <div className="text-white truncate">{hoveredNode.gpu}</div>
             </div>
             <div>
-              <div className="text-arena-subtle">RATE:</div>
-              <div className="text-arena-lime font-bold">{hoveredNode.rate}</div>
+              <div className="text-arena-subtle">Rate</div>
+              <div className="text-arena-lime">{hoveredNode.rate}</div>
             </div>
             <div>
-              <div className="text-arena-subtle">ACTIVE USER:</div>
+              <div className="text-arena-subtle">Active user</div>
               <div className="text-arena-text">@{hoveredNode.user}</div>
             </div>
             <div>
-              <div className="text-arena-subtle">DRAWER LOCK:</div>
-              <div className="text-white">ENFORCED</div>
+              <div className="text-arena-subtle">Drawer lock</div>
+              <div className="text-white">Enforced</div>
             </div>
           </div>
         </div>
       )}
-
-      {/* Bottom Hint */}
-      <div className="absolute bottom-4 right-4 z-10 pointer-events-none text-right font-mono text-[9px] text-arena-subtle">
-        HOVER OVER RIGS TO INSPECT CLIENT STATE
-      </div>
     </div>
   );
 };

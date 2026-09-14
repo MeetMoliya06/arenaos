@@ -74,77 +74,77 @@ export const LiveProof: React.FC = () => {
   return (
     <section id="telemetry" ref={sectionRef} className="py-20 md:py-32 bg-[#060709] border-t border-white/10 relative">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        
+
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
-            <div className="font-mono text-xs text-arena-lime uppercase tracking-widest mb-3 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-arena-lime animate-ping" />
-              <span>BATTLE-TESTED TELEMETRY</span>
+            <div className="text-xs text-arena-lime mb-3 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-arena-lime" />
+              <span>Battle-tested telemetry</span>
             </div>
-            <h2 className="font-display font-black text-3xl sm:text-4xl md:text-5xl tracking-tight text-white uppercase max-w-2xl leading-tight">
-              LIVE NETWORK PROOF
+            <h2 className="font-semibold text-3xl sm:text-4xl md:text-5xl tracking-tight text-white max-w-2xl leading-tight">
+              Live network proof
             </h2>
           </div>
-          <div className="font-mono text-xs text-arena-muted max-w-md">
-            Operating real-world esports arenas across tier-1 metros. Every session, wallet debit, and cashier handover is verified by our distributed SignalR edge cluster.
+          <div className="text-sm text-arena-muted max-w-md leading-relaxed">
+            Operating real-world esports arenas across tier-1 metros. Every session, wallet debit, and cashier handover is verified by our distributed edge cluster.
           </div>
         </div>
 
         {/* The 4 Big Counters */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          
-          <div className="p-6 bg-[#0B0D14] border border-white/10 rounded-xl hover:border-arena-lime/50 transition-all font-mono">
-            <div className="text-[11px] text-arena-subtle uppercase mb-2 flex items-center gap-2">
+
+          <div className="p-6 bg-white/[0.02] border border-white/10 rounded-xl hover:border-white/20 transition-colors">
+            <div className="text-xs text-arena-subtle mb-2 flex items-center gap-2">
               <Building2Icon />
-              <span>METRO BRANCHES</span>
+              <span>Metro branches</span>
             </div>
-            <div className="text-4xl sm:text-5xl font-display font-black text-white">
-              {branchesCount.toString().padStart(2, '0')}
-              <span className="text-arena-lime text-2xl font-mono ml-1">LOC</span>
+            <div className="text-4xl sm:text-5xl font-semibold text-white">
+              {branchesCount}
+              <span className="text-arena-lime text-xl ml-1">loc</span>
             </div>
-            <div className="text-[11px] text-arena-muted mt-2">
+            <div className="text-xs text-arena-muted mt-2">
               Bengaluru (2), Mumbai (1), Delhi (1)
             </div>
           </div>
 
-          <div className="p-6 bg-[#0B0D14] border border-white/10 rounded-xl hover:border-arena-lime/50 transition-all font-mono">
-            <div className="text-[11px] text-arena-subtle uppercase mb-2 flex items-center gap-2">
+          <div className="p-6 bg-white/[0.02] border border-white/10 rounded-xl hover:border-white/20 transition-colors">
+            <div className="text-xs text-arena-subtle mb-2 flex items-center gap-2">
               <Server className="w-3.5 h-3.5 text-arena-lime" />
-              <span>PC RIG CLIENTS</span>
+              <span>PC rig clients</span>
             </div>
-            <div className="text-4xl sm:text-5xl font-display font-black text-arena-lime glow-lime">
+            <div className="text-4xl sm:text-5xl font-semibold text-arena-lime">
               {pcsCount}
-              <span className="text-white text-2xl font-mono ml-1">RIGS</span>
+              <span className="text-white text-xl ml-1">rigs</span>
             </div>
-            <div className="text-[11px] text-arena-muted mt-2">
+            <div className="text-xs text-arena-muted mt-2">
               Under 100% zero-trust client lock
             </div>
           </div>
 
-          <div className="p-6 bg-[#0B0D14] border border-white/10 rounded-xl hover:border-arena-lime/50 transition-all font-mono">
-            <div className="text-[11px] text-arena-subtle uppercase mb-2 flex items-center gap-2">
+          <div className="p-6 bg-white/[0.02] border border-white/10 rounded-xl hover:border-white/20 transition-colors">
+            <div className="text-xs text-arena-subtle mb-2 flex items-center gap-2">
               <Zap className="w-3.5 h-3.5 text-arena-lime" />
-              <span>PRICING ZONES</span>
+              <span>Pricing zones</span>
             </div>
-            <div className="text-4xl sm:text-5xl font-display font-black text-white">
+            <div className="text-4xl sm:text-5xl font-semibold text-white">
               {zonesCount}
-              <span className="text-arena-lime text-2xl font-mono ml-1">ZONES</span>
+              <span className="text-arena-lime text-xl ml-1">zones</span>
             </div>
-            <div className="text-[11px] text-arena-muted mt-2">
-              VIP, Pods, Simulators, Lounge
+            <div className="text-xs text-arena-muted mt-2">
+              VIP, pods, simulators, lounge
             </div>
           </div>
 
-          <div className="p-6 bg-[#0B0D14] border border-white/10 rounded-xl hover:border-arena-lime/50 transition-all font-mono">
-            <div className="text-[11px] text-arena-subtle uppercase mb-2 flex items-center gap-2">
+          <div className="p-6 bg-white/[0.02] border border-white/10 rounded-xl hover:border-white/20 transition-colors">
+            <div className="text-xs text-arena-subtle mb-2 flex items-center gap-2">
               <Activity className="w-3.5 h-3.5 text-arena-lime" />
-              <span>MONTHLY VOLUME</span>
+              <span>Monthly volume</span>
             </div>
-            <div className="text-3xl sm:text-4xl font-display font-black text-white">
+            <div className="text-3xl sm:text-4xl font-semibold text-white">
               ₹{(volumeCount / 100000).toFixed(1)}L+
             </div>
-            <div className="text-[11px] text-arena-muted mt-2">
+            <div className="text-xs text-arena-muted mt-2">
               Audited transactions without cash leakage
             </div>
           </div>
@@ -152,52 +152,52 @@ export const LiveProof: React.FC = () => {
         </div>
 
         {/* Live Network Fleet Map Bar */}
-        <div className="p-6 bg-[#0D0F17] border border-white/10 rounded-xl font-mono text-xs">
+        <div className="p-6 bg-white/[0.02] border border-white/10 rounded-xl text-sm">
           <div className="flex flex-wrap justify-between items-center gap-4 mb-4 pb-4 border-b border-white/10">
-            <div className="flex items-center gap-2 text-white font-bold">
+            <div className="flex items-center gap-2 text-white font-medium">
               <MapPin className="w-4 h-4 text-arena-lime" />
-              <span>ACTIVE METRO CLUSTER STATUS</span>
+              <span>Active metro cluster status</span>
             </div>
-            <div className="flex items-center gap-4 text-[10px] text-arena-muted">
+            <div className="flex items-center gap-4 text-xs text-arena-muted">
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-arena-lime" />
-                ONLINE (99.98% SLA)
+                <span className="w-1.5 h-1.5 rounded-full bg-arena-lime" />
+                Online (99.98% SLA)
               </span>
-              <span className="text-white">EDGE REPLICATION: INSTANT</span>
+              <span>Edge replication: instant</span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-3 bg-black/40 border border-white/5 rounded">
-              <div className="flex justify-between text-white font-bold">
-                <span>INDIRANAGAR // BLR</span>
+            <div className="p-3 bg-black/30 border border-white/5 rounded-md">
+              <div className="flex justify-between text-white font-medium text-sm">
+                <span>Indiranagar, BLR</span>
                 <span className="text-arena-lime">4ms</span>
               </div>
-              <div className="text-arena-subtle text-[10px] mt-1">40 RIGS · 90% OCCUPANCY</div>
+              <div className="text-arena-subtle text-xs mt-1">40 rigs · 90% occupancy</div>
             </div>
 
-            <div className="p-3 bg-black/40 border border-white/5 rounded">
-              <div className="flex justify-between text-white font-bold">
-                <span>KORAMANGALA // BLR</span>
+            <div className="p-3 bg-black/30 border border-white/5 rounded-md">
+              <div className="flex justify-between text-white font-medium text-sm">
+                <span>Koramangala, BLR</span>
                 <span className="text-arena-lime">5ms</span>
               </div>
-              <div className="text-arena-subtle text-[10px] mt-1">32 RIGS · 87% OCCUPANCY</div>
+              <div className="text-arena-subtle text-xs mt-1">32 rigs · 87% occupancy</div>
             </div>
 
-            <div className="p-3 bg-black/40 border border-white/5 rounded">
-              <div className="flex justify-between text-white font-bold">
-                <span>BANDRA WEST // BOM</span>
+            <div className="p-3 bg-black/30 border border-white/5 rounded-md">
+              <div className="flex justify-between text-white font-medium text-sm">
+                <span>Bandra West, BOM</span>
                 <span className="text-arena-lime">11ms</span>
               </div>
-              <div className="text-arena-subtle text-[10px] mt-1">24 RIGS · 91% OCCUPANCY</div>
+              <div className="text-arena-subtle text-xs mt-1">24 rigs · 91% occupancy</div>
             </div>
 
-            <div className="p-3 bg-black/40 border border-white/5 rounded">
-              <div className="flex justify-between text-white font-bold">
-                <span>CYBERHUB // DEL</span>
+            <div className="p-3 bg-black/30 border border-white/5 rounded-md">
+              <div className="flex justify-between text-white font-medium text-sm">
+                <span>Cyberhub, DEL</span>
                 <span className="text-arena-lime">14ms</span>
               </div>
-              <div className="text-arena-subtle text-[10px] mt-1">30 RIGS · 86% OCCUPANCY</div>
+              <div className="text-arena-subtle text-xs mt-1">30 rigs · 86% occupancy</div>
             </div>
           </div>
         </div>

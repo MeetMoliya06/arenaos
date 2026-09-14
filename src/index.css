@@ -8,11 +8,12 @@
   }
 
   body {
-    background-color: #08080A;
-    color: #F4F4F2;
-    font-family: 'Space Grotesk', sans-serif;
+    background-color: #0A0A0B;
+    color: #EDEDEF;
+    font-family: 'Inter', sans-serif;
     overflow-x: hidden;
     cursor: default;
+    -webkit-font-smoothing: antialiased;
   }
 
   /* Custom scrollbar */
@@ -20,75 +21,60 @@
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #08080A;
+    background: #0A0A0B;
   }
   ::-webkit-scrollbar-thumb {
-    background: #23252E;
+    background: #23232A;
     border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #CCFF00;
+    background: #3A3A44;
   }
 }
 
-/* Subtle background architectural grid */
+/* Faint background grid, kept minimal */
 .bg-tech-grid {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
 }
 
 .bg-tech-dots {
   background-size: 24px 24px;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
 }
 
-/* Scanline HUD effect */
-.scanline {
-  position: relative;
-  overflow: hidden;
-}
+/* Effects below intentionally disabled for the minimal visual system:
+   HUD scanlines, brutalist glow borders, noise grain, and the lime text-stroke
+   hover treatment. Classes are kept as no-ops so components using them don't break. */
 .scanline::before {
-  content: " ";
-  display: block;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-  background-size: 100% 4px;
-  z-index: 2;
-  pointer-events: none;
-  opacity: 0.3;
+  content: none;
 }
 
-/* High-contrast brutalist borders */
 .border-brutal {
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: border-color 0.2s ease;
 }
 .border-brutal:hover {
-  border-color: rgba(204, 255, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
-/* Noise overlay */
 .noise-overlay {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  background-image: none;
 }
 
-/* Glow effects */
 .glow-lime {
-  filter: drop-shadow(0 0 12px rgba(204, 255, 0, 0.4));
+  filter: none;
 }
 
-/* Custom text clip */
 .text-stroke {
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
-  color: transparent;
+  -webkit-text-stroke: 0;
+  color: inherit;
 }
 .text-stroke:hover {
-  -webkit-text-stroke: 1px #CCFF00;
-  color: #CCFF00;
-  transition: all 0.25s ease;
+  -webkit-text-stroke: 0;
+  color: inherit;
 }
 
 /* Responsive adjustments */
