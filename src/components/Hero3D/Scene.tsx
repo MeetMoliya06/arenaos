@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { Reflector } from 'three/examples/jsm/objects/Reflector.js';
 import { playClick, playHover } from '../../audio/soundEffects';
 
 interface ActiveNodeData {
@@ -135,23 +134,36 @@ export const Hero3DScene: React.FC = () => {
     gridHelper.position.y = -0.49;
     arenaGroup.add(gridHelper);
 
-    // Low-opacity reflective floor so the glow strips cast soft reflections
-    const reflectiveFloor = new Reflector(new THREE.PlaneGeometry(30, 30), {
-      color: 0x1a1c20,
-      textureWidth: 512,
-      textureHeight: 512,
-      clipBias: 0.003,
+    // Low-opacity dark floor plane. Real-time mirror reflections (three's Reflector)
+    // rely on a multisampled half-float render target that crashes the GPU process on
+    // some drivers, so soft reflections are faked cheaply below with glow-pool decals
+    // placed directly under each light source instead.
+    const floorMat = new THREE.MeshBasicMaterial({
+      color: 0x08080a,
+      transparent: true,
+      opacity: 0.85,
     });
-    reflectiveFloor.rotation.x = -Math.PI / 2;
-    reflectiveFloor.position.y = -0.5;
-    arenaGroup.add(reflectiveFloor);
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), floorMat);
+    floor.rotation.x = -Math.PI / 2;
+    floor.position.y = -0.5;
+    arenaGroup.add(floor);
 
-    // Subtle dark scrim over the reflector to keep the floor moody, not mirror-bright
-    const scrimMat = new THREE.MeshBasicMaterial({ color: 0x08080a, transparent: true, opacity: 0.55 });
-    const scrim = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), scrimMat);
-    scrim.rotation.x = -Math.PI / 2;
-    scrim.position.y = -0.495;
-    arenaGroup.add(scrim);
+    const floorGlowGeo = new THREE.CircleGeometry(0.55, 24);
+    const floorGlowY = -0.495;
+    const addFloorGlow = (x: number, z: number, color: number, opacity: number) => {
+      const glowMat = new THREE.MeshBasicMaterial({
+        color,
+        transparent: true,
+        opacity,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+      const glow = new THREE.Mesh(floorGlowGeo, glowMat);
+      glow.rotation.x = -Math.PI / 2;
+      glow.position.set(x, floorGlowY, z);
+      arenaGroup.add(glow);
+      return glowMat;
+    };
 
     // ---- Central floating dashboard panel (replaces the old "crystal") ----
     const coreGroup = new THREE.Group();
@@ -211,6 +223,19 @@ export const Hero3DScene: React.FC = () => {
     ring2.rotation.x = Math.PI / 1.8;
     ring2.rotation.y = Math.PI / 5;
     coreGroup.add(ring2);
+
+    // Floor glow pool beneath the dashboard panel
+    const dashboardPoolMat = new THREE.MeshBasicMaterial({
+      color: 0x00f0ff,
+      transparent: true,
+      opacity: 0.14,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    const dashboardPool = new THREE.Mesh(new THREE.CircleGeometry(1.6, 32), dashboardPoolMat);
+    dashboardPool.rotation.x = -Math.PI / 2;
+    dashboardPool.position.set(0, floorGlowY, coreGroup.position.z + 0.6);
+    arenaGroup.add(dashboardPool);
 
     // ---- Rig floor plan: straight rows receding into depth, aisle down the middle ----
     const interactiveMeshes: THREE.Mesh[] = [];
@@ -291,6 +316,11 @@ export const Hero3DScene: React.FC = () => {
 
       if (visual.glow) {
         pulsingGlows.push({ material: edgeMat, baseOpacity: edgeOpacity, phase: index + 0.5 });
+
+        // Soft floor glow "reflection" pool beneath this rig's light sources
+        const poolOpacity = 0.16;
+        const pool = addFloorGlow(x + 0.2, z - 0.1, visual.color, poolOpacity);
+        pulsingGlows.push({ material: pool, baseOpacity: poolOpacity, phase: index + 0.25 });
       }
     });
 
