@@ -18,82 +18,614 @@ type StatusVisual = {
   glowOpacity: number;
 };
 
-const STATUS_VISUALS: Record<ActiveNodeData['status'], StatusVisual> = {
-  IN_SESSION: { color: 0xccff00, glow: true, glowOpacity: 0.55 }, // active session -> lime
-  AVAILABLE: { color: 0x00f0ff, glow: true, glowOpacity: 0.42 }, // idle / available -> cyan
-  BILLING: { color: 0xff9900, glow: true, glowOpacity: 0.5 }, // ending soon (<5 min) -> amber
-  OFFLINE: { color: 0x4a4e55, glow: false, glowOpacity: 0.0 }, // offline -> unlit gray
+const STATUS_VISUALS: Record<
+  ActiveNodeData['status'],
+  StatusVisual
+> = {
+  IN_SESSION: {
+    color: 0xccff00,
+    glow: true,
+    glowOpacity: 0.72,
+  },
+
+  AVAILABLE: {
+    color: 0x00eaff,
+    glow: true,
+    glowOpacity: 0.58,
+  },
+
+  BILLING: {
+    color: 0xffa000,
+    glow: true,
+    glowOpacity: 0.68,
+  },
+
+  OFFLINE: {
+    color: 0x454952,
+    glow: false,
+    glowOpacity: 0.08,
+  },
 };
 
-function buildDashboardTexture(total: number, active: number, idle: number, endingSoon: number, offline: number) {
+/* =========================================================
+   DASHBOARD TEXTURE
+========================================================= */
+
+function buildDashboardTexture(
+  total: number,
+  active: number,
+  idle: number,
+  endingSoon: number,
+  offline: number
+) {
   const canvas = document.createElement('canvas');
-  canvas.width = 640;
-  canvas.height = 320;
+
+  canvas.width = 1000;
+  canvas.height = 420;
+
   const ctx = canvas.getContext('2d');
+
   if (!ctx) return null;
 
-  ctx.fillStyle = '#0a0a0c';
+  ctx.fillStyle = '#08090b';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  ctx.strokeStyle = 'rgba(204, 255, 0, 0.35)';
+  /* Outer border */
+
+  ctx.strokeStyle = 'rgba(204,255,0,0.35)';
   ctx.lineWidth = 2;
-  ctx.strokeRect(12, 12, canvas.width - 24, canvas.height - 24);
 
-  ctx.font = '600 20px "JetBrains Mono", monospace';
-  ctx.fillStyle = 'rgba(220, 224, 210, 0.55)';
-  ctx.fillText('ARENA · LIVE STATUS', 36, 64);
+  ctx.strokeRect(
+    12,
+    12,
+    canvas.width - 24,
+    canvas.height - 24
+  );
 
-  ctx.font = '700 42px "JetBrains Mono", monospace';
-  ctx.fillStyle = '#eef2e6';
-  ctx.fillText(`${total} rigs · ${active} active · ${idle} idle`, 36, 148);
+  /* Header */
 
-  const extraParts: string[] = [];
-  if (endingSoon > 0) extraParts.push(`${endingSoon} ending soon`);
-  if (offline > 0) extraParts.push(`${offline} offline`);
+  ctx.font =
+    '600 22px "JetBrains Mono", monospace';
 
-  if (extraParts.length > 0) {
-    ctx.font = '500 26px "JetBrains Mono", monospace';
-    ctx.fillStyle = 'rgba(255, 153, 0, 0.85)';
-    ctx.fillText(extraParts.join(' · '), 36, 200);
+  ctx.fillStyle =
+    'rgba(220,225,215,0.55)';
+
+  ctx.fillText(
+    'ARENAOS / COMMAND',
+    40,
+    58
+  );
+
+  /* Total */
+
+  ctx.font =
+    '700 62px "JetBrains Mono", monospace';
+
+  ctx.fillStyle = '#f1f4eb';
+
+  ctx.fillText(
+    `${total}`,
+    40,
+    135
+  );
+
+  ctx.font =
+    '500 16px "JetBrains Mono", monospace';
+
+  ctx.fillStyle =
+    'rgba(220,225,215,0.45)';
+
+  ctx.fillText(
+    'RIGS',
+    44,
+    163
+  );
+
+  /* Active */
+
+  ctx.font =
+    '700 30px "JetBrains Mono", monospace';
+
+  ctx.fillStyle = '#ccff00';
+
+  ctx.fillText(
+    `${active}`,
+    210,
+    125
+  );
+
+  ctx.font =
+    '500 14px "JetBrains Mono", monospace';
+
+  ctx.fillText(
+    'ACTIVE',
+    210,
+    150
+  );
+
+  /* Available */
+
+  ctx.font =
+    '700 30px "JetBrains Mono", monospace';
+
+  ctx.fillStyle = '#00eaff';
+
+  ctx.fillText(
+    `${idle}`,
+    365,
+    125
+  );
+
+  ctx.font =
+    '500 14px "JetBrains Mono", monospace';
+
+  ctx.fillText(
+    'READY',
+    365,
+    150
+  );
+
+  /* Billing */
+
+  ctx.font =
+    '700 30px "JetBrains Mono", monospace';
+
+  ctx.fillStyle = '#ffa000';
+
+  ctx.fillText(
+    `${endingSoon}`,
+    520,
+    125
+  );
+
+  ctx.font =
+    '500 14px "JetBrains Mono", monospace';
+
+  ctx.fillText(
+    'ENDING',
+    520,
+    150
+  );
+
+  /* Offline */
+
+  ctx.font =
+    '700 30px "JetBrains Mono", monospace';
+
+  ctx.fillStyle = '#6d727a';
+
+  ctx.fillText(
+    `${offline}`,
+    675,
+    125
+  );
+
+  ctx.font =
+    '500 14px "JetBrains Mono", monospace';
+
+  ctx.fillText(
+    'OFFLINE',
+    675,
+    150
+  );
+
+  /* Small activity graph */
+
+  ctx.strokeStyle =
+    'rgba(0,234,255,0.35)';
+
+  ctx.lineWidth = 2;
+
+  ctx.beginPath();
+
+  for (let i = 0; i < 220; i++) {
+    const x = 40 + i * 3.4;
+
+    const y =
+      255 +
+      Math.sin(i * 0.16) * 20 +
+      Math.sin(i * 0.045) * 14;
+
+    if (i === 0) {
+      ctx.moveTo(x, y);
+    } else {
+      ctx.lineTo(x, y);
+    }
   }
 
-  ctx.font = '400 16px "JetBrains Mono", monospace';
-  ctx.fillStyle = 'rgba(0, 240, 255, 0.55)';
-  ctx.fillText('UPDATED IN REAL TIME', 36, canvas.height - 32);
+  ctx.stroke();
 
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
+  /* Lime graph */
+
+  ctx.strokeStyle =
+    'rgba(204,255,0,0.7)';
+
+  ctx.lineWidth = 2;
+
+  ctx.beginPath();
+
+  for (let i = 0; i < 220; i++) {
+    const x = 40 + i * 3.4;
+
+    const y =
+      275 +
+      Math.sin(i * 0.12 + 1) * 18 +
+      Math.sin(i * 0.05) * 12;
+
+    if (i === 0) {
+      ctx.moveTo(x, y);
+    } else {
+      ctx.lineTo(x, y);
+    }
+  }
+
+  ctx.stroke();
+
+  ctx.font =
+    '500 13px "JetBrains Mono", monospace';
+
+  ctx.fillStyle =
+    'rgba(220,225,215,0.4)';
+
+  ctx.fillText(
+    'NETWORK ACTIVITY',
+    40,
+    325
+  );
+
+  ctx.fillStyle = '#ccff00';
+
+  ctx.fillText(
+    '● SYSTEM OPERATIONAL',
+    40,
+    370
+  );
+
+  ctx.fillStyle =
+    'rgba(0,234,255,0.55)';
+
+  ctx.fillText(
+    'REAL-TIME',
+    790,
+    370
+  );
+
+  const texture =
+    new THREE.CanvasTexture(canvas);
+
+  texture.colorSpace =
+    THREE.SRGBColorSpace;
+
   return texture;
 }
 
+/* =========================================================
+   GLOW TEXTURE
+========================================================= */
+
+function buildGlowTexture(
+  color: number
+) {
+  const size = 256;
+
+  const canvas =
+    document.createElement('canvas');
+
+  canvas.width = size;
+  canvas.height = size;
+
+  const ctx =
+    canvas.getContext('2d');
+
+  if (!ctx) return null;
+
+  const c =
+    new THREE.Color(color);
+
+  const rgb =
+    `${Math.round(c.r * 255)}, ${Math.round(
+      c.g * 255
+    )}, ${Math.round(c.b * 255)}`;
+
+  const gradient =
+    ctx.createRadialGradient(
+      size / 2,
+      size / 2,
+      0,
+      size / 2,
+      size / 2,
+      size / 2
+    );
+
+  gradient.addColorStop(
+    0,
+    `rgba(${rgb},0.7)`
+  );
+
+  gradient.addColorStop(
+    0.3,
+    `rgba(${rgb},0.25)`
+  );
+
+  gradient.addColorStop(
+    1,
+    `rgba(${rgb},0)`
+  );
+
+  ctx.fillStyle = gradient;
+
+  ctx.fillRect(
+    0,
+    0,
+    size,
+    size
+  );
+
+  const texture =
+    new THREE.CanvasTexture(canvas);
+
+  texture.colorSpace =
+    THREE.SRGBColorSpace;
+
+  return texture;
+}
+
+/* =========================================================
+   RIG LABEL
+========================================================= */
+
+function buildRigLabelTexture(
+  id: string,
+  status: string,
+  color: number
+) {
+  const canvas =
+    document.createElement('canvas');
+
+  canvas.width = 500;
+  canvas.height = 120;
+
+  const ctx =
+    canvas.getContext('2d');
+
+  if (!ctx) return null;
+
+  const c =
+    new THREE.Color(color);
+
+  const rgb =
+    `${Math.round(c.r * 255)},${Math.round(
+      c.g * 255
+    )},${Math.round(c.b * 255)}`;
+
+  ctx.fillStyle =
+    'rgba(6,8,10,0.92)';
+
+  ctx.fillRect(
+    3,
+    3,
+    494,
+    114
+  );
+
+  ctx.strokeStyle =
+    `rgb(${rgb})`;
+
+  ctx.lineWidth = 2;
+
+  ctx.strokeRect(
+    3,
+    3,
+    494,
+    114
+  );
+
+  ctx.font =
+    '700 27px "JetBrains Mono", monospace';
+
+  ctx.fillStyle = '#ffffff';
+
+  ctx.fillText(
+    id,
+    22,
+    43
+  );
+
+  ctx.font =
+    '500 17px "JetBrains Mono", monospace';
+
+  ctx.fillStyle =
+    `rgb(${rgb})`;
+
+  ctx.fillText(
+    status,
+    22,
+    82
+  );
+
+  const texture =
+    new THREE.CanvasTexture(canvas);
+
+  texture.colorSpace =
+    THREE.SRGBColorSpace;
+
+  return texture;
+}
+
+/* =========================================================
+   COMPONENT
+========================================================= */
+
 export const Hero3DScene: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [hoveredNode, setHoveredNode] = useState<ActiveNodeData | null>(null);
-  const [webGlSupported, setWebGlSupported] = useState(true);
+  const containerRef =
+    useRef<HTMLDivElement>(null);
+
+  const [
+    hoveredNode,
+    setHoveredNode,
+  ] =
+    useState<ActiveNodeData | null>(
+      null
+    );
+
+  const [
+    webGlSupported,
+    setWebGlSupported,
+  ] =
+    useState(true);
+
+  /* =======================================================
+     DATA
+  ======================================================= */
 
   const stationsInfo: ActiveNodeData[] = [
-    { id: 'RIG_01', name: 'TITAN-01', zone: 'VIP ARENA', gpu: 'RTX 4090 24GB', status: 'IN_SESSION', rate: '₹180/hr', user: 'phantom_99' },
-    { id: 'RIG_02', name: 'TITAN-02', zone: 'VIP ARENA', gpu: 'RTX 4090 24GB', status: 'IN_SESSION', rate: '₹180/hr', user: 'vortex_fps' },
-    { id: 'RIG_03', name: 'TITAN-03', zone: 'VIP ARENA', gpu: 'RTX 4090 24GB', status: 'AVAILABLE', rate: '₹180/hr', user: 'READY' },
-    { id: 'RIG_04', name: 'STAGE-01', zone: 'TOURNAMENT POD', gpu: 'RTX 4080 Super', status: 'IN_SESSION', rate: '₹150/hr', user: 'blitz_k' },
-    { id: 'RIG_05', name: 'STAGE-02', zone: 'TOURNAMENT POD', gpu: 'RTX 4080 Super', status: 'BILLING', rate: '₹150/hr', user: 'kryptic' },
-    { id: 'RIG_06', name: 'STAGE-03', zone: 'TOURNAMENT POD', gpu: 'RTX 4080 Super', status: 'IN_SESSION', rate: '₹150/hr', user: 'zenith_pro' },
-    { id: 'RIG_07', name: 'GRID-01', zone: 'MAIN BATTLEFLOOR', gpu: 'RTX 4070 Ti', status: 'IN_SESSION', rate: '₹110/hr', user: 'shadow_in' },
-    { id: 'RIG_08', name: 'GRID-02', zone: 'MAIN BATTLEFLOOR', gpu: 'RTX 4070 Ti', status: 'OFFLINE', rate: '₹110/hr', user: '—' },
-    { id: 'RIG_09', name: 'GRID-03', zone: 'MAIN BATTLEFLOOR', gpu: 'RTX 4070 Ti', status: 'IN_SESSION', rate: '₹110/hr', user: 'cypher_x' },
-    { id: 'RIG_10', name: 'SIM-01', zone: 'RACING RIGS', gpu: 'FANATEC DD2 + RTX 4080', status: 'IN_SESSION', rate: '₹250/hr', user: 'apex_driver' },
-    { id: 'RIG_11', name: 'SIM-02', zone: 'RACING RIGS', gpu: 'FANATEC DD2 + RTX 4080', status: 'AVAILABLE', rate: '₹250/hr', user: 'READY' },
-    { id: 'RIG_12', name: 'CONSOLE-01', zone: 'PS5 LOUNGE', gpu: 'PS5 PRO 4K OLED', status: 'IN_SESSION', rate: '₹140/hr', user: 'ea_fc_squad' },
+    {
+      id: 'RIG_01',
+      name: 'TITAN-01',
+      zone: 'VIP ARENA',
+      gpu: 'RTX 4090 24GB',
+      status: 'IN_SESSION',
+      rate: '₹180/hr',
+      user: 'phantom_99',
+    },
+
+    {
+      id: 'RIG_02',
+      name: 'TITAN-02',
+      zone: 'VIP ARENA',
+      gpu: 'RTX 4090 24GB',
+      status: 'IN_SESSION',
+      rate: '₹180/hr',
+      user: 'vortex_fps',
+    },
+
+    {
+      id: 'RIG_03',
+      name: 'TITAN-03',
+      zone: 'VIP ARENA',
+      gpu: 'RTX 4090 24GB',
+      status: 'AVAILABLE',
+      rate: '₹180/hr',
+      user: 'READY',
+    },
+
+    {
+      id: 'RIG_04',
+      name: 'STAGE-01',
+      zone: 'TOURNAMENT POD',
+      gpu: 'RTX 4080 Super',
+      status: 'IN_SESSION',
+      rate: '₹150/hr',
+      user: 'blitz_k',
+    },
+
+    {
+      id: 'RIG_05',
+      name: 'STAGE-02',
+      zone: 'TOURNAMENT POD',
+      gpu: 'RTX 4080 Super',
+      status: 'BILLING',
+      rate: '₹150/hr',
+      user: 'kryptic',
+    },
+
+    {
+      id: 'RIG_06',
+      name: 'STAGE-03',
+      zone: 'TOURNAMENT POD',
+      gpu: 'RTX 4080 Super',
+      status: 'IN_SESSION',
+      rate: '₹150/hr',
+      user: 'zenith_pro',
+    },
+
+    {
+      id: 'RIG_07',
+      name: 'GRID-01',
+      zone: 'MAIN BATTLEFLOOR',
+      gpu: 'RTX 4070 Ti',
+      status: 'IN_SESSION',
+      rate: '₹110/hr',
+      user: 'shadow_in',
+    },
+
+    {
+      id: 'RIG_08',
+      name: 'GRID-02',
+      zone: 'MAIN BATTLEFLOOR',
+      gpu: 'RTX 4070 Ti',
+      status: 'OFFLINE',
+      rate: '₹110/hr',
+      user: '—',
+    },
+
+    {
+      id: 'RIG_09',
+      name: 'GRID-03',
+      zone: 'MAIN BATTLEFLOOR',
+      gpu: 'RTX 4070 Ti',
+      status: 'IN_SESSION',
+      rate: '₹110/hr',
+      user: 'cypher_x',
+    },
+
+    {
+      id: 'RIG_10',
+      name: 'SIM-01',
+      zone: 'RACING RIGS',
+      gpu: 'FANATEC DD2 + RTX 4080',
+      status: 'IN_SESSION',
+      rate: '₹250/hr',
+      user: 'apex_driver',
+    },
+
+    {
+      id: 'RIG_11',
+      name: 'SIM-02',
+      zone: 'RACING RIGS',
+      gpu: 'FANATEC DD2 + RTX 4080',
+      status: 'AVAILABLE',
+      rate: '₹250/hr',
+      user: 'READY',
+    },
+
+    {
+      id: 'RIG_12',
+      name: 'CONSOLE-01',
+      zone: 'PS5 LOUNGE',
+      gpu: 'PS5 PRO 4K OLED',
+      status: 'IN_SESSION',
+      rate: '₹140/hr',
+      user: 'ea_fc_squad',
+    },
   ];
+
+  /* =======================================================
+     THREE.JS
+  ======================================================= */
 
   useEffect(() => {
     if (!containerRef.current) return;
-    const container = containerRef.current;
 
-    // Check WebGL support
+    const container =
+      containerRef.current;
+
+    /* WebGL check */
+
     try {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      const testCanvas =
+        document.createElement(
+          'canvas'
+        );
+
+      const gl =
+        testCanvas.getContext(
+          'webgl'
+        ) ||
+        testCanvas.getContext(
+          'experimental-webgl'
+        );
+
       if (!gl) {
         setWebGlSupported(false);
         return;
@@ -103,435 +635,1964 @@ export const Hero3DScene: React.FC = () => {
       return;
     }
 
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reducedMotion =
+      window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+      ).matches;
 
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+    /* =====================================================
+       SCENE
+    ===================================================== */
 
-    // Scene, Camera, Renderer
-    const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x08080a, 0.045);
+    const scene =
+      new THREE.Scene();
 
-    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 100);
-    const startCamPos = new THREE.Vector3(0, 4.6, 14);
-    const settleCamPos = new THREE.Vector3(0, 3.6, 9.5);
-    const lookAtTarget = new THREE.Vector3(0, 1.3, -0.5);
-    camera.position.copy(reducedMotion ? settleCamPos : startCamPos);
-    camera.lookAt(lookAtTarget);
+    scene.background =
+      new THREE.Color(
+        0x050608
+      );
 
-    // Opaque canvas on purpose: an alpha-blended WebGL canvas compositing every
-    // frame with the CSS backdrop-blur layers around/over it (this container,
-    // and the node-inspector card that mounts on hover/click) is a known GPU
-    // process crash combo on several drivers. A solid clear color avoids it.
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-    renderer.setClearColor(0x08080a, 1);
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
+    scene.fog =
+      new THREE.FogExp2(
+        0x050608,
+        0.035
+      );
 
-    // Group to hold all arena objects
-    const arenaGroup = new THREE.Group();
-    scene.add(arenaGroup);
+    /* =====================================================
+       CAMERA
+    ===================================================== */
 
-    // Grid Floor
-    const gridHelper = new THREE.GridHelper(30, 30, 0x3a3f2e, 0x1a1b22);
-    gridHelper.position.y = -0.49;
-    arenaGroup.add(gridHelper);
+    const width =
+      container.clientWidth;
 
-    // Low-opacity dark floor plane. Real-time mirror reflections (three's Reflector)
-    // rely on a multisampled half-float render target that crashes the GPU process on
-    // some drivers, so soft reflections are faked cheaply below with glow-pool decals
-    // placed directly under each light source instead.
-    const floorMat = new THREE.MeshBasicMaterial({
-      color: 0x08080a,
-      transparent: true,
-      opacity: 0.85,
-    });
-    const floor = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), floorMat);
-    floor.rotation.x = -Math.PI / 2;
-    floor.position.y = -0.5;
-    arenaGroup.add(floor);
+    const height =
+      container.clientHeight;
 
-    const floorGlowGeo = new THREE.CircleGeometry(0.55, 24);
-    const floorGlowY = -0.495;
-    const addFloorGlow = (x: number, z: number, color: number, opacity: number) => {
-      const glowMat = new THREE.MeshBasicMaterial({
-        color,
-        transparent: true,
-        opacity,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-      });
-      const glow = new THREE.Mesh(floorGlowGeo, glowMat);
-      glow.rotation.x = -Math.PI / 2;
-      glow.position.set(x, floorGlowY, z);
-      arenaGroup.add(glow);
-      return glowMat;
-    };
+    const camera =
+      new THREE.PerspectiveCamera(
+        46,
+        width / height,
+        0.1,
+        120
+      );
 
-    // ---- Central floating dashboard panel (replaces the old "crystal") ----
-    const coreGroup = new THREE.Group();
-    coreGroup.position.set(0, 2.0, -3.6);
-    coreGroup.rotation.x = THREE.MathUtils.degToRad(-8);
-    arenaGroup.add(coreGroup);
+    const startCamera =
+      new THREE.Vector3(
+        0,
+        6.4,
+        20
+      );
 
-    const panelGeo = new THREE.BoxGeometry(3.6, 2.0, 0.14);
-    const panelMat = new THREE.MeshPhysicalMaterial({
-      color: 0x101116,
-      metalness: 0.8,
-      roughness: 0.2,
-      transparent: true,
-      opacity: 0.85,
-    });
-    const panel = new THREE.Mesh(panelGeo, panelMat);
-    coreGroup.add(panel);
+    const targetCamera =
+      new THREE.Vector3(
+        0,
+        4.4,
+        13.5
+      );
 
-    // Wireframe cage around the panel (keeps the original "crystal" visual language)
-    const panelWireGeo = new THREE.WireframeGeometry(panelGeo);
-    const panelWireMat = new THREE.LineBasicMaterial({ color: 0xccff00 });
-    const panelWireframe = new THREE.LineSegments(panelWireGeo, panelWireMat);
-    coreGroup.add(panelWireframe);
+    const cameraLookAt =
+      new THREE.Vector3(
+        0,
+        1.0,
+        0
+      );
 
-    // Live aggregate stats rendered onto the panel as a glowing screen
-    const activeCount = stationsInfo.filter((s) => s.status === 'IN_SESSION').length;
-    const idleCount = stationsInfo.filter((s) => s.status === 'AVAILABLE').length;
-    const endingSoonCount = stationsInfo.filter((s) => s.status === 'BILLING').length;
-    const offlineCount = stationsInfo.filter((s) => s.status === 'OFFLINE').length;
-
-    const dashboardTexture = buildDashboardTexture(
-      stationsInfo.length,
-      activeCount,
-      idleCount,
-      endingSoonCount,
-      offlineCount
+    camera.position.copy(
+      reducedMotion
+        ? targetCamera
+        : startCamera
     );
-    const screenGeo = new THREE.PlaneGeometry(3.3, 1.75);
-    const screenMat = new THREE.MeshBasicMaterial({
-      map: dashboardTexture ?? undefined,
-      color: dashboardTexture ? 0xffffff : 0xccff00,
-      transparent: true,
-      opacity: 0.92,
-    });
-    const screen = new THREE.Mesh(screenGeo, screenMat);
-    screen.position.z = 0.08;
-    coreGroup.add(screen);
 
-    // Halo orbit rings around the dashboard panel
-    const ringGeo = new THREE.TorusGeometry(2.0, 0.025, 16, 64);
-    const ringMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.55 });
-    const ring1 = new THREE.Mesh(ringGeo, ringMat);
-    ring1.rotation.x = Math.PI / 2.3;
-    coreGroup.add(ring1);
+    camera.lookAt(
+      cameraLookAt
+    );
 
-    const ring2 = new THREE.Mesh(ringGeo, ringMat);
-    ring2.rotation.x = Math.PI / 1.8;
-    ring2.rotation.y = Math.PI / 5;
-    coreGroup.add(ring2);
+    /* =====================================================
+       RENDERER
+    ===================================================== */
 
-    // Floor glow pool beneath the dashboard panel
-    const dashboardPoolMat = new THREE.MeshBasicMaterial({
-      color: 0x00f0ff,
-      transparent: true,
-      opacity: 0.14,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-    const dashboardPool = new THREE.Mesh(new THREE.CircleGeometry(1.6, 32), dashboardPoolMat);
-    dashboardPool.rotation.x = -Math.PI / 2;
-    dashboardPool.position.set(0, floorGlowY, coreGroup.position.z + 0.6);
-    arenaGroup.add(dashboardPool);
-
-    // ---- Rig floor plan: straight rows receding into depth, aisle down the middle ----
-    const interactiveMeshes: THREE.Mesh[] = [];
-    const pulsingGlows: { material: THREE.MeshBasicMaterial; baseOpacity: number; phase: number }[] = [];
-
-    const deskGeo = new THREE.BoxGeometry(1.3, 0.07, 0.65);
-    const monitorGeo = new THREE.BoxGeometry(0.85, 0.5, 0.04);
-    const screenPanelGeo = new THREE.PlaneGeometry(0.64, 0.34);
-    const uiLineGeo = new THREE.PlaneGeometry(0.5, 0.02);
-    const towerGeo = new THREE.BoxGeometry(0.22, 0.85, 0.45);
-    const edgeStripGeo = new THREE.BoxGeometry(0.02, 0.85, 0.02);
-
-    const darkBodyMat = new THREE.MeshStandardMaterial({ color: 0x14161f, roughness: 0.4, metalness: 0.6 });
-    const bezelMat = new THREE.MeshStandardMaterial({ color: 0x0c0d10, roughness: 0.35, metalness: 0.5 });
-
-    const cols = [-4, -1.4, 1.4, 4];
-    const rows = [6.5, 2.5, -1.5];
-
-    stationsInfo.forEach((info, index) => {
-      const row = Math.floor(index / cols.length);
-      const col = index % cols.length;
-      const x = cols[col];
-      const z = rows[row];
-
-      const visual = STATUS_VISUALS[info.status];
-      const rig = new THREE.Group();
-      rig.position.set(x, 0, z);
-      // All rigs face the camera down the aisle, like real rows of café PCs
-      arenaGroup.add(rig);
-
-      // a) desk
-      const desk = new THREE.Mesh(deskGeo, darkBodyMat);
-      desk.position.set(0, 0.5, 0);
-      desk.userData = info;
-      interactiveMeshes.push(desk);
-      rig.add(desk);
-
-      // b) monitor tilted back ~10deg, emissive UI-panel front face
-      const monitor = new THREE.Mesh(monitorGeo, bezelMat);
-      monitor.position.set(0, 0.85, -0.3);
-      monitor.rotation.x = THREE.MathUtils.degToRad(-10);
-      monitor.userData = info;
-      interactiveMeshes.push(monitor);
-      rig.add(monitor);
-
-      const screenGlowOpacity = visual.glow ? visual.glowOpacity : 0.06;
-      const screenMatRig = new THREE.MeshBasicMaterial({
-        color: visual.color,
-        transparent: true,
-        opacity: screenGlowOpacity,
+    const renderer =
+      new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: false,
+        powerPreference:
+          'high-performance',
       });
-      const screenPanel = new THREE.Mesh(screenPanelGeo, screenMatRig);
-      screenPanel.position.z = 0.022;
-      monitor.add(screenPanel);
 
-      if (visual.glow) {
-        pulsingGlows.push({ material: screenMatRig, baseOpacity: visual.glowOpacity, phase: index });
+    renderer.setPixelRatio(
+      Math.min(
+        window.devicePixelRatio,
+        2
+      )
+    );
 
-        const lineMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.22 });
-        const line1 = new THREE.Mesh(uiLineGeo, lineMat);
-        line1.position.set(0, 0.08, 0.001);
-        screenPanel.add(line1);
-        const line2 = new THREE.Mesh(uiLineGeo, lineMat.clone());
-        line2.position.set(0, -0.06, 0.001);
-        screenPanel.add(line2);
+    renderer.setSize(
+      width,
+      height
+    );
+
+    renderer.setClearColor(
+      0x050608,
+      1
+    );
+
+    renderer.outputColorSpace =
+      THREE.SRGBColorSpace;
+
+    renderer.toneMapping =
+      THREE.ACESFilmicToneMapping;
+
+    renderer.toneMappingExposure =
+      1.15;
+
+    container.appendChild(
+      renderer.domElement
+    );
+
+    /* =====================================================
+       ARENA ROOT
+    ===================================================== */
+
+    const arena =
+      new THREE.Group();
+
+    scene.add(arena);
+
+    /* =====================================================
+       FLOOR
+    ===================================================== */
+
+    const floor =
+      new THREE.Mesh(
+        new THREE.PlaneGeometry(
+          40,
+          40
+        ),
+        new THREE.MeshStandardMaterial(
+          {
+            color: 0x07090c,
+            roughness: 0.38,
+            metalness: 0.78,
+          }
+        )
+      );
+
+    floor.rotation.x =
+      -Math.PI / 2;
+
+    floor.position.y =
+      -0.5;
+
+    arena.add(floor);
+
+    /* subtle grid */
+
+    const grid =
+      new THREE.GridHelper(
+        40,
+        40,
+        0x20261f,
+        0x101318
+      );
+
+    grid.position.y =
+      -0.47;
+
+    arena.add(grid);
+
+    /* =====================================================
+       CENTRAL OPERATOR
+    ===================================================== */
+
+    const operatorGroup =
+      new THREE.Group();
+
+    operatorGroup.position.set(
+      0,
+      0,
+      1.5
+    );
+
+    arena.add(
+      operatorGroup
+    );
+
+    /* platform */
+
+    const operatorPlatform =
+      new THREE.Mesh(
+        new THREE.CylinderGeometry(
+          2.8,
+          2.95,
+          0.18,
+          64
+        ),
+        new THREE.MeshStandardMaterial(
+          {
+            color: 0x090c10,
+            roughness: 0.25,
+            metalness: 0.88,
+          }
+        )
+      );
+
+    operatorPlatform.position.y =
+      -0.37;
+
+    operatorGroup.add(
+      operatorPlatform
+    );
+
+    /* platform ring */
+
+    const operatorRing =
+      new THREE.Mesh(
+        new THREE.TorusGeometry(
+          2.7,
+          0.025,
+          12,
+          96
+        ),
+        new THREE.MeshBasicMaterial(
+          {
+            color: 0xccff00,
+            transparent: true,
+            opacity: 0.65,
+          }
+        )
+      );
+
+    operatorRing.rotation.x =
+      Math.PI / 2;
+
+    operatorRing.position.y =
+      -0.25;
+
+    operatorGroup.add(
+      operatorRing
+    );
+
+    /* desk */
+
+    const operatorDesk =
+      new THREE.Mesh(
+        new THREE.BoxGeometry(
+          2.8,
+          0.18,
+          1.25
+        ),
+        new THREE.MeshStandardMaterial(
+          {
+            color: 0x101419,
+            roughness: 0.25,
+            metalness: 0.8,
+          }
+        )
+      );
+
+    operatorDesk.position.y =
+      0.95;
+
+    operatorGroup.add(
+      operatorDesk
+    );
+
+    /* desk light */
+
+    const deskLight =
+      new THREE.Mesh(
+        new THREE.BoxGeometry(
+          2.8,
+          0.018,
+          0.025
+        ),
+        new THREE.MeshBasicMaterial(
+          {
+            color: 0xccff00,
+          }
+        )
+      );
+
+    deskLight.position.set(
+      0,
+      0.84,
+      0.63
+    );
+
+    operatorGroup.add(
+      deskLight
+    );
+
+    /* =====================================================
+       OPERATOR PC
+    ===================================================== */
+
+    const operatorPC =
+      new THREE.Group();
+
+    operatorPC.position.set(
+      0.75,
+      1.0,
+      0
+    );
+
+    operatorGroup.add(
+      operatorPC
+    );
+
+    const operatorTower =
+      new THREE.Mesh(
+        new THREE.BoxGeometry(
+          0.48,
+          1.15,
+          0.62
+        ),
+        new THREE.MeshStandardMaterial(
+          {
+            color: 0x0b0e12,
+            roughness: 0.25,
+            metalness: 0.75,
+            emissive: 0x030507,
+            emissiveIntensity: 0.7,
+          }
+        )
+      );
+
+    operatorTower.position.y =
+      0.58;
+
+    operatorPC.add(
+      operatorTower
+    );
+
+    const operatorStrip =
+      new THREE.Mesh(
+        new THREE.BoxGeometry(
+          0.025,
+          0.82,
+          0.025
+        ),
+        new THREE.MeshBasicMaterial(
+          {
+            color: 0xccff00,
+            transparent: true,
+            opacity: 0.9,
+          }
+        )
+      );
+
+    operatorStrip.position.set(
+      0.22,
+      0.58,
+      0.32
+    );
+
+    operatorPC.add(
+      operatorStrip
+    );
+
+    /* =====================================================
+       OPERATOR MONITOR
+    ===================================================== */
+
+    const activeCount =
+      stationsInfo.filter(
+        s =>
+          s.status ===
+          'IN_SESSION'
+      ).length;
+
+    const idleCount =
+      stationsInfo.filter(
+        s =>
+          s.status ===
+          'AVAILABLE'
+      ).length;
+
+    const endingSoonCount =
+      stationsInfo.filter(
+        s =>
+          s.status ===
+          'BILLING'
+      ).length;
+
+    const offlineCount =
+      stationsInfo.filter(
+        s =>
+          s.status ===
+          'OFFLINE'
+      ).length;
+
+    const dashboardTexture =
+      buildDashboardTexture(
+        stationsInfo.length,
+        activeCount,
+        idleCount,
+        endingSoonCount,
+        offlineCount
+      );
+
+    const operatorMonitor =
+      new THREE.Mesh(
+        new THREE.BoxGeometry(
+          1.65,
+          0.95,
+          0.07
+        ),
+        new THREE.MeshStandardMaterial(
+          {
+            color: 0x080a0d,
+            roughness: 0.2,
+            metalness: 0.75,
+          }
+        )
+      );
+
+    operatorMonitor.position.set(
+      0,
+      1.55,
+      -0.15
+    );
+
+    operatorGroup.add(
+      operatorMonitor
+    );
+
+    const operatorScreen =
+      new THREE.Mesh(
+        new THREE.PlaneGeometry(
+          1.5,
+          0.78
+        ),
+        new THREE.MeshBasicMaterial(
+          {
+            map:
+              dashboardTexture ??
+              undefined,
+            color:
+              dashboardTexture
+                ? 0xffffff
+                : 0xccff00,
+            transparent: true,
+            opacity: 0.94,
+          }
+        )
+      );
+
+    operatorScreen.position.z =
+      0.041;
+
+    operatorMonitor.add(
+      operatorScreen
+    );
+
+    /* =====================================================
+       SECONDARY MONITORS
+    ===================================================== */
+
+    [-1.0, 1.0].forEach(
+      (x, index) => {
+        const monitor =
+          new THREE.Mesh(
+            new THREE.BoxGeometry(
+              0.85,
+              0.58,
+              0.055
+            ),
+            new THREE.MeshStandardMaterial(
+              {
+                color: 0x080a0d,
+                roughness: 0.22,
+                metalness: 0.7,
+              }
+            )
+          );
+
+        monitor.position.set(
+          x,
+          1.42,
+          -0.1
+        );
+
+        monitor.rotation.y =
+          x < 0
+            ? THREE.MathUtils.degToRad(
+                8
+              )
+            : THREE.MathUtils.degToRad(
+                -8
+              );
+
+        operatorGroup.add(
+          monitor
+        );
+
+        const screen =
+          new THREE.Mesh(
+            new THREE.PlaneGeometry(
+              0.72,
+              0.42
+            ),
+            new THREE.MeshBasicMaterial(
+              {
+                color:
+                  index === 0
+                    ? 0x00eaff
+                    : 0xccff00,
+                transparent: true,
+                opacity: 0.25,
+              }
+            )
+          );
+
+        screen.position.z =
+          0.031;
+
+        monitor.add(
+          screen
+        );
       }
+    );
 
-      // c) vertical tower beside the desk, ONE thin emissive RGB underglow edge
-      const tower = new THREE.Mesh(towerGeo, darkBodyMat);
-      tower.position.set(0.65, 0.425, -0.05);
-      rig.add(tower);
+    /* =====================================================
+       OPERATOR CHAIR
+    ===================================================== */
 
-      const edgeOpacity = visual.glow ? 0.85 : 0.12;
-      const edgeMat = new THREE.MeshBasicMaterial({ color: visual.color, transparent: true, opacity: edgeOpacity });
-      const edgeStrip = new THREE.Mesh(edgeStripGeo, edgeMat);
-      edgeStrip.position.set(0.76, 0.425, 0.17);
-      rig.add(edgeStrip);
+    const chair =
+      new THREE.Group();
 
-      if (visual.glow) {
-        pulsingGlows.push({ material: edgeMat, baseOpacity: edgeOpacity, phase: index + 0.5 });
+    chair.position.set(
+      0,
+      0,
+      1.45
+    );
 
-        // Soft floor glow "reflection" pool beneath this rig's light sources
-        const poolOpacity = 0.16;
-        const pool = addFloorGlow(x + 0.2, z - 0.1, visual.color, poolOpacity);
-        pulsingGlows.push({ material: pool, baseOpacity: poolOpacity, phase: index + 0.25 });
-      }
-    });
+    operatorGroup.add(
+      chair
+    );
 
-    // Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-    scene.add(ambientLight);
+    const chairSeat =
+      new THREE.Mesh(
+        new THREE.BoxGeometry(
+          0.85,
+          0.18,
+          0.82
+        ),
+        new THREE.MeshStandardMaterial(
+          {
+            color: 0x080a0d,
+            roughness: 0.35,
+            metalness: 0.45,
+          }
+        )
+      );
 
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
-    dirLight.position.set(10, 20, 10);
-    scene.add(dirLight);
+    chairSeat.position.y =
+      0.62;
 
-    const pointLight = new THREE.PointLight(0xccff00, 1.2, 20);
-    pointLight.position.set(0, 4, -2);
-    scene.add(pointLight);
+    chair.add(
+      chairSeat
+    );
 
-    // Mouse Parallax & Raycasting
-    let parallaxX = 0;
-    let parallaxY = 0;
-    const raycaster = new THREE.Raycaster();
-    const mouseVector = new THREE.Vector2(-10, -10);
+    const chairBack =
+      new THREE.Mesh(
+        new THREE.BoxGeometry(
+          0.85,
+          1.05,
+          0.16
+        ),
+        new THREE.MeshStandardMaterial(
+          {
+            color: 0x080a0d,
+            roughness: 0.35,
+            metalness: 0.45,
+          }
+        )
+      );
 
-    const handleMouseMove = (event: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / width) * 2 - 1;
-      const y = -(((event.clientY - rect.top) / height) * 2 - 1);
+    chairBack.position.set(
+      0,
+      1.15,
+      0.34
+    );
 
-      mouseVector.x = x;
-      mouseVector.y = y;
+    chair.add(
+      chairBack
+    );
 
-      if (!reducedMotion) {
-        parallaxX = x * 0.8;
-        parallaxY = y * 0.4;
-      }
-    };
+    /* =====================================================
+       RIG ARRANGEMENT
+    ===================================================== */
 
-    container.addEventListener('mousemove', handleMouseMove);
+    const rigPositions = [
+      [-6.8, 5.0],
+      [-3.4, 6.4],
+      [0, 6.8],
+      [3.4, 6.4],
+      [6.8, 5.0],
 
-    // Raycast on hover
-    let lastHoveredId: string | null = null;
-    const checkIntersection = () => {
-      raycaster.setFromCamera(mouseVector, camera);
-      const intersects = raycaster.intersectObjects(interactiveMeshes);
+      [-7.8, 1.8],
+      [7.8, 1.8],
 
-      if (intersects.length > 0) {
-        const hit = intersects[0].object as THREE.Mesh;
-        const data = hit.userData as ActiveNodeData;
-        if (data && data.id !== lastHoveredId) {
-          lastHoveredId = data.id;
-          setHoveredNode(data);
-          playHover();
+      [-7.4, -2.0],
+      [7.4, -2.0],
+
+      [-5.0, -5.5],
+      [0, -6.2],
+      [5.0, -5.5],
+    ];
+
+    // All rigs (and their network lines/packets) live inside this group,
+    // pivoted at the operator's position. Rotating the group carries every
+    // PC around the operator in a slow carousel so each one sweeps past.
+    const rigOrbitGroup =
+      new THREE.Group();
+
+    rigOrbitGroup.position.set(
+      0,
+      0,
+      1.5
+    );
+
+    arena.add(
+      rigOrbitGroup
+    );
+
+    /* =====================================================
+       ANIMATION DATA
+    ===================================================== */
+
+    const rigGroups:
+      THREE.Group[] = [];
+
+    const interactiveMeshes:
+      THREE.Mesh[] = [];
+
+    const pulseMaterials: {
+      material: THREE.MeshBasicMaterial;
+      base: number;
+      phase: number;
+    }[] = [];
+
+    const networkLines: {
+      material: THREE.LineBasicMaterial;
+      phase: number;
+    }[] = [];
+
+    const networkPackets: {
+      mesh: THREE.Mesh;
+      curve: THREE.CatmullRomCurve3;
+      progress: number;
+      speed: number;
+    }[] = [];
+
+    /* =====================================================
+       REUSABLE GEOMETRIES
+    ===================================================== */
+
+    const rigDeskGeometry =
+      new THREE.BoxGeometry(
+        1.45,
+        0.08,
+        0.72
+      );
+
+    const rigMonitorGeometry =
+      new THREE.BoxGeometry(
+        0.95,
+        0.58,
+        0.055
+      );
+
+    const rigTowerGeometry =
+      new THREE.BoxGeometry(
+        0.34,
+        0.92,
+        0.48
+      );
+
+    /* =====================================================
+       BUILD RIGS
+    ===================================================== */
+
+    stationsInfo.forEach(
+      (info, index) => {
+        const [x, z] =
+          rigPositions[index];
+
+        const visual =
+          STATUS_VISUALS[
+            info.status
+          ];
+
+        const rig =
+          new THREE.Group();
+
+        // Local to rigOrbitGroup, which is pivoted at the operator
+        // (0, 0, 1.5) — so z is relative to that pivot, not world origin.
+        rig.position.set(
+          x,
+          0,
+          z - 1.5
+        );
+
+        rigOrbitGroup.add(
+          rig
+        );
+
+        rigGroups.push(
+          rig
+        );
+
+        /* -----------------------------------------------
+           PLATFORM
+        ----------------------------------------------- */
+
+        const platform =
+          new THREE.Mesh(
+            new THREE.CylinderGeometry(
+              1.0,
+              1.0,
+              0.06,
+              48
+            ),
+            new THREE.MeshStandardMaterial(
+              {
+                color: 0x080a0d,
+                roughness: 0.28,
+                metalness: 0.82,
+              }
+            )
+          );
+
+        platform.position.y =
+          -0.43;
+
+        rig.add(
+          platform
+        );
+
+        /* -----------------------------------------------
+           RING
+        ----------------------------------------------- */
+
+        const ring =
+          new THREE.Mesh(
+            new THREE.TorusGeometry(
+              0.82,
+              0.018,
+              10,
+              64
+            ),
+            new THREE.MeshBasicMaterial(
+              {
+                color:
+                  visual.color,
+                transparent: true,
+                opacity:
+                  visual.glow
+                    ? 0.7
+                    : 0.12,
+              }
+            )
+          );
+
+        ring.rotation.x =
+          Math.PI / 2;
+
+        ring.position.y =
+          -0.38;
+
+        rig.add(
+          ring
+        );
+
+        if (visual.glow) {
+          pulseMaterials.push({
+            material:
+              ring.material as THREE.MeshBasicMaterial,
+            base: 0.7,
+            phase: index,
+          });
         }
-      } else {
-        if (lastHoveredId !== null) {
-          lastHoveredId = null;
-          setHoveredNode(null);
+
+        /* -----------------------------------------------
+           DESK
+        ----------------------------------------------- */
+
+        const desk =
+          new THREE.Mesh(
+            rigDeskGeometry,
+            new THREE.MeshStandardMaterial(
+              {
+                color: 0x111419,
+                roughness: 0.28,
+                metalness: 0.78,
+              }
+            )
+          );
+
+        desk.position.y =
+          0.38;
+
+        desk.userData =
+          info;
+
+        rig.add(
+          desk
+        );
+
+        interactiveMeshes.push(
+          desk
+        );
+
+        /* -----------------------------------------------
+           MONITOR
+        ----------------------------------------------- */
+
+        const monitor =
+          new THREE.Mesh(
+            rigMonitorGeometry,
+            new THREE.MeshStandardMaterial(
+              {
+                color: 0x080a0d,
+                roughness: 0.22,
+                metalness: 0.72,
+              }
+            )
+          );
+
+        monitor.position.set(
+          0,
+          0.83,
+          -0.22
+        );
+
+        monitor.rotation.x =
+          THREE.MathUtils.degToRad(
+            -8
+          );
+
+        monitor.userData =
+          info;
+
+        rig.add(
+          monitor
+        );
+
+        interactiveMeshes.push(
+          monitor
+        );
+
+        /* -----------------------------------------------
+           SCREEN
+        ----------------------------------------------- */
+
+        const screen =
+          new THREE.Mesh(
+            new THREE.PlaneGeometry(
+              0.72,
+              0.42
+            ),
+            new THREE.MeshBasicMaterial(
+              {
+                color:
+                  visual.color,
+                transparent: true,
+                opacity:
+                  visual.glow
+                    ? visual.glowOpacity
+                    : 0.07,
+              }
+            )
+          );
+
+        screen.position.z =
+          0.031;
+
+        monitor.add(
+          screen
+        );
+
+        rig.userData.screen =
+          screen;
+
+        if (visual.glow) {
+          pulseMaterials.push({
+            material:
+              screen.material as THREE.MeshBasicMaterial,
+            base:
+              visual.glowOpacity,
+            phase:
+              index + 3,
+          });
         }
-      }
-    };
 
-    // Render loop
-    let animationFrameId: number;
-    const clock = new THREE.Clock();
-    const introDuration = 3.2;
-    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+        /* -----------------------------------------------
+           PC TOWER
+        ----------------------------------------------- */
 
-    const animate = () => {
-      const elapsedTime = clock.getElapsedTime();
+        const tower =
+          new THREE.Mesh(
+            rigTowerGeometry,
+            new THREE.MeshStandardMaterial(
+              {
+                color: 0x0b0e12,
+                roughness: 0.27,
+                metalness: 0.74,
+                emissive: 0x020304,
+                emissiveIntensity: 0.6,
+              }
+            )
+          );
 
-      if (!reducedMotion) {
-        // Camera: drift forward down the center aisle, then settle into a gentle idle orbit
-        const basePos = new THREE.Vector3();
-        if (elapsedTime < introDuration) {
-          const t = easeOutCubic(elapsedTime / introDuration);
-          basePos.copy(startCamPos).lerp(settleCamPos, t);
-        } else {
-          const idleT = elapsedTime - introDuration;
-          basePos.copy(settleCamPos);
-          basePos.x += Math.sin(idleT * 0.25) * 0.7;
-          basePos.y += Math.sin(idleT * 0.18) * 0.25;
-          basePos.z += Math.cos(idleT * 0.2) * 0.4;
+        tower.position.set(
+          0.56,
+          0.46,
+          0.02
+        );
+
+        rig.add(
+          tower
+        );
+
+        /* -----------------------------------------------
+           GLASS PANEL
+        ----------------------------------------------- */
+
+        const glass =
+          new THREE.Mesh(
+            new THREE.PlaneGeometry(
+              0.28,
+              0.72
+            ),
+            new THREE.MeshBasicMaterial(
+              {
+                color:
+                  visual.color,
+                transparent: true,
+                opacity:
+                  visual.glow
+                    ? 0.12
+                    : 0.025,
+              }
+            )
+          );
+
+        glass.position.set(
+          0.56,
+          0.46,
+          0.265
+        );
+
+        rig.add(
+          glass
+        );
+
+        /* -----------------------------------------------
+           RGB STRIP
+        ----------------------------------------------- */
+
+        const led =
+          new THREE.Mesh(
+            new THREE.BoxGeometry(
+              0.025,
+              0.72,
+              0.025
+            ),
+            new THREE.MeshBasicMaterial(
+              {
+                color:
+                  visual.color,
+                transparent: true,
+                opacity:
+                  visual.glow
+                    ? 0.9
+                    : 0.12,
+              }
+            )
+          );
+
+        led.position.set(
+          0.39,
+          0.46,
+          0.27
+        );
+
+        rig.add(
+          led
+        );
+
+        rig.userData.led =
+          led;
+
+        if (visual.glow) {
+          pulseMaterials.push({
+            material:
+              led.material as THREE.MeshBasicMaterial,
+            base:
+              visual.glow
+                ? 0.9
+                : 0.12,
+            phase:
+              index + 5,
+          });
         }
 
-        camera.position.x += (basePos.x + parallaxX - camera.position.x) * 0.06;
-        camera.position.y += (basePos.y + parallaxY - camera.position.y) * 0.06;
-        camera.position.z += (basePos.z - camera.position.z) * 0.06;
-        camera.lookAt(lookAtTarget);
+        /* -----------------------------------------------
+           SMALL FLOOR GLOW
+        ----------------------------------------------- */
 
-        ring1.rotation.z = elapsedTime * 0.35;
-        ring2.rotation.z = -elapsedTime * 0.28;
+        if (visual.glow) {
+          const glowTexture =
+            buildGlowTexture(
+              visual.color
+            );
 
-        pointLight.intensity = 1.2 + Math.sin(elapsedTime * 3) * 0.4;
+          if (glowTexture) {
+            const glow =
+              new THREE.Mesh(
+                new THREE.PlaneGeometry(
+                  2.3,
+                  2.3
+                ),
+                new THREE.MeshBasicMaterial(
+                  {
+                    map:
+                      glowTexture,
+                    transparent: true,
+                    opacity: 0.11,
+                    blending:
+                      THREE.AdditiveBlending,
+                    depthWrite: false,
+                  }
+                )
+              );
 
-        pulsingGlows.forEach(({ material, baseOpacity, phase }) => {
-          material.opacity = baseOpacity * (0.75 + 0.25 * Math.sin(elapsedTime * 1.6 + phase));
+            glow.rotation.x =
+              -Math.PI / 2;
+
+            glow.position.y =
+              -0.41;
+
+            rig.add(
+              glow
+            );
+
+            pulseMaterials.push({
+              material:
+                glow.material as THREE.MeshBasicMaterial,
+              base: 0.11,
+              phase:
+                index + 8,
+            });
+          }
+        }
+
+        /* -----------------------------------------------
+           LABEL
+        ----------------------------------------------- */
+
+        const labelTexture =
+          buildRigLabelTexture(
+            info.id,
+            info.status.replace(
+              '_',
+              ' '
+            ),
+            visual.color
+          );
+
+        if (labelTexture) {
+          const label =
+            new THREE.Mesh(
+              new THREE.PlaneGeometry(
+                1.15,
+                0.28
+              ),
+              new THREE.MeshBasicMaterial(
+                {
+                  map:
+                    labelTexture,
+                  transparent: true,
+                  depthWrite: false,
+                }
+              )
+            );
+
+          label.position.set(
+            0,
+            1.35,
+            0
+          );
+
+          rig.add(
+            label
+          );
+        }
+
+        /* =================================================
+           NETWORK CONNECTION
+        ================================================= */
+
+        // Local to rigOrbitGroup: the operator/pivot sits at this
+        // group's own origin, so "start" no longer needs the world
+        // z=1.5 offset — it stays pinned to the pivot as the group
+        // rotates, while "end" (the rig) rotates along with it.
+        const start =
+          new THREE.Vector3(
+            0,
+            0.08,
+            0
+          );
+
+        const end =
+          new THREE.Vector3(
+            x,
+            0.04,
+            z - 1.5
+          );
+
+        const distance =
+          Math.sqrt(
+            x * x +
+              (z - 1.5) *
+                (z - 1.5)
+          );
+
+        const curveHeight =
+          Math.min(
+            0.8,
+            distance * 0.035
+          );
+
+        const midpoint =
+          new THREE.Vector3(
+            x * 0.5,
+            0.05 +
+              curveHeight,
+            (z - 1.5) *
+              0.5
+          );
+
+        const curve =
+          new THREE.CatmullRomCurve3(
+            [
+              start,
+              midpoint,
+              end,
+            ]
+          );
+
+        const points =
+          curve.getPoints(
+            60
+          );
+
+        const geometry =
+          new THREE.BufferGeometry().setFromPoints(
+            points
+          );
+
+        const networkMaterial =
+          new THREE.LineBasicMaterial(
+            {
+              color:
+                visual.color,
+              transparent: true,
+              opacity:
+                visual.glow
+                  ? 0.16
+                  : 0.045,
+              blending:
+                THREE.AdditiveBlending,
+            }
+          );
+
+        const line =
+          new THREE.Line(
+            geometry,
+            networkMaterial
+          );
+
+        rigOrbitGroup.add(
+          line
+        );
+
+        networkLines.push({
+          material:
+            networkMaterial,
+          phase: index,
         });
+
+        /* -----------------------------------------------
+           DATA PACKET
+        ----------------------------------------------- */
+
+        if (visual.glow) {
+          const packet =
+            new THREE.Mesh(
+              new THREE.SphereGeometry(
+                0.045,
+                10,
+                10
+              ),
+              new THREE.MeshBasicMaterial(
+                {
+                  color:
+                    visual.color,
+                }
+              )
+            );
+
+          rigOrbitGroup.add(
+            packet
+          );
+
+          networkPackets.push({
+            mesh: packet,
+            curve,
+            progress:
+              (index * 0.17) %
+              1,
+            speed:
+              0.035 +
+              Math.random() *
+                0.025,
+          });
+        }
       }
+    );
 
-      checkIntersection();
+    /* =====================================================
+       LIGHTING
+    ===================================================== */
 
-      renderer.render(scene, camera);
-      animationFrameId = requestAnimationFrame(animate);
-    };
+    const ambient =
+      new THREE.AmbientLight(
+        0xffffff,
+        0.3
+      );
+
+    scene.add(
+      ambient
+    );
+
+    const mainLight =
+      new THREE.DirectionalLight(
+        0xffffff,
+        1.0
+      );
+
+    mainLight.position.set(
+      5,
+      12,
+      8
+    );
+
+    scene.add(
+      mainLight
+    );
+
+    const cyanLight =
+      new THREE.PointLight(
+        0x00eaff,
+        2.0,
+        20
+      );
+
+    cyanLight.position.set(
+      -6,
+      4,
+      -2
+    );
+
+    scene.add(
+      cyanLight
+    );
+
+    const limeLight =
+      new THREE.PointLight(
+        0xccff00,
+        2.2,
+        20
+      );
+
+    limeLight.position.set(
+      5,
+      3,
+      4
+    );
+
+    scene.add(
+      limeLight
+    );
+
+    const operatorLight =
+      new THREE.PointLight(
+        0xccff00,
+        1.8,
+        10
+      );
+
+    operatorLight.position.set(
+      0,
+      3,
+      1
+    );
+
+    scene.add(
+      operatorLight
+    );
+
+    /* =====================================================
+       MOUSE
+    ===================================================== */
+
+    const mouse =
+      new THREE.Vector2(
+        -10,
+        -10
+      );
+
+    // Cursor position drives hover raycasting only — it no longer
+    // shifts the camera (parallax removed).
+    const handleMouseMove =
+      (event: MouseEvent) => {
+        const rect =
+          container.getBoundingClientRect();
+
+        const x =
+          ((event.clientX -
+            rect.left) /
+            rect.width) *
+            2 -
+          1;
+
+        const y =
+          -(
+            ((event.clientY -
+              rect.top) /
+              rect.height) *
+              2 -
+            1
+          );
+
+        mouse.x = x;
+        mouse.y = y;
+      };
+
+    container.addEventListener(
+      'mousemove',
+      handleMouseMove
+    );
+
+    /* =====================================================
+       RAYCASTING
+    ===================================================== */
+
+    const raycaster =
+      new THREE.Raycaster();
+
+    let lastHoveredId:
+      | string
+      | null = null;
+
+    const checkIntersection =
+      () => {
+        raycaster.setFromCamera(
+          mouse,
+          camera
+        );
+
+        const hits =
+          raycaster.intersectObjects(
+            interactiveMeshes,
+            false
+          );
+
+        if (hits.length > 0) {
+          const hit =
+            hits[0]
+              .object as THREE.Mesh;
+
+          const data =
+            hit.userData as ActiveNodeData;
+
+          if (
+            data &&
+            data.id !==
+              lastHoveredId
+          ) {
+            lastHoveredId =
+              data.id;
+
+            setHoveredNode(
+              data
+            );
+
+            playHover();
+          }
+        } else {
+          if (
+            lastHoveredId !==
+            null
+          ) {
+            lastHoveredId =
+              null;
+
+            setHoveredNode(
+              null
+            );
+          }
+        }
+      };
+
+    /* =====================================================
+       ANIMATION
+    ===================================================== */
+
+    const clock =
+      new THREE.Clock();
+
+    let animationFrameId = 0;
+
+    const animate =
+      () => {
+        const elapsed =
+          clock.getElapsedTime();
+
+        if (!reducedMotion) {
+          /* -----------------------------------------------
+             CAMERA
+          ----------------------------------------------- */
+
+          camera.position.x =
+            targetCamera.x +
+            Math.sin(
+              elapsed * 0.11
+            ) *
+              0.65;
+
+          camera.position.y =
+            targetCamera.y +
+            Math.sin(
+              elapsed * 0.15
+            ) *
+              0.18;
+
+          camera.position.z =
+            targetCamera.z +
+            Math.cos(
+              elapsed * 0.09
+            ) *
+              0.38;
+
+          camera.lookAt(
+            cameraLookAt
+          );
+
+          /* -----------------------------------------------
+             ENTIRE ARENA MOVEMENT
+          ----------------------------------------------- */
+
+          arena.rotation.y =
+            Math.sin(
+              elapsed * 0.08
+            ) *
+              0.045;
+
+          arena.position.y =
+            Math.sin(
+              elapsed * 0.55
+            ) *
+              0.018;
+
+          /* -----------------------------------------------
+             OPERATOR
+          ----------------------------------------------- */
+
+          operatorGroup.position.y =
+            Math.sin(
+              elapsed * 0.8
+            ) *
+              0.035;
+
+          operatorGroup.rotation.y =
+            Math.sin(
+              elapsed * 0.16
+            ) *
+              0.055;
+
+          /* -----------------------------------------------
+             OPERATOR RING
+          ----------------------------------------------- */
+
+          operatorRing.rotation.z =
+            elapsed * 0.12;
+
+          /* -----------------------------------------------
+             OPERATOR PC
+          ----------------------------------------------- */
+
+          operatorPC.rotation.y =
+            Math.sin(
+              elapsed * 0.3
+            ) *
+              0.04;
+
+          operatorPC.position.y =
+            1.0 +
+            Math.sin(
+              elapsed * 0.9
+            ) *
+              0.025;
+
+          /* -----------------------------------------------
+             RIG ORBIT — every PC sweeps slowly side to side
+             around the operator. Bounded, not continuous: the
+             camera has a narrow, forward-facing FOV, so a full
+             360° spin would walk half the rigs out of frame
+             (and out of raycast reach) for most of the cycle.
+             A back-and-forth sweep keeps every rig inside the
+             visible/hoverable frustum at all times.
+          ----------------------------------------------- */
+
+          rigOrbitGroup.rotation.y =
+            Math.sin(elapsed * 0.09) * 0.4;
+
+          /* -----------------------------------------------
+             RIG MOTION
+          ----------------------------------------------- */
+
+          rigGroups.forEach(
+            (
+              rig,
+              index
+            ) => {
+              const phase =
+                index * 0.47;
+
+              /* floating */
+
+              rig.position.y =
+                Math.sin(
+                  elapsed * 0.7 +
+                    phase
+                ) *
+                  0.035;
+
+              /* subtle rotation */
+
+              rig.rotation.y =
+                Math.sin(
+                  elapsed * 0.28 +
+                    phase
+                ) *
+                  0.025;
+
+              /* tiny breathing */
+
+              const scale =
+                1 +
+                Math.sin(
+                  elapsed * 0.8 +
+                    phase
+                ) *
+                  0.006;
+
+              rig.scale.setScalar(
+                scale
+              );
+            }
+          );
+
+          /* -----------------------------------------------
+             DATA PACKETS
+          ----------------------------------------------- */
+
+          networkPackets.forEach(
+            packet => {
+              packet.progress +=
+                packet.speed *
+                0.016;
+
+              if (
+                packet.progress >
+                1
+              ) {
+                packet.progress = 0;
+              }
+
+              const point =
+                packet.curve.getPointAt(
+                  packet.progress
+                );
+
+              packet.mesh.position.copy(
+                point
+              );
+
+              const packetScale =
+                0.8 +
+                Math.sin(
+                  elapsed * 7
+                ) *
+                  0.18;
+
+              packet.mesh.scale.setScalar(
+                packetScale
+              );
+            }
+          );
+
+          /* -----------------------------------------------
+             FLOOR — extremely subtle light movement
+             (drift the two colored point lights a hair so
+             their specular highlights creep across the
+             reflective floor instead of sitting static)
+          ----------------------------------------------- */
+
+          cyanLight.position.x =
+            -6 +
+            Math.sin(elapsed * 0.05) * 0.4;
+
+          cyanLight.position.z =
+            -2 +
+            Math.cos(elapsed * 0.045) * 0.4;
+
+          limeLight.position.x =
+            5 +
+            Math.cos(elapsed * 0.04) * 0.35;
+
+          limeLight.position.z =
+            4 +
+            Math.sin(elapsed * 0.05) * 0.35;
+        }
+
+        /* -----------------------------------------------
+           ALWAYS-ON PULSING — kept even under
+           prefers-reduced-motion. These are gentle opacity/
+           intensity flickers, not the large camera/rotation/
+           orbit motion that setting exists to suppress, so the
+           scene still reads as "live" instead of freezing dead.
+        ----------------------------------------------- */
+
+        const operatorRingMaterial =
+          operatorRing.material as THREE.MeshBasicMaterial;
+
+        operatorRingMaterial.opacity =
+          0.52 +
+          Math.sin(
+            elapsed * 1.8
+          ) *
+            0.12;
+
+        pulseMaterials.forEach(
+          ({
+            material,
+            base,
+            phase,
+          }) => {
+            material.opacity =
+              base *
+              (0.72 +
+                Math.sin(
+                  elapsed *
+                    1.8 +
+                    phase
+                ) *
+                  0.28);
+          }
+        );
+
+        networkLines.forEach(
+          ({
+            material,
+            phase,
+          }) => {
+            material.opacity =
+              0.10 +
+              Math.sin(
+                elapsed *
+                  1.4 +
+                  phase
+              ) *
+                0.045;
+          }
+        );
+
+        operatorLight.intensity =
+          1.65 +
+          Math.sin(
+            elapsed * 2
+          ) *
+            0.25;
+
+        cyanLight.intensity =
+          1.8 +
+          Math.sin(
+            elapsed * 1.5
+          ) *
+            0.2;
+
+        limeLight.intensity =
+          2.0 +
+          Math.sin(
+            elapsed * 1.7
+          ) *
+            0.25;
+
+        checkIntersection();
+
+        renderer.render(
+          scene,
+          camera
+        );
+
+        animationFrameId =
+          requestAnimationFrame(
+            animate
+          );
+      };
 
     animate();
 
-    // Window resize handling
-    const handleResize = () => {
-      if (!container) return;
-      const newWidth = container.clientWidth;
-      const newHeight = container.clientHeight;
-      camera.aspect = newWidth / newHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(newWidth, newHeight);
-    };
+    /* =====================================================
+       RESIZE
+    ===================================================== */
 
-    window.addEventListener('resize', handleResize);
+    const handleResize =
+      () => {
+        const newWidth =
+          container.clientWidth;
 
-    // If the GPU process/driver ever drops the context, stop cleanly and fall
-    // back to the static message instead of freezing on a black frame.
-    const handleContextLost = (event: Event) => {
-      event.preventDefault();
-      cancelAnimationFrame(animationFrameId);
-      setWebGlSupported(false);
-    };
-    renderer.domElement.addEventListener('webglcontextlost', handleContextLost);
+        const newHeight =
+          container.clientHeight;
+
+        if (
+          newWidth <= 0 ||
+          newHeight <= 0
+        ) {
+          return;
+        }
+
+        camera.aspect =
+          newWidth /
+          newHeight;
+
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(
+          newWidth,
+          newHeight
+        );
+      };
+
+    window.addEventListener(
+      'resize',
+      handleResize
+    );
+
+    /* =====================================================
+       CLEANUP
+    ===================================================== */
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-      container.removeEventListener('mousemove', handleMouseMove);
-      renderer.domElement.removeEventListener('webglcontextlost', handleContextLost);
-      cancelAnimationFrame(animationFrameId);
+      cancelAnimationFrame(
+        animationFrameId
+      );
+
+      window.removeEventListener(
+        'resize',
+        handleResize
+      );
+
+      container.removeEventListener(
+        'mousemove',
+        handleMouseMove
+      );
+
       renderer.dispose();
-      if (container.contains(renderer.domElement)) {
-        container.removeChild(renderer.domElement);
+
+      scene.traverse(
+        object => {
+          if (
+            object instanceof
+            THREE.Mesh
+          ) {
+            object.geometry.dispose();
+
+            if (
+              Array.isArray(
+                object.material
+              )
+            ) {
+              object.material.forEach(
+                material =>
+                  material.dispose()
+              );
+            } else {
+              object.material.dispose();
+            }
+          }
+        }
+      );
+
+      if (
+        container.contains(
+          renderer.domElement
+        )
+      ) {
+        container.removeChild(
+          renderer.domElement
+        );
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  /* =======================================================
+     WEBGL FALLBACK
+  ======================================================= */
 
   if (!webGlSupported) {
     return (
-      <div className="w-full h-full flex items-center justify-center bg-arena-card border border-white/10 rounded-lg p-6 text-sm text-arena-muted">
-        3D preview unavailable — hardware acceleration disabled
+      <div className="w-full h-full flex items-center justify-center bg-[#08090B] border border-white/10 rounded-xl p-6 text-sm text-arena-muted">
+        3D preview unavailable —
+        hardware acceleration disabled
       </div>
     );
   }
 
+  /* =======================================================
+     UI
+  ======================================================= */
+
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[450px] lg:h-[620px] rounded-xl overflow-hidden border border-white/10 bg-[#0A0A0B]/60 backdrop-blur-sm"
+      className="relative w-full h-[500px] sm:h-[560px] lg:h-[680px] rounded-xl overflow-hidden border border-white/10 bg-[#050608]"
     >
-      {/* Live status */}
-      <div className="absolute top-4 left-4 z-10 pointer-events-none flex items-center gap-2 text-xs text-arena-muted">
-        <span className="w-1.5 h-1.5 rounded-full bg-arena-lime" />
-        <span>{stationsInfo.length} rigs, live</span>
+      {/* TOP LEFT */}
+
+      <div className="absolute top-5 left-5 z-20 pointer-events-none flex items-center gap-2 text-xs text-arena-muted">
+        <span className="w-1.5 h-1.5 rounded-full bg-arena-lime shadow-[0_0_8px_rgba(204,255,0,0.8)]" />
+
+        <span>
+          {stationsInfo.length} rigs · live
+        </span>
       </div>
 
-      {/* Node Inspector Card when hovering a 3D station */}
+      {/* TOP RIGHT */}
+
+      <div className="absolute top-5 right-5 z-20 pointer-events-none text-right">
+        <div className="text-[9px] tracking-[0.28em] text-arena-muted">
+          ARENAOS
+        </div>
+
+        <div className="text-xs text-white/60">
+          OPERATOR NETWORK
+        </div>
+      </div>
+
+      {/* HOVER CARD */}
+
       {hoveredNode && (
         <div
-          className="absolute bottom-4 left-4 right-4 sm:right-auto sm:w-80 z-20 bg-[#111114]/95 border border-white/10 rounded-lg p-4 backdrop-blur-md transition-all duration-200 animate-fadeIn"
-          onClick={() => playClick()}
+          className="absolute bottom-5 left-5 z-30 w-[300px] max-w-[calc(100%-40px)] bg-[#0b0d10]/95 border border-white/10 rounded-xl p-4 backdrop-blur-xl shadow-2xl"
+          onClick={() =>
+            playClick()
+          }
         >
-          <div className="flex justify-between items-start border-b border-white/10 pb-2 mb-2">
-            <div>
-              <div className="text-[10px] text-arena-muted font-medium">
+          <div className="flex justify-between items-start gap-3 border-b border-white/10 pb-3 mb-3">
+            <div className="min-w-0">
+              <div className="text-[9px] tracking-wider text-arena-muted uppercase">
                 {hoveredNode.zone}
               </div>
-              <div className="font-semibold text-white text-base">
+
+              <div className="text-base font-semibold text-white">
                 {hoveredNode.name}
               </div>
             </div>
+
             <span
-              className={`text-[10px] px-2 py-0.5 rounded font-medium ${hoveredNode.status === 'IN_SESSION'
+              className={`shrink-0 text-[9px] px-2 py-1 rounded-md ${
+                hoveredNode.status ===
+                'IN_SESSION'
                   ? 'bg-arena-lime/10 text-arena-lime'
-                  : hoveredNode.status === 'AVAILABLE'
-                    ? 'bg-arena-cyan/10 text-arena-cyan'
-                    : hoveredNode.status === 'BILLING'
-                      ? 'bg-orange-500/10 text-orange-400'
-                      : 'bg-white/5 text-arena-muted'
-                }`}
+                  : hoveredNode.status ===
+                    'AVAILABLE'
+                  ? 'bg-arena-cyan/10 text-arena-cyan'
+                  : hoveredNode.status ===
+                    'BILLING'
+                  ? 'bg-orange-500/10 text-orange-400'
+                  : 'bg-white/5 text-arena-muted'
+              }`}
             >
-              {hoveredNode.status.replace('_', ' ').toLowerCase()}
+              {hoveredNode.status
+                .replace(
+                  '_',
+                  ' '
+                )
+                .toLowerCase()}
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 text-xs">
+          <div className="grid grid-cols-2 gap-3 text-xs">
             <div>
-              <div className="text-arena-subtle">Specs</div>
-              <div className="text-white truncate">{hoveredNode.gpu}</div>
+              <div className="text-arena-subtle">
+                GPU
+              </div>
+
+              <div className="text-white truncate">
+                {hoveredNode.gpu}
+              </div>
             </div>
+
             <div>
-              <div className="text-arena-subtle">Rate</div>
-              <div className="text-arena-lime">{hoveredNode.rate}</div>
+              <div className="text-arena-subtle">
+                RATE
+              </div>
+
+              <div className="text-arena-lime">
+                {hoveredNode.rate}
+              </div>
             </div>
+
             <div>
-              <div className="text-arena-subtle">Active user</div>
-              <div className="text-arena-text">@{hoveredNode.user}</div>
+              <div className="text-arena-subtle">
+                USER
+              </div>
+
+              <div className="text-white truncate">
+                @{hoveredNode.user}
+              </div>
             </div>
+
             <div>
-              <div className="text-arena-subtle">Drawer lock</div>
-              <div className="text-white">Enforced</div>
+              <div className="text-arena-subtle">
+                NETWORK
+              </div>
+
+              <div className="text-arena-cyan">
+                CONNECTED
+              </div>
             </div>
           </div>
         </div>
       )}
+
+      {/* BOTTOM RIGHT */}
+
+      <div className="absolute bottom-5 right-5 z-20 pointer-events-none hidden sm:block text-right">
+        <div className="text-[9px] tracking-[0.28em] text-arena-muted">
+          ONE OPERATOR
+        </div>
+
+        <div className="text-xs text-white/50">
+          TOTAL CONTROL
+        </div>
+      </div>
     </div>
   );
 };
