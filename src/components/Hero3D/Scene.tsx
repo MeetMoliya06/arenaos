@@ -635,10 +635,10 @@ export const Hero3DScene: React.FC = () => {
       return;
     }
 
-    const reducedMotion =
-      window.matchMedia(
-        '(prefers-reduced-motion: reduce)'
-      ).matches;
+    // This hero scene is purely decorative and its motion is gentle
+    // (slow drift, small sweeps, opacity pulses) — no large/fast/
+    // parallax motion — so it intentionally always plays in full,
+    // rather than gating behind prefers-reduced-motion.
 
     /* =====================================================
        SCENE
@@ -698,9 +698,7 @@ export const Hero3DScene: React.FC = () => {
       );
 
     camera.position.copy(
-      reducedMotion
-        ? targetCamera
-        : startCamera
+      startCamera
     );
 
     camera.lookAt(
@@ -2062,7 +2060,7 @@ export const Hero3DScene: React.FC = () => {
         const elapsed =
           clock.getElapsedTime();
 
-        if (!reducedMotion) {
+        {
           /* -----------------------------------------------
              CAMERA
           ----------------------------------------------- */
@@ -2271,11 +2269,7 @@ export const Hero3DScene: React.FC = () => {
         }
 
         /* -----------------------------------------------
-           ALWAYS-ON PULSING — kept even under
-           prefers-reduced-motion. These are gentle opacity/
-           intensity flickers, not the large camera/rotation/
-           orbit motion that setting exists to suppress, so the
-           scene still reads as "live" instead of freezing dead.
+           STATUS/GLOW PULSING
         ----------------------------------------------- */
 
         const operatorRingMaterial =
