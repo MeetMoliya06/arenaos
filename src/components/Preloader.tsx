@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Logo } from './Logo';
 
 interface PreloaderProps {
   onComplete: () => void;
@@ -38,9 +39,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
         isDone ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
-      <span className="font-semibold text-lg tracking-tight text-white mb-6">
-        Arena<span className="text-arena-lime">OS</span>
-      </span>
+      <Logo className="mb-6" />
       <div className="w-40 h-[2px] bg-white/10 overflow-hidden rounded-full">
         <div
           className="h-full bg-arena-lime transition-all duration-150 ease-out"

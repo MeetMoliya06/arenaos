@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { playClick, playHover } from '../audio/soundEffects';
+import { Logo } from './Logo';
 
 interface NavbarProps {
   onOpenDemo: () => void;
@@ -26,15 +27,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
         {/* Brand / Logo */}
-        <a
-          href="#"
-          onClick={() => playClick()}
-          className="flex items-center gap-2.5"
-        >
-          <div className="w-2 h-2 rounded-full bg-arena-lime" />
-          <span className="font-semibold text-lg tracking-tight text-white">
-            Arena<span className="text-arena-lime">OS</span>
-          </span>
+        <a href="#" onClick={() => playClick()}>
+          <Logo />
         </a>
 
         {/* Nav Links */}
