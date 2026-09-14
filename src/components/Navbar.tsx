@@ -28,7 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
         {/* Brand / Logo */}
         <a href="#" onClick={() => playClick()}>
-          <Logo />
+          <Logo markClassName="w-12 h-12" wordmarkClassName="h-8" />
         </a>
 
         {/* Nav Links */}
