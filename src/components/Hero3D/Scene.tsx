@@ -119,10 +119,14 @@ export const Hero3DScene: React.FC = () => {
     camera.position.copy(reducedMotion ? settleCamPos : startCamPos);
     camera.lookAt(lookAtTarget);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    // Opaque canvas on purpose: an alpha-blended WebGL canvas compositing every
+    // frame with the CSS backdrop-blur layers around/over it (this container,
+    // and the node-inspector card that mounts on hover/click) is a known GPU
+    // process crash combo on several drivers. A solid clear color avoids it.
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer.setClearColor(0x08080a, 1);
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
     container.appendChild(renderer.domElement);
 
     // Group to hold all arena objects
@@ -438,9 +442,19 @@ export const Hero3DScene: React.FC = () => {
 
     window.addEventListener('resize', handleResize);
 
+    // If the GPU process/driver ever drops the context, stop cleanly and fall
+    // back to the static message instead of freezing on a black frame.
+    const handleContextLost = (event: Event) => {
+      event.preventDefault();
+      cancelAnimationFrame(animationFrameId);
+      setWebGlSupported(false);
+    };
+    renderer.domElement.addEventListener('webglcontextlost', handleContextLost);
+
     return () => {
       window.removeEventListener('resize', handleResize);
       container.removeEventListener('mousemove', handleMouseMove);
+      renderer.domElement.removeEventListener('webglcontextlost', handleContextLost);
       cancelAnimationFrame(animationFrameId);
       renderer.dispose();
       if (container.contains(renderer.domElement)) {
