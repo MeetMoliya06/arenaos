@@ -37,38 +37,38 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
   };
 
   return (
-    <section id="demo" className={`relative ${isModal ? 'p-0' : 'py-20 md:py-32 bg-[#08080A] border-t border-white/10'}`}>
+    <section id="demo" className={`relative ${isModal ? 'p-0' : 'py-10 md:py-16 bg-[#08080A] border-t border-white/10'}`}>
       <div className="max-w-7xl mx-auto px-4 md:px-8">
 
         {/* Header */}
         {!isModal && (
-          <div className="max-w-3xl mb-14">
-            <div className="text-xs text-arena-lime mb-3 flex items-center gap-2">
+          <div className="max-w-3xl mb-8">
+            <div className="text-xs text-arena-lime mb-2 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-arena-lime" />
               <span>Custom enterprise rollout</span>
             </div>
             <h2 className="font-semibold text-3xl sm:text-4xl md:text-5xl tracking-tight text-white leading-tight">
               Request ArenaOS deployment
             </h2>
-            <p className="text-arena-muted text-base mt-4">
+            <p className="text-arena-muted text-base mt-2">
               ArenaOS is enterprise-grade hardware infrastructure, not self-serve generic SaaS. We evaluate your network topology, install the zero-trust Windows client shell, and integrate your physical cash drawers on-site.
             </p>
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
           {/* Left: Capacity Configurator & Hardware Spec Recommendation */}
-          <div className="lg:col-span-5 bg-white/[0.02] border border-white/10 rounded-xl p-6 md:p-8">
-            <div className="text-arena-lime text-sm mb-4 flex items-center gap-2">
+          <div className="lg:col-span-5 bg-white/[0.02] border border-white/10 rounded-xl p-4 sm:p-6">
+            <div className="text-arena-lime text-sm mb-3 flex items-center gap-2">
               <Cpu className="w-4 h-4" />
               <span>Step 1: Fleet capacity profile</span>
             </div>
 
             {/* Sliders */}
-            <div className="space-y-6 mb-8">
+            <div className="space-y-4 mb-5">
               <div>
-                <div className="flex justify-between text-white mb-2 text-sm">
+                <div className="flex justify-between text-white mb-1.5 text-sm">
                   <span>Gaming rigs to control</span>
                   <span className="text-arena-lime font-medium">{pcs} rigs</span>
                 </div>
@@ -87,7 +87,7 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
               </div>
 
               <div>
-                <div className="flex justify-between text-white mb-2 text-sm">
+                <div className="flex justify-between text-white mb-1.5 text-sm">
                   <span>Total venues / branches</span>
                   <span className="text-arena-lime font-medium">{branches} {branches === 1 ? 'branch' : 'branches'}</span>
                 </div>
@@ -100,7 +100,7 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
                         playClick();
                         setBranches(b);
                       }}
-                      className={`py-2 rounded-md text-sm font-medium border transition-colors ${
+                      className={`py-1.5 rounded-md text-sm font-medium border transition-colors ${
                         branches === b
                           ? 'bg-arena-lime text-black border-arena-lime'
                           : 'bg-white/5 border-white/10 text-arena-muted hover:border-white/30'
@@ -114,7 +114,7 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
             </div>
 
             {/* Hardware Deployment Spec Generated */}
-            <div className="p-4 bg-black/30 border border-white/10 rounded-lg space-y-2.5 text-sm">
+            <div className="p-3.5 bg-black/30 border border-white/10 rounded-lg space-y-2 text-xs sm:text-sm">
               <div className="text-xs text-arena-subtle mb-1">
                 System deployment includes
               </div>
@@ -139,7 +139,7 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
           </div>
 
           {/* Right: VIP Inquiry Form or Submission State */}
-          <div className="lg:col-span-7 bg-white/[0.02] border border-white/10 rounded-xl p-6 md:p-8">
+          <div className="lg:col-span-7 bg-white/[0.02] border border-white/10 rounded-xl p-4 sm:p-6">
 
             {submitted ? (
               <div className="py-12 flex flex-col items-center text-center">
@@ -169,8 +169,8 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
                 )}
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
+              <form onSubmit={handleSubmit} className="space-y-3">
+                <div className="flex items-center justify-between pb-2.5 border-b border-white/10 mb-3">
                   <span className="text-arena-lime text-sm flex items-center gap-2">
                     <Terminal className="w-4 h-4" />
                     <span>Step 2: Arena & owner details</span>
@@ -178,9 +178,9 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
                   <span className="text-arena-subtle text-xs">All fields encrypted</span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-arena-muted mb-1 text-sm">
+                    <label className="block text-arena-muted mb-1 text-xs">
                       Owner / operator name
                     </label>
                     <input
@@ -189,12 +189,12 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
                       placeholder="e.g. Vikram Malhotra"
                       value={formData.ownerName}
                       onChange={(e) => setFormData({ ...formData, ownerName: e.target.value })}
-                      className="w-full bg-white/[0.03] border border-white/10 focus:border-arena-lime rounded-md p-2.5 text-white text-sm outline-none"
+                      className="w-full bg-white/[0.03] border border-white/10 focus:border-arena-lime rounded-md p-2 text-white text-xs sm:text-sm outline-none"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-arena-muted mb-1 text-sm">
+                    <label className="block text-arena-muted mb-1 text-xs">
                       Arena / café brand
                     </label>
                     <input
@@ -203,14 +203,14 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
                       placeholder="e.g. Velocity Gaming Lounge"
                       value={formData.arenaName}
                       onChange={(e) => setFormData({ ...formData, arenaName: e.target.value })}
-                      className="w-full bg-white/[0.03] border border-white/10 focus:border-arena-lime rounded-md p-2.5 text-white text-sm outline-none"
+                      className="w-full bg-white/[0.03] border border-white/10 focus:border-arena-lime rounded-md p-2 text-white text-xs sm:text-sm outline-none"
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-arena-muted mb-1 text-sm">
+                    <label className="block text-arena-muted mb-1 text-xs">
                       Location / city
                     </label>
                     <input
@@ -219,12 +219,12 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
                       placeholder="e.g. Indiranagar, Bengaluru"
                       value={formData.city}
                       onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                      className="w-full bg-white/[0.03] border border-white/10 focus:border-arena-lime rounded-md p-2.5 text-white text-sm outline-none"
+                      className="w-full bg-white/[0.03] border border-white/10 focus:border-arena-lime rounded-md p-2 text-white text-xs sm:text-sm outline-none"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-arena-muted mb-1 text-sm">
+                    <label className="block text-arena-muted mb-1 text-xs">
                       WhatsApp / phone number
                     </label>
                     <input
@@ -233,34 +233,34 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
                       placeholder="+91 98000 00000"
                       value={formData.contact}
                       onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
-                      className="w-full bg-white/[0.03] border border-white/10 focus:border-arena-lime rounded-md p-2.5 text-white text-sm outline-none"
+                      className="w-full bg-white/[0.03] border border-white/10 focus:border-arena-lime rounded-md p-2 text-white text-xs sm:text-sm outline-none"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-arena-muted mb-1 text-sm">
+                  <label className="block text-arena-muted mb-1 text-xs">
                     Specific pain points or timeline (optional)
                   </label>
                   <textarea
                     rows={2}
-                    placeholder="e.g. Currently bleeding money on unbilled hours, looking to deploy in 2 weeks..."
+                    placeholder="e.g. Bleeding on unbilled hours, looking to deploy in 2 weeks..."
                     value={formData.notes}
                     onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                    className="w-full bg-white/[0.03] border border-white/10 focus:border-arena-lime rounded-md p-2.5 text-white text-sm outline-none resize-none"
+                    className="w-full bg-white/[0.03] border border-white/10 focus:border-arena-lime rounded-md p-2 text-white text-xs sm:text-sm outline-none resize-none"
                   />
                 </div>
 
                 <button
                   type="submit"
                   onMouseEnter={() => playHover()}
-                  className="w-full py-3.5 bg-arena-lime hover:bg-arena-limeBright text-black font-medium text-sm rounded-md transition-colors flex items-center justify-center gap-2 active:scale-[0.98] mt-4"
+                  className="w-full py-2.5 bg-arena-lime hover:bg-arena-limeBright text-black font-medium text-sm rounded-md transition-colors flex items-center justify-center gap-2 active:scale-[0.98] mt-2"
                 >
                   <Send className="w-4 h-4" />
                   <span>Dispatch deployment application</span>
                 </button>
 
-                <div className="text-xs text-arena-subtle text-center pt-2">
+                <div className="text-[11px] text-arena-subtle text-center pt-1">
                   No automated pushy sales calls. Direct technical discovery with our engineering team.
                 </div>
               </form>

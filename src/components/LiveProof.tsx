@@ -72,13 +72,13 @@ export const LiveProof: React.FC = () => {
   }, [inView]);
 
   return (
-    <section id="telemetry" ref={sectionRef} className="py-20 md:py-32 bg-[#060709] border-t border-white/10 relative">
+    <section id="telemetry" ref={sectionRef} className="py-10 md:py-16 bg-[#060709] border-t border-white/10 relative">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
 
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-3">
           <div>
-            <div className="text-xs text-arena-lime mb-3 flex items-center gap-2">
+            <div className="text-xs text-arena-lime mb-2 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-arena-lime" />
               <span>Battle-tested telemetry</span>
             </div>
@@ -92,59 +92,59 @@ export const LiveProof: React.FC = () => {
         </div>
 
         {/* The 4 Big Counters */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
 
-          <div className="p-6 bg-white/[0.02] border border-white/10 rounded-xl hover:border-white/20 transition-colors">
-            <div className="text-xs text-arena-subtle mb-2 flex items-center gap-2">
+          <div className="p-4 sm:p-5 bg-white/[0.02] border border-white/10 rounded-xl hover:border-white/20 transition-colors">
+            <div className="text-xs text-arena-subtle mb-1.5 flex items-center gap-2">
               <Building2Icon />
               <span>Metro branches</span>
             </div>
-            <div className="text-4xl sm:text-5xl font-semibold text-white">
+            <div className="text-3xl sm:text-4xl font-semibold text-white">
               {branchesCount}
-              <span className="text-arena-lime text-xl ml-1">loc</span>
+              <span className="text-arena-lime text-lg ml-1">loc</span>
             </div>
-            <div className="text-xs text-arena-muted mt-2">
+            <div className="text-xs text-arena-muted mt-1.5">
               Bengaluru (2), Mumbai (1), Delhi (1)
             </div>
           </div>
 
-          <div className="p-6 bg-white/[0.02] border border-white/10 rounded-xl hover:border-white/20 transition-colors">
-            <div className="text-xs text-arena-subtle mb-2 flex items-center gap-2">
+          <div className="p-4 sm:p-5 bg-white/[0.02] border border-white/10 rounded-xl hover:border-white/20 transition-colors">
+            <div className="text-xs text-arena-subtle mb-1.5 flex items-center gap-2">
               <Server className="w-3.5 h-3.5 text-arena-lime" />
               <span>PC rig clients</span>
             </div>
-            <div className="text-4xl sm:text-5xl font-semibold text-arena-lime">
+            <div className="text-3xl sm:text-4xl font-semibold text-arena-lime">
               {pcsCount}
-              <span className="text-white text-xl ml-1">rigs</span>
+              <span className="text-white text-lg ml-1">rigs</span>
             </div>
-            <div className="text-xs text-arena-muted mt-2">
+            <div className="text-xs text-arena-muted mt-1.5">
               Under 100% zero-trust client lock
             </div>
           </div>
 
-          <div className="p-6 bg-white/[0.02] border border-white/10 rounded-xl hover:border-white/20 transition-colors">
-            <div className="text-xs text-arena-subtle mb-2 flex items-center gap-2">
+          <div className="p-4 sm:p-5 bg-white/[0.02] border border-white/10 rounded-xl hover:border-white/20 transition-colors">
+            <div className="text-xs text-arena-subtle mb-1.5 flex items-center gap-2">
               <Zap className="w-3.5 h-3.5 text-arena-lime" />
               <span>Pricing zones</span>
             </div>
-            <div className="text-4xl sm:text-5xl font-semibold text-white">
+            <div className="text-3xl sm:text-4xl font-semibold text-white">
               {zonesCount}
-              <span className="text-arena-lime text-xl ml-1">zones</span>
+              <span className="text-arena-lime text-lg ml-1">zones</span>
             </div>
-            <div className="text-xs text-arena-muted mt-2">
+            <div className="text-xs text-arena-muted mt-1.5">
               VIP, pods, simulators, lounge
             </div>
           </div>
 
-          <div className="p-6 bg-white/[0.02] border border-white/10 rounded-xl hover:border-white/20 transition-colors">
-            <div className="text-xs text-arena-subtle mb-2 flex items-center gap-2">
+          <div className="p-4 sm:p-5 bg-white/[0.02] border border-white/10 rounded-xl hover:border-white/20 transition-colors">
+            <div className="text-xs text-arena-subtle mb-1.5 flex items-center gap-2">
               <Activity className="w-3.5 h-3.5 text-arena-lime" />
               <span>Monthly volume</span>
             </div>
             <div className="text-3xl sm:text-4xl font-semibold text-white">
               ₹{(volumeCount / 100000).toFixed(1)}L+
             </div>
-            <div className="text-xs text-arena-muted mt-2">
+            <div className="text-xs text-arena-muted mt-1.5">
               Audited transactions without cash leakage
             </div>
           </div>
@@ -152,8 +152,8 @@ export const LiveProof: React.FC = () => {
         </div>
 
         {/* Live Network Fleet Map Bar */}
-        <div className="p-6 bg-white/[0.02] border border-white/10 rounded-xl text-sm">
-          <div className="flex flex-wrap justify-between items-center gap-4 mb-4 pb-4 border-b border-white/10">
+        <div className="p-4 sm:p-5 bg-white/[0.02] border border-white/10 rounded-xl text-sm">
+          <div className="flex flex-wrap justify-between items-center gap-4 mb-3 pb-3 border-b border-white/10">
             <div className="flex items-center gap-2 text-white font-medium">
               <MapPin className="w-4 h-4 text-arena-lime" />
               <span>Active metro cluster status</span>

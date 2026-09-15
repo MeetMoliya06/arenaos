@@ -108,28 +108,28 @@ export const ProductWalkthrough: React.FC = () => {
   };
 
   return (
-    <section id="modules" className="py-20 md:py-32 bg-[#08080A] border-t border-white/10 relative">
+    <section id="modules" className="py-10 md:py-16 bg-[#08080A] border-t border-white/10 relative">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
 
         {/* Section Header */}
-        <div className="mb-14">
-          <div className="text-xs text-arena-lime mb-3 flex items-center gap-2">
+        <div className="mb-8">
+          <div className="text-xs text-arena-lime mb-2 flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-arena-lime" />
             <span>The core engine architecture</span>
           </div>
           <h2 className="font-semibold text-3xl sm:text-4xl md:text-5xl tracking-tight text-white max-w-3xl leading-tight">
             Six mission-critical modules. Zero room for error.
           </h2>
-          <p className="text-arena-muted text-base max-w-2xl mt-4">
+          <p className="text-arena-muted text-base max-w-2xl mt-2">
             Every module is designed specifically for high-velocity gaming arenas where seconds count and cash discrepancies ruin owner peace of mind.
           </p>
         </div>
 
         {/* Console Layout: Left Selector vs Right Live Interactive Mockup */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
           {/* Left: Module Switcher List */}
-          <div className="lg:col-span-4 space-y-2">
+          <div className="lg:col-span-4 space-y-1.5">
             {MODULES.map(module => {
               const isActive = module.id === activeModuleId;
               return (
@@ -140,14 +140,14 @@ export const ProductWalkthrough: React.FC = () => {
                     setActiveModuleId(module.id);
                   }}
                   onMouseEnter={() => playHover()}
-                  className={`w-full p-4 rounded-lg text-left transition-colors border flex items-center justify-between group ${
+                  className={`w-full p-3 rounded-lg text-left transition-colors border flex items-center justify-between group ${
                     isActive
                       ? 'bg-white/[0.04] border-arena-lime/60 text-white'
                       : 'bg-white/[0.01] border-white/10 text-arena-muted hover:border-white/20 hover:text-white'
                   }`}
                 >
                   <div>
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="flex items-center gap-2 mb-0.5">
                       <span className={`text-xs ${isActive ? 'text-arena-lime' : 'text-arena-subtle'}`}>
                         {module.code}
                       </span>
@@ -168,14 +168,14 @@ export const ProductWalkthrough: React.FC = () => {
             })}
 
             {/* Quick Summary Box */}
-            <div className="mt-6 p-5 bg-white/[0.02] border border-white/10 rounded-lg">
-              <div className="text-arena-lime text-xs mb-2">
+            <div className="mt-4 p-4 bg-white/[0.02] border border-white/10 rounded-lg">
+              <div className="text-arena-lime text-xs mb-1.5">
                 <span>{activeModule.code} overview</span>
               </div>
-              <p className="text-arena-muted text-xs leading-relaxed mb-4">
+              <p className="text-arena-muted text-xs leading-relaxed mb-3">
                 {activeModule.description}
               </p>
-              <div className="grid grid-cols-2 gap-2 pt-3 border-t border-white/10">
+              <div className="grid grid-cols-2 gap-2 pt-2.5 border-t border-white/10">
                 {activeModule.stats.map((stat, i) => (
                   <div key={i}>
                     <div className="text-white font-semibold text-sm">{stat.value}</div>

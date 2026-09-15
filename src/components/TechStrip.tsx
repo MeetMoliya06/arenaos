@@ -37,10 +37,10 @@ const TECH_ITEMS = [
 
 export const TechStrip: React.FC = () => {
   return (
-    <section className="py-16 md:py-24 bg-[#0A0A0B] border-t border-white/10">
+    <section className="py-8 md:py-12 bg-[#0A0A0B] border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
 
-        <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 pb-4 border-b border-white/10 gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-5 pb-3 border-b border-white/10 gap-3">
           <div className="flex items-center gap-3 text-sm">
             <span className="text-arena-lime font-medium">Infrastructure stack</span>
             <span className="text-arena-subtle">·</span>
@@ -53,14 +53,14 @@ export const TechStrip: React.FC = () => {
         </div>
 
         {/* Minimalist Tech Strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {TECH_ITEMS.map((item, index) => {
             const Icon = item.icon;
             return (
               <div
                 key={index}
                 onMouseEnter={() => playHover()}
-                className="p-4 bg-white/[0.02] border border-white/5 hover:border-white/15 rounded-lg transition-colors group"
+                className="p-3.5 bg-white/[0.02] border border-white/5 hover:border-white/15 rounded-lg transition-colors group"
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-white font-medium text-sm">

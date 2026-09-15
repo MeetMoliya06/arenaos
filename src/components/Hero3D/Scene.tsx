@@ -2910,7 +2910,7 @@ export const Hero3DScene: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="group relative w-full h-[500px] sm:h-[560px] lg:h-[680px] rounded-2xl overflow-hidden bg-[#060810]"
+      className="group relative w-full h-[380px] sm:h-[440px] lg:h-[500px] rounded-2xl overflow-hidden bg-[#060810]"
       style={{
         boxShadow:
           '0 0 0 1px rgba(204,255,0,0.08), 0 0 60px -15px rgba(204,255,0,0.08), 0 25px 50px -12px rgba(0,0,0,0.6)',
