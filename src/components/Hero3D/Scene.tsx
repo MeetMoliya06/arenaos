@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { playClick, playHover } from '../../audio/soundEffects';
 
 interface ActiveNodeData {
@@ -649,13 +652,13 @@ export const Hero3DScene: React.FC = () => {
 
     scene.background =
       new THREE.Color(
-        0x050608
+        0x060810
       );
 
     scene.fog =
       new THREE.FogExp2(
-        0x050608,
-        0.035
+        0x060810,
+        0.018
       );
 
     /* =====================================================
@@ -670,10 +673,10 @@ export const Hero3DScene: React.FC = () => {
 
     const camera =
       new THREE.PerspectiveCamera(
-        46,
+        50,
         width / height,
         0.1,
-        120
+        150
       );
 
     const startCamera =
@@ -686,14 +689,14 @@ export const Hero3DScene: React.FC = () => {
     const targetCamera =
       new THREE.Vector3(
         0,
-        4.4,
-        13.5
+        5.2,
+        14.5
       );
 
     const cameraLookAt =
       new THREE.Vector3(
         0,
-        1.0,
+        0.6,
         0
       );
 
@@ -730,7 +733,7 @@ export const Hero3DScene: React.FC = () => {
     );
 
     renderer.setClearColor(
-      0x050608,
+      0x060810,
       1
     );
 
@@ -741,11 +744,36 @@ export const Hero3DScene: React.FC = () => {
       THREE.ACESFilmicToneMapping;
 
     renderer.toneMappingExposure =
-      1.15;
+      1.5;
 
     container.appendChild(
       renderer.domElement
     );
+
+    /* =====================================================
+       POST-PROCESSING (BLOOM)
+    ===================================================== */
+
+    const composer =
+      new EffectComposer(renderer);
+
+    const renderPass =
+      new RenderPass(scene, camera);
+
+    composer.addPass(renderPass);
+
+    const bloomPass =
+      new UnrealBloomPass(
+        new THREE.Vector2(
+          width,
+          height
+        ),
+        0.65,   // strength
+        0.45,   // radius
+        0.78    // threshold
+      );
+
+    composer.addPass(bloomPass);
 
     /* =====================================================
        ARENA ROOT
@@ -763,14 +791,14 @@ export const Hero3DScene: React.FC = () => {
     const floor =
       new THREE.Mesh(
         new THREE.PlaneGeometry(
-          40,
-          40
+          50,
+          50
         ),
         new THREE.MeshStandardMaterial(
           {
-            color: 0x07090c,
-            roughness: 0.38,
-            metalness: 0.78,
+            color: 0x0c1018,
+            roughness: 0.32,
+            metalness: 0.82,
           }
         )
       );
@@ -787,10 +815,10 @@ export const Hero3DScene: React.FC = () => {
 
     const grid =
       new THREE.GridHelper(
-        40,
-        40,
-        0x20261f,
-        0x101318
+        50,
+        50,
+        0x2a3328,
+        0x161c24
       );
 
     grid.position.y =
@@ -1356,9 +1384,9 @@ export const Hero3DScene: React.FC = () => {
             ),
             new THREE.MeshStandardMaterial(
               {
-                color: 0x080a0d,
-                roughness: 0.28,
-                metalness: 0.82,
+                color: 0x0e1218,
+                roughness: 0.25,
+                metalness: 0.85,
               }
             )
           );
@@ -1389,8 +1417,8 @@ export const Hero3DScene: React.FC = () => {
                 transparent: true,
                 opacity:
                   visual.glow
-                    ? 0.7
-                    : 0.12,
+                    ? 0.85
+                    : 0.2,
               }
             )
           );
@@ -1423,9 +1451,9 @@ export const Hero3DScene: React.FC = () => {
             rigDeskGeometry,
             new THREE.MeshStandardMaterial(
               {
-                color: 0x111419,
-                roughness: 0.28,
-                metalness: 0.78,
+                color: 0x181c24,
+                roughness: 0.25,
+                metalness: 0.82,
               }
             )
           );
@@ -1453,9 +1481,9 @@ export const Hero3DScene: React.FC = () => {
             rigMonitorGeometry,
             new THREE.MeshStandardMaterial(
               {
-                color: 0x080a0d,
-                roughness: 0.22,
-                metalness: 0.72,
+                color: 0x10141a,
+                roughness: 0.2,
+                metalness: 0.78,
               }
             )
           );
@@ -1499,8 +1527,8 @@ export const Hero3DScene: React.FC = () => {
                 transparent: true,
                 opacity:
                   visual.glow
-                    ? visual.glowOpacity
-                    : 0.07,
+                    ? Math.min(visual.glowOpacity * 1.4, 0.95)
+                    : 0.12,
               }
             )
           );
@@ -1535,11 +1563,11 @@ export const Hero3DScene: React.FC = () => {
             rigTowerGeometry,
             new THREE.MeshStandardMaterial(
               {
-                color: 0x0b0e12,
-                roughness: 0.27,
-                metalness: 0.74,
-                emissive: 0x020304,
-                emissiveIntensity: 0.6,
+                color: 0x12161e,
+                roughness: 0.24,
+                metalness: 0.78,
+                emissive: 0x050810,
+                emissiveIntensity: 1.0,
               }
             )
           );
@@ -1571,8 +1599,8 @@ export const Hero3DScene: React.FC = () => {
                 transparent: true,
                 opacity:
                   visual.glow
-                    ? 0.12
-                    : 0.025,
+                    ? 0.22
+                    : 0.06,
               }
             )
           );
@@ -1605,8 +1633,8 @@ export const Hero3DScene: React.FC = () => {
                 transparent: true,
                 opacity:
                   visual.glow
-                    ? 0.9
-                    : 0.12,
+                    ? 1.0
+                    : 0.2,
               }
             )
           );
@@ -1659,7 +1687,7 @@ export const Hero3DScene: React.FC = () => {
                     map:
                       glowTexture,
                     transparent: true,
-                    opacity: 0.11,
+                    opacity: 0.22,
                     blending:
                       THREE.AdditiveBlending,
                     depthWrite: false,
@@ -1680,7 +1708,7 @@ export const Hero3DScene: React.FC = () => {
             pulseMaterials.push({
               material:
                 glow.material as THREE.MeshBasicMaterial,
-              base: 0.11,
+              base: 0.22,
               phase:
                 index + 8,
             });
@@ -1800,8 +1828,8 @@ export const Hero3DScene: React.FC = () => {
               transparent: true,
               opacity:
                 visual.glow
-                  ? 0.16
-                  : 0.045,
+                  ? 0.35
+                  : 0.1,
               blending:
                 THREE.AdditiveBlending,
             }
@@ -1831,9 +1859,9 @@ export const Hero3DScene: React.FC = () => {
           const packet =
             new THREE.Mesh(
               new THREE.SphereGeometry(
-                0.045,
-                10,
-                10
+                0.065,
+                12,
+                12
               ),
               new THREE.MeshBasicMaterial(
                 {
@@ -1869,7 +1897,7 @@ export const Hero3DScene: React.FC = () => {
     const ambient =
       new THREE.AmbientLight(
         0xffffff,
-        0.3
+        0.6
       );
 
     scene.add(
@@ -1879,7 +1907,7 @@ export const Hero3DScene: React.FC = () => {
     const mainLight =
       new THREE.DirectionalLight(
         0xffffff,
-        1.0
+        1.8
       );
 
     mainLight.position.set(
@@ -1895,8 +1923,8 @@ export const Hero3DScene: React.FC = () => {
     const cyanLight =
       new THREE.PointLight(
         0x00eaff,
-        2.0,
-        20
+        4.0,
+        35
       );
 
     cyanLight.position.set(
@@ -1912,8 +1940,8 @@ export const Hero3DScene: React.FC = () => {
     const limeLight =
       new THREE.PointLight(
         0xccff00,
-        2.2,
-        20
+        4.5,
+        35
       );
 
     limeLight.position.set(
@@ -1929,8 +1957,8 @@ export const Hero3DScene: React.FC = () => {
     const operatorLight =
       new THREE.PointLight(
         0xccff00,
-        1.8,
-        10
+        3.5,
+        18
       );
 
     operatorLight.position.set(
@@ -1941,6 +1969,347 @@ export const Hero3DScene: React.FC = () => {
 
     scene.add(
       operatorLight
+    );
+
+    /* back-fill rim light — gives depth to silhouettes */
+
+    const rimLight =
+      new THREE.DirectionalLight(
+        0x1a2a40,
+        1.2
+      );
+
+    rimLight.position.set(
+      -4,
+      6,
+      -10
+    );
+
+    scene.add(
+      rimLight
+    );
+
+    /* =====================================================
+       FLOATING PARTICLES
+    ===================================================== */
+
+    const particleCount = 280;
+
+    const particlePositions =
+      new Float32Array(
+        particleCount * 3
+      );
+
+    const particleSpeeds =
+      new Float32Array(
+        particleCount
+      );
+
+    const particlePhases =
+      new Float32Array(
+        particleCount
+      );
+
+    for (
+      let i = 0;
+      i < particleCount;
+      i++
+    ) {
+      particlePositions[i * 3] =
+        (Math.random() - 0.5) * 40;
+
+      particlePositions[
+        i * 3 + 1
+      ] =
+        Math.random() * 10 - 0.5;
+
+      particlePositions[
+        i * 3 + 2
+      ] =
+        (Math.random() - 0.5) * 40;
+
+      particleSpeeds[i] =
+        0.008 +
+        Math.random() * 0.02;
+
+      particlePhases[i] =
+        Math.random() *
+        Math.PI *
+        2;
+    }
+
+    const particleGeometry =
+      new THREE.BufferGeometry();
+
+    particleGeometry.setAttribute(
+      'position',
+      new THREE.BufferAttribute(
+        particlePositions,
+        3
+      )
+    );
+
+    const particleTexture =
+      (() => {
+        const c =
+          document.createElement(
+            'canvas'
+          );
+
+        c.width = 64;
+        c.height = 64;
+
+        const ct =
+          c.getContext('2d');
+
+        if (!ct) return null;
+
+        const g =
+          ct.createRadialGradient(
+            32,
+            32,
+            0,
+            32,
+            32,
+            32
+          );
+
+        g.addColorStop(
+          0,
+          'rgba(204,255,0,0.9)'
+        );
+
+        g.addColorStop(
+          0.15,
+          'rgba(204,255,0,0.4)'
+        );
+
+        g.addColorStop(
+          0.5,
+          'rgba(0,234,255,0.12)'
+        );
+
+        g.addColorStop(
+          1,
+          'rgba(0,0,0,0)'
+        );
+
+        ct.fillStyle = g;
+
+        ct.fillRect(
+          0,
+          0,
+          64,
+          64
+        );
+
+        const tex =
+          new THREE.CanvasTexture(
+            c
+          );
+
+        tex.colorSpace =
+          THREE.SRGBColorSpace;
+
+        return tex;
+      })();
+
+    const particles =
+      new THREE.Points(
+        particleGeometry,
+        new THREE.PointsMaterial({
+          size: 0.12,
+          map:
+            particleTexture ??
+            undefined,
+          transparent: true,
+          opacity: 0.7,
+          blending:
+            THREE.AdditiveBlending,
+          depthWrite: false,
+          sizeAttenuation: true,
+        })
+      );
+
+    scene.add(particles);
+
+    /* =====================================================
+       HOLOGRAPHIC ORBIT ARCS
+    ===================================================== */
+
+    const holoArcs: {
+      mesh: THREE.Line;
+      speed: number;
+      axis: THREE.Vector3;
+    }[] = [];
+
+    const arcConfigs = [
+      {
+        radius: 4.2,
+        color: 0xccff00,
+        opacity: 0.15,
+        arcLength: Math.PI * 0.65,
+        speed: 0.15,
+        tiltX: 0.18,
+        tiltZ: 0.05,
+      },
+      {
+        radius: 5.8,
+        color: 0x00eaff,
+        opacity: 0.1,
+        arcLength: Math.PI * 0.5,
+        speed: -0.1,
+        tiltX: -0.12,
+        tiltZ: 0.08,
+      },
+      {
+        radius: 7.5,
+        color: 0xccff00,
+        opacity: 0.06,
+        arcLength: Math.PI * 0.4,
+        speed: 0.07,
+        tiltX: 0.06,
+        tiltZ: -0.1,
+      },
+    ];
+
+    arcConfigs.forEach(cfg => {
+      const pts: THREE.Vector3[] =
+        [];
+
+      const segments = 80;
+
+      for (
+        let i = 0;
+        i <= segments;
+        i++
+      ) {
+        const angle =
+          (i / segments) *
+          cfg.arcLength;
+
+        pts.push(
+          new THREE.Vector3(
+            Math.cos(angle) *
+              cfg.radius,
+            0,
+            Math.sin(angle) *
+              cfg.radius
+          )
+        );
+      }
+
+      const arcGeom =
+        new THREE.BufferGeometry().setFromPoints(
+          pts
+        );
+
+      const arcMat =
+        new THREE.LineBasicMaterial(
+          {
+            color: cfg.color,
+            transparent: true,
+            opacity: cfg.opacity,
+            blending:
+              THREE.AdditiveBlending,
+          }
+        );
+
+      const arc =
+        new THREE.Line(
+          arcGeom,
+          arcMat
+        );
+
+      arc.rotation.x =
+        Math.PI / 2 +
+        cfg.tiltX;
+
+      arc.rotation.z =
+        cfg.tiltZ;
+
+      arc.position.set(
+        0,
+        0.1,
+        1.5
+      );
+
+      arena.add(arc);
+
+      holoArcs.push({
+        mesh: arc,
+        speed: cfg.speed,
+        axis:
+          new THREE.Vector3(
+            0,
+            1,
+            0
+          ),
+      });
+    });
+
+    /* =====================================================
+       OUTER PERIMETER RING
+    ===================================================== */
+
+    const outerRing =
+      new THREE.Mesh(
+        new THREE.TorusGeometry(
+          14,
+          0.015,
+          8,
+          180
+        ),
+        new THREE.MeshBasicMaterial(
+          {
+            color: 0xccff00,
+            transparent: true,
+            opacity: 0.08,
+          }
+        )
+      );
+
+    outerRing.rotation.x =
+      Math.PI / 2;
+
+    outerRing.position.set(
+      0,
+      -0.42,
+      1.5
+    );
+
+    arena.add(
+      outerRing
+    );
+
+    const outerRing2 =
+      new THREE.Mesh(
+        new THREE.TorusGeometry(
+          10.5,
+          0.012,
+          8,
+          140
+        ),
+        new THREE.MeshBasicMaterial(
+          {
+            color: 0x00eaff,
+            transparent: true,
+            opacity: 0.05,
+          }
+        )
+      );
+
+    outerRing2.rotation.x =
+      Math.PI / 2;
+
+    outerRing2.position.set(
+      0,
+      -0.44,
+      1.5
+    );
+
+    arena.add(
+      outerRing2
     );
 
     /* =====================================================
@@ -2105,6 +2474,74 @@ export const Hero3DScene: React.FC = () => {
               elapsed * 0.55
             ) *
               0.018;
+
+          /* -----------------------------------------------
+             PARTICLES
+          ----------------------------------------------- */
+
+          const posAttr =
+            particleGeometry.getAttribute(
+              'position'
+            ) as THREE.BufferAttribute;
+
+          for (
+            let i = 0;
+            i < particleCount;
+            i++
+          ) {
+            posAttr.array[
+              i * 3 + 1
+            ] +=
+              particleSpeeds[i] *
+              0.35;
+
+            // drift X/Z
+            posAttr.array[
+              i * 3
+            ] +=
+              Math.sin(
+                elapsed * 0.3 +
+                  particlePhases[
+                    i
+                  ]
+              ) *
+              0.002;
+
+            // reset when too high
+            if (
+              posAttr.array[
+                i * 3 + 1
+              ] > 10
+            ) {
+              posAttr.array[
+                i * 3 + 1
+              ] = -0.5;
+            }
+          }
+
+          posAttr.needsUpdate =
+            true;
+
+          /* -----------------------------------------------
+             HOLOGRAPHIC ARCS
+          ----------------------------------------------- */
+
+          holoArcs.forEach(
+            arc => {
+              arc.mesh.rotation.z +=
+                arc.speed * 0.008;
+            }
+          );
+
+          /* -----------------------------------------------
+             OUTER RINGS
+          ----------------------------------------------- */
+
+          outerRing.rotation.z =
+            elapsed * 0.02;
+
+          outerRing2.rotation.z =
+            -elapsed * 0.015;
 
           /* -----------------------------------------------
              OPERATOR
@@ -2306,43 +2743,40 @@ export const Hero3DScene: React.FC = () => {
             phase,
           }) => {
             material.opacity =
-              0.10 +
+              0.25 +
               Math.sin(
                 elapsed *
                   1.4 +
                   phase
               ) *
-                0.045;
+                0.1;
           }
         );
 
         operatorLight.intensity =
-          1.65 +
+          3.2 +
           Math.sin(
             elapsed * 2
           ) *
-            0.25;
+            0.4;
 
         cyanLight.intensity =
-          1.8 +
+          3.5 +
           Math.sin(
             elapsed * 1.5
           ) *
-            0.2;
+            0.5;
 
         limeLight.intensity =
-          2.0 +
+          4.0 +
           Math.sin(
             elapsed * 1.7
           ) *
-            0.25;
+            0.5;
 
         checkIntersection();
 
-        renderer.render(
-          scene,
-          camera
-        );
+        composer.render();
 
         animationFrameId =
           requestAnimationFrame(
@@ -2381,6 +2815,16 @@ export const Hero3DScene: React.FC = () => {
           newWidth,
           newHeight
         );
+
+        composer.setSize(
+          newWidth,
+          newHeight
+        );
+
+        bloomPass.resolution.set(
+          newWidth,
+          newHeight
+        );
       };
 
     window.addEventListener(
@@ -2407,6 +2851,7 @@ export const Hero3DScene: React.FC = () => {
         handleMouseMove
       );
 
+      composer.dispose();
       renderer.dispose();
 
       scene.traverse(
@@ -2465,111 +2910,200 @@ export const Hero3DScene: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[500px] sm:h-[560px] lg:h-[680px] rounded-xl overflow-hidden border border-white/10 bg-[#050608]"
+      className="group relative w-full h-[500px] sm:h-[560px] lg:h-[680px] rounded-2xl overflow-hidden bg-[#060810]"
+      style={{
+        boxShadow:
+          '0 0 0 1px rgba(204,255,0,0.08), 0 0 60px -15px rgba(204,255,0,0.08), 0 25px 50px -12px rgba(0,0,0,0.6)',
+      }}
     >
-      {/* TOP LEFT */}
+      {/* SCAN-LINE OVERLAY */}
+      <div
+        className="absolute inset-0 z-10 pointer-events-none opacity-[0.03]"
+        style={{
+          backgroundImage:
+            'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px)',
+          backgroundSize: '100% 4px',
+        }}
+      />
 
-      <div className="absolute top-5 left-5 z-20 pointer-events-none flex items-center gap-2 text-xs text-arena-muted">
-        <span className="w-1.5 h-1.5 rounded-full bg-arena-lime shadow-[0_0_8px_rgba(204,255,0,0.8)]" />
+      {/* VIGNETTE */}
+      <div
+        className="absolute inset-0 z-10 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 70% 60% at 50% 45%, transparent 40%, rgba(6,8,16,0.55) 100%)',
+        }}
+      />
 
-        <span>
-          {stationsInfo.length} rigs · live
-        </span>
+      {/* TOP EDGE GLOW */}
+      <div
+        className="absolute top-0 left-0 right-0 h-[1px] z-20"
+        style={{
+          background:
+            'linear-gradient(90deg, transparent 5%, rgba(204,255,0,0.25) 30%, rgba(0,234,255,0.2) 70%, transparent 95%)',
+        }}
+      />
+
+      {/* TOP LEFT — LIVE INDICATOR */}
+      <div className="absolute top-5 left-5 z-20 pointer-events-none">
+        <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/[0.06]">
+          <span
+            className="relative flex h-2 w-2"
+          >
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-arena-lime opacity-60" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-arena-lime shadow-[0_0_8px_rgba(204,255,0,0.9)]" />
+          </span>
+
+          <span className="text-[11px] tracking-wide text-white/50 font-medium" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+            {stationsInfo.length} RIGS
+            <span className="text-arena-lime/70 ml-1.5">LIVE</span>
+          </span>
+        </div>
       </div>
 
-      {/* TOP RIGHT */}
-
+      {/* TOP RIGHT — SYSTEM LABEL */}
       <div className="absolute top-5 right-5 z-20 pointer-events-none text-right">
-        <div className="text-[9px] tracking-[0.28em] text-arena-muted">
-          ARENAOS
-        </div>
-
-        <div className="text-xs text-white/60">
-          OPERATOR NETWORK
+        <div
+          className="px-3 py-2 rounded-lg bg-black/30 backdrop-blur-md border border-white/[0.06]"
+        >
+          <div
+            className="text-[8px] tracking-[0.35em] text-white/25 font-medium mb-0.5"
+            style={{ fontFamily: '"JetBrains Mono", monospace' }}
+          >
+            ARENAOS
+          </div>
+          <div
+            className="text-[11px] tracking-wider text-white/50 font-medium"
+            style={{ fontFamily: '"JetBrains Mono", monospace' }}
+          >
+            OPERATOR NETWORK
+          </div>
         </div>
       </div>
 
       {/* HOVER CARD */}
-
       {hoveredNode && (
         <div
-          className="absolute bottom-5 left-5 z-30 w-[300px] max-w-[calc(100%-40px)] bg-[#0b0d10]/95 border border-white/10 rounded-xl p-4 backdrop-blur-xl shadow-2xl"
+          className="absolute bottom-5 left-5 z-30 w-[300px] max-w-[calc(100%-40px)] rounded-xl overflow-hidden"
+          style={{
+            background:
+              'linear-gradient(135deg, rgba(11,13,16,0.97) 0%, rgba(8,10,14,0.98) 100%)',
+            boxShadow:
+              '0 0 0 1px rgba(204,255,0,0.08), 0 0 40px -10px rgba(204,255,0,0.12), 0 25px 50px -12px rgba(0,0,0,0.5)',
+            backdropFilter: 'blur(20px)',
+          }}
           onClick={() =>
             playClick()
           }
         >
-          <div className="flex justify-between items-start gap-3 border-b border-white/10 pb-3 mb-3">
-            <div className="min-w-0">
-              <div className="text-[9px] tracking-wider text-arena-muted uppercase">
-                {hoveredNode.zone}
+          {/* card accent line */}
+          <div
+            className="h-[1px]"
+            style={{
+              background:
+                hoveredNode.status === 'IN_SESSION'
+                  ? 'linear-gradient(90deg, transparent 0%, rgba(204,255,0,0.5) 20%, rgba(204,255,0,0.5) 80%, transparent 100%)'
+                  : hoveredNode.status === 'AVAILABLE'
+                  ? 'linear-gradient(90deg, transparent 0%, rgba(0,234,255,0.5) 20%, rgba(0,234,255,0.5) 80%, transparent 100%)'
+                  : hoveredNode.status === 'BILLING'
+                  ? 'linear-gradient(90deg, transparent 0%, rgba(255,160,0,0.5) 20%, rgba(255,160,0,0.5) 80%, transparent 100%)'
+                  : 'linear-gradient(90deg, transparent 0%, rgba(100,100,120,0.3) 20%, rgba(100,100,120,0.3) 80%, transparent 100%)',
+            }}
+          />
+
+          <div className="p-4">
+            <div className="flex justify-between items-start gap-3 border-b border-white/[0.06] pb-3 mb-3">
+              <div className="min-w-0">
+                <div
+                  className="text-[8px] tracking-[0.25em] text-white/25 uppercase mb-1"
+                  style={{ fontFamily: '"JetBrains Mono", monospace' }}
+                >
+                  {hoveredNode.zone}
+                </div>
+
+                <div className="text-sm font-semibold text-white/90">
+                  {hoveredNode.name}
+                </div>
               </div>
 
-              <div className="text-base font-semibold text-white">
-                {hoveredNode.name}
-              </div>
+              <span
+                className={`shrink-0 text-[8px] tracking-wider px-2.5 py-1 rounded-md font-medium ${
+                  hoveredNode.status ===
+                  'IN_SESSION'
+                    ? 'bg-arena-lime/10 text-arena-lime border border-arena-lime/20'
+                    : hoveredNode.status ===
+                      'AVAILABLE'
+                    ? 'bg-arena-cyan/10 text-arena-cyan border border-arena-cyan/20'
+                    : hoveredNode.status ===
+                      'BILLING'
+                    ? 'bg-orange-500/10 text-orange-400 border border-orange-400/20'
+                    : 'bg-white/5 text-arena-muted border border-white/10'
+                }`}
+                style={{ fontFamily: '"JetBrains Mono", monospace' }}
+              >
+                {hoveredNode.status
+                  .replace(
+                    '_',
+                    ' '
+                  )
+                  .toLowerCase()}
+              </span>
             </div>
 
-            <span
-              className={`shrink-0 text-[9px] px-2 py-1 rounded-md ${
-                hoveredNode.status ===
-                'IN_SESSION'
-                  ? 'bg-arena-lime/10 text-arena-lime'
-                  : hoveredNode.status ===
-                    'AVAILABLE'
-                  ? 'bg-arena-cyan/10 text-arena-cyan'
-                  : hoveredNode.status ===
-                    'BILLING'
-                  ? 'bg-orange-500/10 text-orange-400'
-                  : 'bg-white/5 text-arena-muted'
-              }`}
-            >
-              {hoveredNode.status
-                .replace(
-                  '_',
-                  ' '
-                )
-                .toLowerCase()}
-            </span>
-          </div>
+            <div className="grid grid-cols-2 gap-3 text-xs">
+              <div>
+                <div
+                  className="text-[8px] tracking-[0.2em] text-white/20 uppercase mb-0.5"
+                  style={{ fontFamily: '"JetBrains Mono", monospace' }}
+                >
+                  GPU
+                </div>
 
-          <div className="grid grid-cols-2 gap-3 text-xs">
-            <div>
-              <div className="text-arena-subtle">
-                GPU
+                <div className="text-white/75 truncate text-[11px]" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+                  {hoveredNode.gpu}
+                </div>
               </div>
 
-              <div className="text-white truncate">
-                {hoveredNode.gpu}
-              </div>
-            </div>
+              <div>
+                <div
+                  className="text-[8px] tracking-[0.2em] text-white/20 uppercase mb-0.5"
+                  style={{ fontFamily: '"JetBrains Mono", monospace' }}
+                >
+                  RATE
+                </div>
 
-            <div>
-              <div className="text-arena-subtle">
-                RATE
-              </div>
-
-              <div className="text-arena-lime">
-                {hoveredNode.rate}
-              </div>
-            </div>
-
-            <div>
-              <div className="text-arena-subtle">
-                USER
+                <div className="text-arena-lime/90 text-[11px]" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+                  {hoveredNode.rate}
+                </div>
               </div>
 
-              <div className="text-white truncate">
-                @{hoveredNode.user}
-              </div>
-            </div>
+              <div>
+                <div
+                  className="text-[8px] tracking-[0.2em] text-white/20 uppercase mb-0.5"
+                  style={{ fontFamily: '"JetBrains Mono", monospace' }}
+                >
+                  USER
+                </div>
 
-            <div>
-              <div className="text-arena-subtle">
-                NETWORK
+                <div className="text-white/75 truncate text-[11px]" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+                  @{hoveredNode.user}
+                </div>
               </div>
 
-              <div className="text-arena-cyan">
-                CONNECTED
+              <div>
+                <div
+                  className="text-[8px] tracking-[0.2em] text-white/20 uppercase mb-0.5"
+                  style={{ fontFamily: '"JetBrains Mono", monospace' }}
+                >
+                  NETWORK
+                </div>
+
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1 h-1 rounded-full bg-arena-cyan shadow-[0_0_4px_rgba(0,234,255,0.7)]" />
+                  <span className="text-arena-cyan/90 text-[11px]" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+                    CONNECTED
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -2577,16 +3111,33 @@ export const Hero3DScene: React.FC = () => {
       )}
 
       {/* BOTTOM RIGHT */}
-
       <div className="absolute bottom-5 right-5 z-20 pointer-events-none hidden sm:block text-right">
-        <div className="text-[9px] tracking-[0.28em] text-arena-muted">
-          ONE OPERATOR
-        </div>
-
-        <div className="text-xs text-white/50">
-          TOTAL CONTROL
+        <div
+          className="px-3 py-2 rounded-lg bg-black/30 backdrop-blur-md border border-white/[0.06]"
+        >
+          <div
+            className="text-[8px] tracking-[0.35em] text-white/20 font-medium mb-0.5"
+            style={{ fontFamily: '"JetBrains Mono", monospace' }}
+          >
+            ONE OPERATOR
+          </div>
+          <div
+            className="text-[11px] tracking-wider text-white/40 font-medium"
+            style={{ fontFamily: '"JetBrains Mono", monospace' }}
+          >
+            TOTAL CONTROL
+          </div>
         </div>
       </div>
+
+      {/* BOTTOM EDGE GLOW */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-[1px] z-20"
+        style={{
+          background:
+            'linear-gradient(90deg, transparent 10%, rgba(0,234,255,0.15) 40%, rgba(204,255,0,0.12) 60%, transparent 90%)',
+        }}
+      />
     </div>
   );
 };
