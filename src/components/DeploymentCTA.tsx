@@ -12,6 +12,7 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
   const [pcs, setPcs] = useState(40);
   const [branches, setBranches] = useState(1);
   const [submitted, setSubmitted] = useState(false);
+  const [toast, setToast] = useState(false);
   const [formData, setFormData] = useState({
     ownerName: '',
     arenaName: '',
@@ -24,6 +25,8 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
     e.preventDefault();
     playConfirm();
     setSubmitted(true);
+    setToast(true);
+    setTimeout(() => setToast(false), 5000);
     try {
       confetti({
         particleCount: 70,
@@ -38,6 +41,12 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
 
   return (
     <section id="demo" className={`relative ${isModal ? 'p-0' : 'py-10 md:py-16 bg-[#08080A] border-t border-white/10'}`}>
+      {toast && (
+        <div role="status" className="fixed top-5 right-5 z-[100] flex items-center gap-3 bg-arena-lime text-black px-4 py-3 rounded-lg shadow-lg text-sm font-medium">
+          <CheckCircle2 className="w-5 h-5" />
+          <span>Request sent. We will contact you soon.</span>
+        </div>
+      )}
       <div className="max-w-7xl mx-auto px-4 md:px-8">
 
         {/* Header */}
@@ -45,13 +54,13 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
           <div className="max-w-3xl mb-8">
             <div className="text-xs text-arena-lime mb-2 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-arena-lime" />
-              <span>Custom enterprise rollout</span>
+              <span>Get started</span>
             </div>
             <h2 className="font-semibold text-3xl sm:text-4xl md:text-5xl tracking-tight text-white leading-tight">
-              Request ArenaOS deployment
+              Get ArenaOS for your café
             </h2>
             <p className="text-arena-muted text-base mt-2">
-              ArenaOS is enterprise-grade hardware infrastructure, not self-serve generic SaaS. We evaluate your network topology, install the zero-trust Windows client shell, and integrate your physical cash drawers on-site.
+              Tell us about your café. We visit, set up ArenaOS on your PCs and cash counter, and train your staff. Pricing is discussed with you directly.
             </p>
           </div>
         )}
@@ -62,15 +71,15 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
           <div className="lg:col-span-5 bg-white/[0.02] border border-white/10 rounded-xl p-4 sm:p-6">
             <div className="text-arena-lime text-sm mb-3 flex items-center gap-2">
               <Cpu className="w-4 h-4" />
-              <span>Step 1: Fleet capacity profile</span>
+              <span>Step 1: Your café size</span>
             </div>
 
             {/* Sliders */}
             <div className="space-y-4 mb-5">
               <div>
                 <div className="flex justify-between text-white mb-1.5 text-sm">
-                  <span>Gaming rigs to control</span>
-                  <span className="text-arena-lime font-medium">{pcs} rigs</span>
+                  <span>Gaming PCs</span>
+                  <span className="text-arena-lime font-medium">{pcs} PCs</span>
                 </div>
                 <input
                   type="range"
@@ -116,23 +125,23 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
             {/* Hardware Deployment Spec Generated */}
             <div className="p-3.5 bg-black/30 border border-white/10 rounded-lg space-y-2 text-xs sm:text-sm">
               <div className="text-xs text-arena-subtle mb-1">
-                System deployment includes
+                What you get
               </div>
               <div className="flex items-center gap-2 text-white">
                 <span className="w-1.5 h-1.5 rounded-full bg-arena-lime" />
-                <span>{pcs}x Windows zero-trust shell client licenses</span>
+                <span>Timer and lock software on {pcs} PCs</span>
               </div>
               <div className="flex items-center gap-2 text-white">
                 <span className="w-1.5 h-1.5 rounded-full bg-arena-lime" />
-                <span>{branches}x local edge Docker node (offline resilient)</span>
+                <span>Local server at each branch, works offline</span>
               </div>
               <div className="flex items-center gap-2 text-white">
                 <span className="w-1.5 h-1.5 rounded-full bg-arena-lime" />
-                <span>RJ11 cash drawer + thermal printer drivers</span>
+                <span>Cash drawer and receipt printer setup</span>
               </div>
               <div className="flex items-center gap-2 text-white">
                 <span className="w-1.5 h-1.5 rounded-full bg-arena-lime" />
-                <span>Central cloud sync & Telegram EOD dispatch</span>
+                <span>Head Office sync and daily report to the owner</span>
               </div>
             </div>
 
@@ -147,16 +156,16 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
                   <CheckCircle2 className="w-8 h-8 text-arena-lime" />
                 </div>
                 <h3 className="font-semibold text-2xl md:text-3xl text-white mb-2">
-                  Deployment request sent
+                  Request sent
                 </h3>
                 <p className="text-arena-muted text-sm max-w-md leading-relaxed mb-6">
-                  Our systems architect will contact you within 4 business hours via WhatsApp/phone to review your hardware floor plan and configure your trial cluster.
+                  Our team will contact you soon on WhatsApp or phone to plan your setup.
                 </p>
                 <div className="p-4 bg-black/30 border border-white/10 rounded-lg text-left text-sm text-arena-lime space-y-1 w-full max-w-md">
-                  <div>Dispatch ID: #AR-{Math.floor(100000 + Math.random() * 900000)}</div>
+                  <div>Request ID: #AR-{Math.floor(100000 + Math.random() * 900000)}</div>
                   <div>Owner: {formData.ownerName || 'Operator'}</div>
                   <div>Facility: {formData.arenaName || 'Esports venue'}</div>
-                  <div>Nodes queued: {pcs} rigs / {branches} locations</div>
+                  <div>PCs: {pcs} · Branches: {branches}</div>
                 </div>
 
                 {isModal && onClose && (
@@ -173,7 +182,7 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
                 <div className="flex items-center justify-between pb-2.5 border-b border-white/10 mb-3">
                   <span className="text-arena-lime text-sm flex items-center gap-2">
                     <Terminal className="w-4 h-4" />
-                    <span>Step 2: Arena & owner details</span>
+                    <span>Step 2: Your details</span>
                   </span>
                   <span className="text-arena-subtle text-xs">All fields encrypted</span>
                 </div>
@@ -216,7 +225,7 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Indiranagar, Bengaluru"
+                      placeholder="e.g. Adajan, Surat"
                       value={formData.city}
                       onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                       className="w-full bg-white/[0.03] border border-white/10 focus:border-arena-lime rounded-md p-2 text-white text-xs sm:text-sm outline-none"
@@ -240,11 +249,11 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
 
                 <div>
                   <label className="block text-arena-muted mb-1 text-xs">
-                    Specific pain points or timeline (optional)
+                    Anything else? (optional)
                   </label>
                   <textarea
                     rows={2}
-                    placeholder="e.g. Bleeding on unbilled hours, looking to deploy in 2 weeks..."
+                    placeholder="e.g. Want to start in 2 weeks..."
                     value={formData.notes}
                     onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                     className="w-full bg-white/[0.03] border border-white/10 focus:border-arena-lime rounded-md p-2 text-white text-xs sm:text-sm outline-none resize-none"
@@ -257,11 +266,11 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
                   className="w-full py-2.5 bg-arena-lime hover:bg-arena-limeBright text-black font-medium text-sm rounded-md transition-colors flex items-center justify-center gap-2 active:scale-[0.98] mt-2"
                 >
                   <Send className="w-4 h-4" />
-                  <span>Dispatch deployment application</span>
+                  <span>Send request</span>
                 </button>
 
                 <div className="text-[11px] text-arena-subtle text-center pt-1">
-                  No automated pushy sales calls. Direct technical discovery with our engineering team.
+                  No pushy sales calls. Just a simple conversation.
                 </div>
               </form>
             )}

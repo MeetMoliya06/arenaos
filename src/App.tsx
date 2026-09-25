@@ -5,8 +5,7 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ProblemFraming } from './components/ProblemFraming';
 import { ProductWalkthrough } from './components/ProductWalkthrough';
-import { LiveProof } from './components/LiveProof';
-import { TechStrip } from './components/TechStrip';
+import { CaseStudy } from './components/CaseStudy';
 import { RbacMatrix } from './components/RbacMatrix';
 import { DeploymentCTA } from './components/DeploymentCTA';
 import { Footer } from './components/Footer';
@@ -58,11 +57,8 @@ export function App() {
       {/* The Core Engine: 6 Mission-Critical Modules Walkthrough */}
       <ProductWalkthrough />
 
-      {/* Battle-Tested Live Proof Counters & Branch Grid */}
-      <LiveProof />
-
-      {/* Tech Credibility Infrastructure Strip */}
-      <TechStrip />
+      {/* Live proof: Apple Esports, 1 brand, 4 branches */}
+      <CaseStudy />
 
       {/* Role-Based Access Control Scope Matrix */}
       <RbacMatrix />

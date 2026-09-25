@@ -4,54 +4,14 @@ import { BranchInfo } from '../types';
 import { playClick, playConfirm, playHover } from '../audio/soundEffects';
 
 const BRANCH_DATA: BranchInfo[] = [
-  {
-    id: 'indiranagar',
-    name: 'Indiranagar',
-    city: 'Bengaluru',
-    totalPcs: 40,
-    activePcs: 36,
-    occupancy: 90,
-    pingMs: 4,
-    revenueToday: 58400,
-    zones: ['VIP Arena (10)', 'Main Battlefloor (24)', 'Racing Pods (6)'],
-  },
-  {
-    id: 'koramangala',
-    name: 'Koramangala',
-    city: 'Bengaluru',
-    totalPcs: 32,
-    activePcs: 28,
-    occupancy: 87,
-    pingMs: 5,
-    revenueToday: 44200,
-    zones: ['Tournament Stage (12)', 'Main Floor (20)'],
-  },
-  {
-    id: 'bandra',
-    name: 'Bandra West',
-    city: 'Mumbai',
-    totalPcs: 24,
-    activePcs: 22,
-    occupancy: 91,
-    pingMs: 11,
-    revenueToday: 49100,
-    zones: ['Ultra VIP (8)', 'Esports Deck (16)'],
-  },
-  {
-    id: 'cyberhub',
-    name: 'Cyberhub',
-    city: 'Gurugram',
-    totalPcs: 30,
-    activePcs: 26,
-    occupancy: 86,
-    pingMs: 14,
-    revenueToday: 41800,
-    zones: ['Sim Rigs (6)', 'Console Lounge (8)', 'PC Fleet (16)'],
-  },
+  { id: 'adajan', name: 'Adajan', city: 'Surat', totalPcs: 30, activePcs: 27, occupancy: 90, pingMs: 4, zones: ['VIP zone', 'Main floor'] },
+  { id: 'katargam', name: 'Katargam', city: 'Surat', totalPcs: 25, activePcs: 22, occupancy: 88, pingMs: 5, zones: ['Tournament area', 'Main floor'] },
+  { id: 'citylight', name: 'Citylight', city: 'Surat', totalPcs: 25, activePcs: 22, occupancy: 87, pingMs: 5, zones: ['VIP zone', 'Main floor'] },
+  { id: 'varachha', name: 'Varachha', city: 'Surat', totalPcs: 26, activePcs: 23, occupancy: 89, pingMs: 6, zones: ['VIP zone', 'Main floor', 'Console lounge'] },
 ];
 
 export const MultiBranchMockup: React.FC = () => {
-  const [selectedBranchId, setSelectedBranchId] = useState<string>('indiranagar');
+  const [selectedBranchId, setSelectedBranchId] = useState<string>('adajan');
   const [synced, setSynced] = useState(false);
 
   const activeBranch = BRANCH_DATA.find(b => b.id === selectedBranchId) || BRANCH_DATA[0];
@@ -68,11 +28,11 @@ export const MultiBranchMockup: React.FC = () => {
       <div className="bg-[#161619] px-4 py-2.5 border-b border-white/10 flex items-center justify-between text-sm text-arena-muted">
         <div className="flex items-center gap-2">
           <Globe2 className="w-4 h-4 text-arena-lime" />
-          <span className="text-white font-medium">Multi-branch fleet command</span>
+          <span className="text-white font-medium">All branches, one screen</span>
         </div>
         <div className="flex items-center gap-3 text-xs">
-          <span className="text-arena-lime">4 nodes online</span>
-          <span className="text-arena-subtle">126 rigs active</span>
+          <span className="text-arena-lime">4 branches online</span>
+          <span className="text-arena-subtle">100+ PCs</span>
         </div>
       </div>
 
@@ -113,8 +73,8 @@ export const MultiBranchMockup: React.FC = () => {
             <div>
               <div className="text-xs text-arena-lime">{activeBranch.name}</div>
               <div className="text-2xl font-semibold text-white mt-0.5">
-                ₹{activeBranch.revenueToday.toLocaleString('en-IN')}
-                <span className="text-xs text-arena-muted ml-2 font-normal">today's gross</span>
+                {activeBranch.activePcs} PCs in use
+                <span className="text-xs text-arena-muted ml-2 font-normal">right now</span>
               </div>
             </div>
 
@@ -124,34 +84,34 @@ export const MultiBranchMockup: React.FC = () => {
               className="px-4 py-2 bg-white/10 hover:bg-arena-lime hover:text-black rounded-md font-medium text-sm text-white transition-colors flex items-center gap-2"
             >
               {synced ? <Check className="w-3.5 h-3.5" /> : <RefreshCw className="w-3.5 h-3.5" />}
-              <span>{synced ? 'Rates pushed to 4 branches' : 'Push global tariff update'}</span>
+              <span>{synced ? 'Update sent to 4 branches' : 'Send update to all branches'}</span>
             </button>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
             <div>
-              <div className="text-arena-subtle text-xs">Rig utilization</div>
+              <div className="text-arena-subtle text-xs">PCs in use</div>
               <div className="text-white font-medium">{activeBranch.activePcs} / {activeBranch.totalPcs} PCs</div>
             </div>
             <div>
-              <div className="text-arena-subtle text-xs">Network ping</div>
+              <div className="text-arena-subtle text-xs">Connection</div>
               <div className="text-arena-lime font-medium">{activeBranch.pingMs}ms</div>
             </div>
             <div>
-              <div className="text-arena-subtle text-xs">Zone profiles</div>
-              <div className="text-white font-medium">{activeBranch.zones.length} tariffs</div>
+              <div className="text-arena-subtle text-xs">Zones</div>
+              <div className="text-white font-medium">{activeBranch.zones.length} zones</div>
             </div>
             <div>
-              <div className="text-arena-subtle text-xs">EOD audit status</div>
-              <div className="text-arena-lime font-medium">In sync, 0 errors</div>
+              <div className="text-arena-subtle text-xs">Daily cash check</div>
+              <div className="text-arena-lime font-medium">Synced</div>
             </div>
           </div>
         </div>
 
         {/* Bottom Tag */}
         <div className="pt-4 border-t border-white/10 flex justify-between items-center text-xs text-arena-subtle">
-          <div>Centralized member roaming — gamer pass credits work across all venues</div>
-          <div className="text-arena-lime">One financial audit for the entire chain</div>
+          <div>Members can use their wallet at any branch</div>
+          <div className="text-arena-lime">One daily report for every branch</div>
         </div>
 
       </div>

@@ -53,10 +53,10 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
 
         <div className="mb-6 pb-4 border-b border-white/10">
           <div className="text-arena-lime text-xs mb-1">
-            On-site hardware audit
+            Get started
           </div>
           <h2 className="font-semibold text-2xl sm:text-3xl text-white">
-            Deploy ArenaOS to your arena fleet
+            Get ArenaOS for your café
           </h2>
         </div>
 

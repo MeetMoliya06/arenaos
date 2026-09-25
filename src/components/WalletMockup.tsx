@@ -3,12 +3,10 @@ import { Wallet, Sparkles, CheckCircle } from 'lucide-react';
 import { playConfirm, playHover } from '../audio/soundEffects';
 
 export const WalletMockup: React.FC = () => {
-  const [balance, setBalance] = useState(1450);
   const [bonusAdded, setBonusAdded] = useState(false);
 
-  const handleTopup = (amount: number, bonus: number) => {
+  const handleTopup = () => {
     playConfirm();
-    setBalance(prev => prev + amount + bonus);
     setBonusAdded(true);
     setTimeout(() => setBonusAdded(false), 2500);
   };
@@ -19,10 +17,10 @@ export const WalletMockup: React.FC = () => {
       <div className="bg-[#161619] px-4 py-2.5 border-b border-white/10 flex items-center justify-between text-sm text-arena-muted">
         <div className="flex items-center gap-2">
           <Wallet className="w-4 h-4 text-arena-lime" />
-          <span className="text-white font-medium">Closed-loop gamer passbook</span>
+          <span className="text-white font-medium">Member wallet</span>
         </div>
         <div className="flex items-center gap-3 text-xs">
-          <span className="text-arena-lime">Auto-settle · UPI / Razorpay</span>
+          <span className="text-arena-lime">Cash / UPI / wallet</span>
           <span className="text-arena-subtle">Member #AR-9402</span>
         </div>
       </div>
@@ -36,26 +34,26 @@ export const WalletMockup: React.FC = () => {
             <div className="flex justify-between items-start mb-4">
               <div>
                 <div className="text-xs text-arena-muted">
-                  Total stored value
+                  Gaming wallet and food wallet
                 </div>
-                <div className="font-semibold text-3xl sm:text-4xl text-white mt-1">
-                  ₹{balance.toLocaleString('en-IN')}<span className="text-arena-lime text-xl">.00</span>
+                <div className="font-semibold text-2xl sm:text-3xl text-white mt-1">
+                  Two separate balances
                 </div>
               </div>
               <span className="px-2 py-0.5 bg-arena-lime/10 text-arena-lime text-xs font-medium rounded-md">
-                Tier: Elite Pro
+                Loyalty points
               </span>
             </div>
 
             <div className="flex justify-between items-center text-sm text-arena-muted pt-4 border-t border-white/10">
               <span>@shadow_operator</span>
-              <span className="text-arena-lime">Roaming: 4 branches</span>
+              <span className="text-arena-lime">Works at all 4 branches</span>
             </div>
 
             {bonusAdded && (
               <div className="absolute inset-0 bg-arena-lime/95 flex items-center justify-center text-black font-medium text-sm gap-2 animate-fadeIn">
                 <CheckCircle className="w-5 h-5" />
-                <span>Wallet recharged with bonus credits</span>
+                <span>Wallet recharged</span>
               </div>
             )}
           </div>
@@ -63,70 +61,40 @@ export const WalletMockup: React.FC = () => {
           {/* Quick Stats */}
           <div className="sm:col-span-5 space-y-3 text-sm">
             <div className="p-3 bg-white/[0.02] border border-white/10 rounded-md flex justify-between items-center">
-              <span className="text-arena-muted">Hourly VIP discount</span>
-              <span className="text-arena-lime font-medium">15% applied</span>
+              <span className="text-arena-muted">Member discount</span>
+              <span className="text-arena-lime font-medium">Applied</span>
             </div>
             <div className="p-3 bg-white/[0.02] border border-white/10 rounded-md flex justify-between items-center">
               <span className="text-arena-muted">Cross-branch sync</span>
-              <span className="text-white font-medium">Instant (&lt;4ms)</span>
+              <span className="text-white font-medium">Instant</span>
             </div>
             <div className="p-3 bg-white/[0.02] border border-white/10 rounded-md flex justify-between items-center">
-              <span className="text-arena-muted">Unbilled play permitted</span>
-              <span className="text-red-400 font-medium">0.00 sec</span>
+              <span className="text-arena-muted">Free play allowed</span>
+              <span className="text-red-400 font-medium">None</span>
             </div>
           </div>
 
         </div>
 
-        {/* Bonus Incentive Selector (Interactive simulation) */}
+        {/* Recharge demo */}
         <div className="my-6">
           <div className="text-sm text-white mb-3 flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5 text-arena-lime" />
-            <span>Try a closed-loop recharge</span>
+            <span>Try a wallet recharge</span>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <button
-              onClick={() => handleTopup(500, 50)}
-              onMouseEnter={() => playHover()}
-              className="p-3 bg-white/[0.02] border border-white/10 hover:border-white/25 rounded-lg text-left transition-colors"
-            >
-              <div className="flex justify-between text-white font-medium text-sm">
-                <span>+ ₹500</span>
-                <span className="text-arena-lime text-xs">+₹50 free</span>
-              </div>
-              <div className="text-xs text-arena-subtle mt-1">Gamer gets 4.5 hours</div>
-            </button>
-
-            <button
-              onClick={() => handleTopup(1000, 200)}
-              onMouseEnter={() => playHover()}
-              className="p-3 bg-white/[0.02] border border-arena-lime/40 hover:border-arena-lime rounded-lg text-left transition-colors"
-            >
-              <div className="flex justify-between text-white font-medium text-sm">
-                <span>+ ₹1,000</span>
-                <span className="text-arena-lime text-xs">+₹200 free</span>
-              </div>
-              <div className="text-xs text-arena-subtle mt-1">Most popular VIP pack</div>
-            </button>
-
-            <button
-              onClick={() => handleTopup(2500, 600)}
-              onMouseEnter={() => playHover()}
-              className="p-3 bg-white/[0.02] border border-white/10 hover:border-white/25 rounded-lg text-left transition-colors"
-            >
-              <div className="flex justify-between text-white font-medium text-sm">
-                <span>+ ₹2,500</span>
-                <span className="text-arena-lime text-xs">+₹600 free</span>
-              </div>
-              <div className="text-xs text-arena-subtle mt-1">All-night tournament pass</div>
-            </button>
-          </div>
+          <button
+            onClick={handleTopup}
+            onMouseEnter={() => playHover()}
+            className="w-full p-3 bg-white/[0.02] border border-arena-lime/40 hover:border-arena-lime rounded-lg text-left transition-colors"
+          >
+            <div className="text-white font-medium text-sm">Recharge wallet with UPI / cash</div>
+            <div className="text-xs text-arena-subtle mt-1">Bonus credits can be set per branch</div>
+          </button>
         </div>
 
         {/* Security verification stamp */}
         <div className="pt-4 border-t border-white/10 flex justify-between items-center text-xs text-arena-subtle">
-          <div>PCI-DSS compliant, no cash handling leakage</div>
+          <div>Every top-up is recorded</div>
           <div className="text-arena-lime">Transaction logged · hash #9C82A</div>
         </div>
 

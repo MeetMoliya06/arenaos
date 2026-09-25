@@ -38,7 +38,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
             onClick={() => playClick()}
             className="hover:text-white transition-colors"
           >
-            Leakage audit
+            Why ArenaOS
           </a>
           <a
             href="#modules"
@@ -46,13 +46,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
             className="hover:text-white transition-colors"
           >
             Product
-          </a>
-          <a
-            href="#telemetry"
-            onClick={() => playClick()}
-            className="hover:text-white transition-colors"
-          >
-            Telemetry
           </a>
           <a
             href="#rbac"

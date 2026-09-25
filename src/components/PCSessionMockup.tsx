@@ -20,11 +20,11 @@ export const PCSessionMockup: React.FC = () => {
           <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
           <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
           <div className="w-2.5 h-2.5 rounded-full bg-arena-lime/60" />
-          <span className="text-white font-medium ml-2">Arena client lockscreen</span>
+          <span className="text-white font-medium ml-2">Session on PC</span>
         </div>
         <div className="flex items-center gap-4 text-xs">
           <span className="text-arena-lime">Enforced</span>
-          <span>Rig BLR-14</span>
+          <span>PC 14</span>
         </div>
       </div>
 
@@ -64,10 +64,10 @@ export const PCSessionMockup: React.FC = () => {
           <div className="my-6 p-6 border border-red-500/20 bg-red-500/[0.03] rounded-lg flex flex-col items-center justify-center text-center">
             <Lock className="w-8 h-8 text-red-400 mb-3" />
             <div className="font-semibold text-lg text-white mb-1">
-              Zero-trust lockscreen engaged
+              PC locked
             </div>
             <p className="text-arena-muted text-sm max-w-md">
-              Task Manager, Windows keys, Alt+Tab, and USB mounting are hardware-blocked. Session timer stopped. No free minutes possible.
+              The screen is locked and the timer is stopped. The gamer cannot use the PC until staff unlock it.
             </p>
           </div>
         ) : (
@@ -77,16 +77,15 @@ export const PCSessionMockup: React.FC = () => {
               <div className="text-2xl font-semibold text-white">
                 00:{elapsedMins.toString().padStart(2, '0')}:18
               </div>
-              <div className="text-arena-lime text-xs mt-1">Rate: ₹140.00 / hr</div>
+              <div className="text-arena-lime text-xs mt-1">Prepaid session</div>
             </div>
 
             <div className="p-4 bg-white/[0.02] border border-white/10 rounded-lg">
-              <div className="text-arena-subtle text-xs mb-1">Wallet debit running</div>
+              <div className="text-arena-subtle text-xs mb-1">Time left</div>
               <div className="text-2xl font-semibold text-arena-lime">
-                ₹{Math.round((elapsedMins / 60) * 140)}
-                <span className="text-sm text-white/50 font-normal">.00</span>
+                01:13:00
               </div>
-              <div className="text-arena-muted text-xs mt-1">Remaining: ₹680.00</div>
+              <div className="text-arena-muted text-xs mt-1">Countdown shown on the PC</div>
             </div>
 
             <div className="p-4 bg-white/[0.02] border border-white/10 rounded-lg flex flex-col justify-between">
@@ -96,7 +95,7 @@ export const PCSessionMockup: React.FC = () => {
               </div>
               <div className="flex items-center gap-1.5 text-arena-lime text-xs">
                 <span className="w-1.5 h-1.5 rounded-full bg-arena-lime" />
-                <span>Anti-cheat OK · 240 FPS lock</span>
+                <span>Game running</span>
               </div>
             </div>
           </div>

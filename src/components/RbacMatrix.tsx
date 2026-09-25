@@ -22,14 +22,14 @@ const ROLES: RoleScope[] = [
   },
   {
     id: 'manager',
-    name: 'Branch manager',
+    name: 'Admin',
     clearance: 'Level 3 · Venue supervisor',
     badge: 'Branch enforcement',
     summary: 'Local operational lead. Oversees shift handovers, inventory restocking, and customer dispute resolution.',
     permissions: [
       { feature: 'Global tariff & zone pricing configuration', allowed: false, note: 'Locked to head office' },
       { feature: 'End-of-day (EOD) audit approval & vault override', allowed: true },
-      { feature: 'Manual receipt voiding / refund sanction', allowed: true, note: 'Manager PIN required' },
+      { feature: 'Manual receipt voiding / refund sanction', allowed: true, note: 'Admin PIN required' },
       { feature: 'Emergency fleet kill switch & remote freeze', allowed: true },
       { feature: 'Cash drawer open without active transaction', allowed: false, note: 'Triggers audit flag' },
       { feature: 'Staff access creation & shift reassignment', allowed: true },
@@ -90,7 +90,7 @@ export const RbacMatrix: React.FC = () => {
             </h2>
           </div>
           <div className="text-sm text-arena-muted max-w-sm leading-relaxed">
-            Cashiers can never void a bill, edit an hourly rate, or pop a cash drawer without cryptographic authorization.
+            Cashiers can't cancel a bill, change a rate, or open the cash drawer without admin approval.
           </div>
         </div>
 

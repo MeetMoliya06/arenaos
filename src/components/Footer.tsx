@@ -30,7 +30,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDemo }) => {
             <span>Executive summary</span>
           </div>
           <p className="font-semibold text-3xl sm:text-4xl md:text-5xl text-white tracking-tight leading-none max-w-4xl">
-            Built for owners who want control.
+            Built for café owners who want to see everything.
           </p>
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <button
@@ -42,14 +42,14 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDemo }) => {
               className="px-4 py-2.5 bg-arena-lime text-black font-medium text-sm rounded-md hover:bg-arena-limeBright transition-colors flex items-center gap-2"
             >
               <Terminal className="w-4 h-4" />
-              <span>Request deployment demo</span>
+              <span>Get a demo</span>
             </button>
             <a
               href="#leakage"
               onClick={() => playClick()}
               className="px-4 py-2.5 border border-white/15 text-white text-sm rounded-md hover:border-white/30 transition-colors"
             >
-              Review financial audit
+              See problems we solve
             </a>
           </div>
         </div>
@@ -70,28 +70,28 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDemo }) => {
           <div>
             <div className="text-white font-medium mb-2.5">Infrastructure</div>
             <ul className="space-y-1.5 text-xs sm:text-sm">
-              <li><span className="text-arena-subtle">.NET 8 high-concurrency</span></li>
-              <li><span className="text-arena-subtle">SignalR TLS WebSocket cluster</span></li>
-              <li><span className="text-arena-subtle">TimescaleDB audit streams</span></li>
-              <li><span className="text-arena-subtle">Docker edge branch nodes</span></li>
-              <li><span className="text-arena-subtle">Windows kernel ring-0 lock</span></li>
+              <li><span className="text-arena-subtle">.NET 8 and React 19</span></li>
+              <li><span className="text-arena-subtle">PostgreSQL database</span></li>
+              <li><span className="text-arena-subtle">Real-time sync with SignalR</span></li>
+              <li><span className="text-arena-subtle">Runs offline at each branch</span></li>
+              <li><span className="text-arena-subtle">Docker deployment</span></li>
             </ul>
           </div>
 
           <div>
-            <div className="text-white font-medium mb-2.5">Live clusters</div>
+            <div className="text-white font-medium mb-2.5">Our branches</div>
             <ul className="space-y-1.5 text-xs sm:text-sm">
-              <li><span className="text-white">Indiranagar</span> · 40 rigs</li>
-              <li><span className="text-white">Koramangala</span> · 32 rigs</li>
-              <li><span className="text-white">Bandra West</span> · 24 rigs</li>
-              <li><span className="text-white">Cyberhub</span> · 30 rigs</li>
+              <li><span className="text-white">Adajan</span>, Surat</li>
+              <li><span className="text-white">Katargam</span>, Surat</li>
+              <li><span className="text-white">Citylight</span>, Surat</li>
+              <li><span className="text-white">Varachha</span>, Surat</li>
             </ul>
           </div>
 
           <div>
-            <div className="text-white font-medium mb-2.5">Engineering contact</div>
+            <div className="text-white font-medium mb-2.5">Contact</div>
             <p className="text-arena-subtle leading-relaxed mb-2 text-xs">
-              Direct engineering deployments for arenas with 20+ PC battlestations.
+              Talk to us about setting up ArenaOS at your café.
             </p>
             <div className="text-arena-lime text-xs sm:text-sm">ops@arenaos.network</div>
             <div className="text-arena-muted mt-0.5 text-xs sm:text-sm">+91 80 4920 8800</div>

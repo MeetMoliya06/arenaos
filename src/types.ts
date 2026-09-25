@@ -1,4 +1,4 @@
-export type BranchId = 'indiranagar' | 'koramangala' | 'bandra' | 'cyberhub';
+export type BranchId = 'adajan' | 'katargam' | 'citylight' | 'varachha';
 
 export interface BranchInfo {
   id: BranchId;
@@ -8,7 +8,6 @@ export interface BranchInfo {
   activePcs: number;
   occupancy: number;
   pingMs: number;
-  revenueToday: number;
   zones: string[];
 }
 

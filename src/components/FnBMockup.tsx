@@ -5,16 +5,15 @@ import { playClick, playConfirm, playHover } from '../audio/soundEffects';
 interface FnbItem {
   id: string;
   name: string;
-  price: number;
   category: string;
   tag: string;
 }
 
 const MENU_ITEMS: FnbItem[] = [
-  { id: '1', name: 'Monster Energy Ultra White', price: 150, category: 'Drinks', tag: 'High margin (68%)' },
-  { id: '2', name: 'Double Cheese Butter Maggi', price: 95, category: 'Snacks', tag: 'Bestseller' },
-  { id: '3', name: 'Peri Peri Crispy Nachos', price: 120, category: 'Snacks', tag: 'Kitchen ready' },
-  { id: '4', name: 'Nitro Cold Brew Coffee (300ml)', price: 160, category: 'Drinks', tag: 'Esports boost' },
+  { id: '1', name: 'Monster Energy Ultra White', category: 'Drinks', tag: 'Cold drink' },
+  { id: '2', name: 'Double Cheese Butter Maggi', category: 'Snacks', tag: 'Bestseller' },
+  { id: '3', name: 'Peri Peri Crispy Nachos', category: 'Snacks', tag: 'Kitchen ready' },
+  { id: '4', name: 'Nitro Cold Brew Coffee (300ml)', category: 'Drinks', tag: 'Esports boost' },
 ];
 
 export const FnBMockup: React.FC = () => {
@@ -39,10 +38,7 @@ export const FnBMockup: React.FC = () => {
     });
   };
 
-  const total = Object.entries(selectedItems).reduce((sum, [id, qty]) => {
-    const item = MENU_ITEMS.find(m => m.id === id);
-    return sum + (item ? item.price * qty : 0);
-  }, 0);
+  const total = Object.values(selectedItems).reduce((sum, qty) => sum + qty, 0);
 
   const handleOrder = () => {
     playConfirm();
@@ -59,7 +55,7 @@ export const FnBMockup: React.FC = () => {
       <div className="bg-[#161619] px-4 py-2.5 border-b border-white/10 flex items-center justify-between text-sm text-arena-muted">
         <div className="flex items-center gap-2">
           <Utensils className="w-4 h-4 text-arena-lime" />
-          <span className="text-white font-medium">In-seat kiosk · Rig 09</span>
+          <span className="text-white font-medium">Food order · PC 09</span>
         </div>
         <div className="flex items-center gap-3 text-xs">
           <span className="text-arena-lime">Kitchen: dispatched</span>
@@ -75,7 +71,7 @@ export const FnBMockup: React.FC = () => {
           {/* Menu Items List */}
           <div className="md:col-span-7 space-y-2.5">
             <div className="text-xs text-arena-muted mb-2">
-              Select items, delivered directly to Rig 09
+              Select items, delivered to PC 09
             </div>
 
             {MENU_ITEMS.map(item => {
@@ -88,8 +84,6 @@ export const FnBMockup: React.FC = () => {
                   <div>
                     <div className="text-white font-medium text-sm">{item.name}</div>
                     <div className="flex items-center gap-2 text-xs text-arena-subtle mt-0.5">
-                      <span className="text-arena-lime">₹{item.price}.00</span>
-                      <span>·</span>
                       <span>{item.tag}</span>
                     </div>
                   </div>
@@ -121,8 +115,8 @@ export const FnBMockup: React.FC = () => {
           <div className="md:col-span-5 bg-white/[0.03] border border-white/10 rounded-lg p-5 flex flex-col justify-between">
             <div>
               <div className="flex justify-between items-center border-b border-white/10 pb-3 mb-3">
-                <span className="text-white font-medium text-sm">Rig ticket #418</span>
-                <span className="text-arena-lime text-xs">Auto-bill to wallet</span>
+                <span className="text-white font-medium text-sm">Order #418</span>
+                <span className="text-arena-lime text-xs">Charged to wallet</span>
               </div>
 
               {Object.keys(selectedItems).length === 0 ? (
@@ -139,7 +133,7 @@ export const FnBMockup: React.FC = () => {
                         <span className="text-arena-text">
                           {qty}x {item.name}
                         </span>
-                        <span className="text-white font-medium">₹{item.price * qty}</span>
+                        <span className="text-white font-medium">x{qty}</span>
                       </div>
                     );
                   })}
@@ -149,9 +143,9 @@ export const FnBMockup: React.FC = () => {
 
             <div>
               <div className="pt-3 border-t border-white/10 flex justify-between items-center mb-4">
-                <span className="text-arena-muted text-sm">Order total</span>
+                <span className="text-arena-muted text-sm">Items</span>
                 <span className="text-xl font-semibold text-arena-lime">
-                  ₹{total}.00
+                  {total}
                 </span>
               </div>
 
@@ -169,7 +163,7 @@ export const FnBMockup: React.FC = () => {
                 {orderPlaced ? (
                   <>
                     <Check className="w-4 h-4" />
-                    <span>Dispatched to kitchen screen</span>
+                    <span>Sent to kitchen</span>
                   </>
                 ) : (
                   <>
@@ -186,8 +180,8 @@ export const FnBMockup: React.FC = () => {
 
         {/* Bottom Tag */}
         <div className="pt-4 border-t border-white/10 flex justify-between items-center text-xs text-arena-subtle">
-          <div>Zero ghost snacks — kitchen prep barcode locked to inventory</div>
-          <div className="text-arena-lime">Average in-seat F&amp;B lift: +34%</div>
+          <div>Every item is tracked in stock</div>
+          <div className="text-arena-lime">Orders go straight to the kitchen</div>
         </div>
 
       </div>
