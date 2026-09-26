@@ -40,7 +40,8 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
   };
 
   return (
-    <section id="demo" className={`relative ${isModal ? 'p-0' : 'py-10 md:py-16 bg-[#08080A] border-t border-white/10'}`}>
+    <section id="deploy" className={`relative scroll-mt-20 ${isModal ? 'p-0' : 'py-10 md:py-16 bg-[#08080A] border-t border-white/10'}`}>
+      <span id="demo" className="absolute -top-24 invisible pointer-events-none" />
       {toast && (
         <div role="status" className="fixed top-5 right-5 z-[100] flex items-center gap-3 bg-arena-lime text-black px-4 py-3 rounded-lg shadow-lg text-sm font-medium">
           <CheckCircle2 className="w-5 h-5" />

@@ -17,6 +17,10 @@ interface LogoProps {
 export const Logo: React.FC<LogoProps> = ({ className = '', markClassName, wordmarkClassName = 'h-6' }) => (
   <span className={`flex items-center gap-2.5 ${className}`}>
     <LogoMark className={markClassName} />
-    <img src="/logo-wordmark.png" alt="ArenaOS" className={`w-auto object-contain ${wordmarkClassName}`} />
+    <img
+      src="/logo-wordmark.png"
+      alt="ArenaOS"
+      className={`w-auto object-contain arenaos-wordmark transition-all duration-300 ${wordmarkClassName}`}
+    />
   </span>
 );

@@ -17,7 +17,6 @@ export function App() {
 
   // Initialize smooth scrolling with Lenis
   useEffect(() => {
-    // Check if user prefers reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
@@ -41,30 +40,30 @@ export function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0A0A0B] text-[#EDEDEF] selection:bg-[#CCFF00] selection:text-black relative">
+    <div className="min-h-screen bg-[#08090B] text-[#EDEDEF] selection:bg-[#CCFF00] selection:text-black relative">
       {/* Preloader */}
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 
       {/* Main Architectural Navigation */}
       <Navbar onOpenDemo={() => setDemoModalOpen(true)} />
 
-      {/* Hero with 3D WebGL Rig Scene & Live Marquee */}
+      {/* Hero: Crystal-Clear Positioning + Interactive Arena Station Command Deck */}
       <Hero onOpenDemo={() => setDemoModalOpen(true)} />
 
-      {/* The Financial Leakage Audit & Interactive Calculator */}
-      <ProblemFraming />
+      {/* Problem Framing & Interactive Financial Leakage Calculator */}
+      <ProblemFraming onOpenDemo={() => setDemoModalOpen(true)} />
 
-      {/* The Core Engine: 6 Mission-Critical Modules Walkthrough */}
+      {/* The Core Engine: 6 Mission-Critical Modules */}
       <ProductWalkthrough />
-
-      {/* Live proof: Apple Esports, 1 brand, 4 branches */}
-      <CaseStudy />
 
       {/* Role-Based Access Control Scope Matrix */}
       <RbacMatrix />
 
       {/* Custom Enterprise Rollout Configurator & Form */}
       <DeploymentCTA />
+
+      {/* Live Enterprise Production Deployment: Apple Esports (Surat, Gujarat) */}
+      <CaseStudy onOpenDemo={() => setDemoModalOpen(true)} />
 
       {/* Minimal Confident Editorial Footer */}
       <Footer onOpenDemo={() => setDemoModalOpen(true)} />

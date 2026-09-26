@@ -666,14 +666,14 @@ export const Hero3DScene: React.FC = () => {
     ===================================================== */
 
     const width =
-      container.clientWidth;
+      container.clientWidth || 600;
 
     const height =
-      container.clientHeight;
+      container.clientHeight || 420;
 
     const camera =
       new THREE.PerspectiveCamera(
-        50,
+        46,
         width / height,
         0.1,
         150
@@ -682,22 +682,22 @@ export const Hero3DScene: React.FC = () => {
     const startCamera =
       new THREE.Vector3(
         0,
-        6.4,
-        20
+        5.8,
+        16.0
       );
 
     const targetCamera =
       new THREE.Vector3(
         0,
-        5.2,
-        14.5
+        4.6,
+        13.5
       );
 
     const cameraLookAt =
       new THREE.Vector3(
         0,
-        0.6,
-        0
+        1.1,
+        0.2
       );
 
     camera.position.copy(
@@ -2832,6 +2832,11 @@ export const Hero3DScene: React.FC = () => {
       handleResize
     );
 
+    const resizeObserver = new ResizeObserver(() => {
+      handleResize();
+    });
+    resizeObserver.observe(container);
+
     /* =====================================================
        CLEANUP
     ===================================================== */
@@ -2840,6 +2845,8 @@ export const Hero3DScene: React.FC = () => {
       cancelAnimationFrame(
         animationFrameId
       );
+
+      resizeObserver.disconnect();
 
       window.removeEventListener(
         'resize',
@@ -2910,7 +2917,7 @@ export const Hero3DScene: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="group relative w-full h-[380px] sm:h-[440px] lg:h-[500px] rounded-2xl overflow-hidden bg-[#060810]"
+      className="group relative w-full h-full min-h-[380px] rounded-xl overflow-hidden bg-[#060810]"
       style={{
         boxShadow:
           '0 0 0 1px rgba(204,255,0,0.08), 0 0 60px -15px rgba(204,255,0,0.08), 0 25px 50px -12px rgba(0,0,0,0.6)',

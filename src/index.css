@@ -8,20 +8,21 @@
   }
 
   body {
-    background-color: #0A0A0B;
+    background-color: #08090B;
     color: #EDEDEF;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
     cursor: default;
     -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.01em;
   }
 
-  /* Custom scrollbar */
+  /* Custom subtle scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #0A0A0B;
+    background: #08090B;
   }
   ::-webkit-scrollbar-thumb {
     background: #23232A;
@@ -30,26 +31,24 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #3A3A44;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
 }
 
-/* Faint background grid, kept minimal */
+/* Subtle background architectural grid */
 .bg-tech-grid {
-  background-size: 48px 48px;
+  background-size: 56px 56px;
   background-image:
     linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
 }
 
 .bg-tech-dots {
-  background-size: 24px 24px;
+  background-size: 28px 28px;
   background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-}
-
-/* Effects below intentionally disabled for the minimal visual system:
-   HUD scanlines, brutalist glow borders, noise grain, and the lime text-stroke
-   hover treatment. Classes are kept as no-ops so components using them don't break. */
-.scanline::before {
-  content: none;
 }
 
 .border-brutal {
@@ -60,26 +59,23 @@
   border-color: rgba(255, 255, 255, 0.16);
 }
 
-.noise-overlay {
-  background-image: none;
+/* Hairline glass surface */
+.surface-glass {
+  background: rgba(14, 15, 19, 0.72);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.glow-lime {
-  filter: none;
+/* Tabular numerals standard */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }
 
-.text-stroke {
-  -webkit-text-stroke: 0;
-  color: inherit;
-}
-.text-stroke:hover {
-  -webkit-text-stroke: 0;
-  color: inherit;
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.85; }
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .custom-cursor {
-    display: none !important;
-  }
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
 }
