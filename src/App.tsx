@@ -7,7 +7,7 @@ import { ProblemFraming } from './components/ProblemFraming';
 import { ProductWalkthrough } from './components/ProductWalkthrough';
 import { CaseStudy } from './components/CaseStudy';
 import { RbacMatrix } from './components/RbacMatrix';
-import { DeploymentCTA } from './components/DeploymentCTA';
+import { ContactUs } from './components/ContactUs';
 import { Footer } from './components/Footer';
 import { DemoModal } from './components/DemoModal';
 
@@ -59,11 +59,11 @@ export function App() {
       {/* Role-Based Access Control Scope Matrix */}
       <RbacMatrix />
 
-      {/* Custom Enterprise Rollout Configurator & Form */}
-      <DeploymentCTA />
-
       {/* Live Enterprise Production Deployment: Apple Esports (Surat, Gujarat) */}
       <CaseStudy onOpenDemo={() => setDemoModalOpen(true)} />
+
+      {/* "Tell us what you need" — Customizable Contact Flow (final CTA) */}
+      {/* <ContactUs /> */}
 
       {/* Minimal Confident Editorial Footer */}
       <Footer onOpenDemo={() => setDemoModalOpen(true)} />

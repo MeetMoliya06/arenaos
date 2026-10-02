@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { X } from 'lucide-react';
-import { DeploymentCTA } from './DeploymentCTA';
+import { ContactUs } from './ContactUs';
 import { playClick } from '../audio/soundEffects';
 
 interface DemoModalProps {
@@ -60,7 +60,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
           </h2>
         </div>
 
-        <DeploymentCTA isModal={true} onClose={onClose} />
+        <ContactUs isModal={true} onClose={onClose} />
       </div>
     </div>
   );
