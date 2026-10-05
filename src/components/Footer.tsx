@@ -82,8 +82,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDemo }) => {
             <p className="text-arena-subtle leading-relaxed mb-2 text-xs">
               Talk to us about setting up ArenaOS at your café.
             </p>
-            <div className="text-arena-lime text-xs sm:text-sm">ops@arenaos.network</div>
-            <div className="text-arena-muted mt-0.5 text-xs sm:text-sm">+91 80 4920 8800</div>
+            <a href="mailto:connect@p3q.in" className="text-arena-lime text-xs sm:text-sm block">connect@p3q.in</a>
+            <a href="tel:+919173676680" className="text-arena-muted mt-0.5 text-xs sm:text-sm block hover:text-white">+91 9173676680</a>
+            <a href="tel:+918238482880" className="text-arena-muted mt-0.5 text-xs sm:text-sm block hover:text-white">+91 82384 82880</a>
+            <a href="tel:+919664812556" className="text-arena-muted mt-0.5 text-xs sm:text-sm block hover:text-white">+91 96648 12556</a>
           </div>
         </div>
 
