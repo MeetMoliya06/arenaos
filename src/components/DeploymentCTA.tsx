@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Terminal, Send, CheckCircle2, Cpu } from 'lucide-react';
+import { sendLead } from '../lib/sendLead';
 import confetti from 'canvas-confetti';
 import { playClick, playConfirm, playHover } from '../audio/soundEffects';
 
@@ -21,8 +22,22 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
     notes: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const ok = await sendLead({
+      Source: 'Deployment CTA',
+      Owner: formData.ownerName,
+      Arena: formData.arenaName,
+      City: formData.city,
+      Contact: formData.contact,
+      Notes: formData.notes,
+      PCs: pcs,
+      Branches: branches,
+    });
+    if (!ok) {
+      alert('Could not send your request. Please call us on +91 9173676680.');
+      return;
+    }
     playConfirm();
     setSubmitted(true);
     setToast(true);

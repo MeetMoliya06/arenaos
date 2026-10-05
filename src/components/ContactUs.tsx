@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, CheckCircle2, ChevronRight, X } from 'lucide-react';
+import { sendLead } from '../lib/sendLead';
 import confetti from 'canvas-confetti';
 import { playClick, playConfirm, playHover } from '../audio/soundEffects';
 
@@ -82,8 +83,21 @@ export const ContactUs: React.FC<ContactUsProps> = ({ isModal = false, onClose }
   };
 
   /* ─── submit form ─── */
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const ok = await sendLead({
+      Source: 'Contact form',
+      Owner: formData.ownerName,
+      Arena: formData.arenaName,
+      City: formData.city,
+      Contact: formData.contact,
+      Notes: formData.notes,
+      Modules: selected.map(getLabel).join(', '),
+    });
+    if (!ok) {
+      alert('Could not send your request. Please call us on +91 9173676680.');
+      return;
+    }
     playConfirm();
     setSubmitted(true);
     setToast(true);
