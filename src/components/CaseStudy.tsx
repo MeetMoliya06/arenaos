@@ -112,7 +112,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
   const selectedBranch = BRANCHES_DATA.find((b) => b.id === selectedBranchId) || BRANCHES_DATA[0];
 
   return (
-    <section id="proof" className="relative bg-[#0A0A0B] text-[#EDEDEF] py-24 md:py-36 border-t border-white/[0.08] overflow-hidden">
+    <section id="proof" className="relative min-h-screen flex items-center bg-[#0A0A0B] text-[#EDEDEF] pt-20 pb-6 border-t border-white/[0.08] overflow-hidden">
       {/* Dynamic ambient background glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[#CCFF00]/[0.035] blur-[150px] pointer-events-none rounded-full" />
       <div className="absolute bottom-10 right-10 w-[500px] h-[400px] bg-[#00F0FF]/[0.03] blur-[140px] pointer-events-none rounded-full" />
@@ -126,10 +126,10 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
         }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-4 md:px-8">
+      <div className="relative max-w-7xl w-full mx-auto px-4 md:px-8">
         {/* Top Proof Tag & Client Identification */}
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-          <div className="flex items-center justify-center gap-2 text-xs font-semibold tracking-wider uppercase text-[#CCFF00] mb-4">
+          <div className="flex items-center justify-center gap-2 text-xs font-semibold tracking-wider uppercase text-[#CCFF00] mb-2">
             <span className="w-2 h-2 rounded-full bg-[#CCFF00] animate-pulse" />
             <span>Verified Production Deployment</span>
             <span className="text-white/20">·</span>
@@ -137,7 +137,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
           </div>
 
           {/* Official Client Brand Identification */}
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 text-sm text-[#9999A0]">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-3 text-sm text-[#9999A0]">
             <div className="flex items-center gap-2 text-white font-bold tracking-wide">
               <div className="w-7 h-7 rounded-md bg-black border border-white/15 p-1 flex items-center justify-center shadow-inner overflow-hidden">
                 <img 
@@ -156,44 +156,17 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
             <span className="text-emerald-400 font-medium">100% Hardware Locked</span>
           </div>
 
-          <h2 className="font-display font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.05] text-white">
-            The Engine Behind Surat&apos;s <br className="hidden sm:block" />
+          <h2 className="font-display font-semibold text-2xl sm:text-3xl md:text-4xl tracking-tight leading-[1.1] text-white">
+            The Engine Behind Surat&apos;s 
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#CCFF00] via-white to-[#00F0FF]">
               Premier Esports Empire.
             </span>
           </h2>
 
-          <p className="mt-5 text-white/60 text-base sm:text-lg md:text-xl max-w-2xl font-normal leading-relaxed">
-            From the historic Adajan flagship founded in 2011 to the brand-new ultra-luxury Varachha megacenter, Apple Esports runs every PC unlock, gamer wallet, in-seat food order, and shift audit on <span className="text-white font-medium">ArenaOS</span>.
-          </p>
-
-          {/* Quick Metrics Ticker */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 w-full mt-10 max-w-4xl">
-            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.07] text-left">
-              <div className="text-2xl sm:text-3xl font-display font-bold text-[#CCFF00]">4</div>
-              <div className="text-xs font-mono text-white/50 uppercase mt-1">Interconnected Hubs</div>
-              <div className="text-[11px] text-white/40 mt-0.5">Surat City-wide Mesh</div>
-            </div>
-            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.07] text-left">
-              <div className="text-2xl sm:text-3xl font-display font-bold text-white">240+</div>
-              <div className="text-xs font-mono text-white/50 uppercase mt-1">Battle Stations</div>
-              <div className="text-[11px] text-white/40 mt-0.5">Hardware Lock Enforced</div>
-            </div>
-            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.07] text-left">
-              <div className="text-2xl sm:text-3xl font-display font-bold text-[#00F0FF]">1</div>
-              <div className="text-xs font-mono text-white/50 uppercase mt-1">Unified Gamer Wallet</div>
-              <div className="text-[11px] text-white/40 mt-0.5">Recharge once, play anywhere</div>
-            </div>
-            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.07] text-left">
-              <div className="text-2xl sm:text-3xl font-display font-bold text-emerald-400">₹0</div>
-              <div className="text-xs font-mono text-white/50 uppercase mt-1">Cash Leakage</div>
-              <div className="text-[11px] text-white/40 mt-0.5">Shift reconciliations 100%</div>
-            </div>
-          </div>
         </div>
 
         {/* View Switcher: Interactive Branches vs Synchronized Architecture */}
-        <div className="mt-12 flex justify-center">
+        <div className="mt-3 flex justify-center">
           <div className="inline-flex p-1 rounded-xl bg-white/[0.04] border border-white/[0.1] backdrop-blur-md">
             <button
               onClick={() => {
@@ -227,7 +200,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
 
         {/* TAB 1: INTERACTIVE BRANCH EXPLORER */}
         {activeTab === 'branches' && (
-          <div className="mt-8 space-y-6">
+          <div className="mt-4 space-y-3">
             {/* Branch Selector Cards */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               {BRANCHES_DATA.map((branch) => {
@@ -240,7 +213,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
                       playClick();
                     }}
                     onMouseEnter={() => playHover()}
-                    className={`relative p-3.5 sm:p-4 rounded-xl text-left transition-all duration-200 border ${
+                    className={`relative p-2.5 sm:p-3 rounded-xl text-left transition-all duration-200 border ${
                       isSelected
                         ? 'bg-white/[0.08] border-[#CCFF00] shadow-[0_0_20px_rgba(204,255,0,0.15)] ring-1 ring-[#CCFF00]/50'
                         : 'bg-white/[0.02] border-white/[0.08] hover:bg-white/[0.04] hover:border-white/20'
@@ -268,12 +241,12 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
             </div>
 
             {/* Active Branch Deep-Dive Showcase */}
-            <div className="relative rounded-2xl bg-gradient-to-b from-white/[0.05] to-white/[0.02] border border-white/[0.1] overflow-hidden p-6 sm:p-8 backdrop-blur-xl">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className="relative rounded-2xl bg-gradient-to-b from-white/[0.05] to-white/[0.02] border border-white/[0.1] overflow-hidden p-4 sm:p-5 backdrop-blur-xl">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
                 
                 {/* Branch Real Photography with Cyber HUD Overlays */}
                 <div className="lg:col-span-7 relative group">
-                  <div className="relative rounded-xl overflow-hidden border border-white/15 aspect-[16/10] bg-black shadow-2xl">
+                  <div className="relative rounded-xl overflow-hidden border border-white/15 h-[clamp(170px,calc(100svh-600px),400px)] bg-black shadow-2xl">
                     <img 
                       src={selectedBranch.image} 
                       alt={selectedBranch.name} 
@@ -306,7 +279,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
                 </div>
 
                 {/* Branch Operations & ArenaOS Integration Details */}
-                <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-6">
+                <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-3">
                   <div>
                     <div className="flex items-center gap-2 mb-2">
                       <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider bg-white/10 text-white/80">
@@ -322,13 +295,13 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
                       {selectedBranch.name}
                     </h3>
 
-                    <p className="mt-3 text-white/70 text-sm sm:text-base leading-relaxed">
+                    <p className="mt-2 text-white/70 text-xs sm:text-sm leading-relaxed">
                       {selectedBranch.highlight}
                     </p>
                   </div>
 
                   {/* Feature Checklist */}
-                  <div className="space-y-2.5 pt-2 border-t border-white/[0.08]">
+                  <div className="space-y-1.5 pt-2 border-t border-white/[0.08]">
                     <div className="text-xs font-mono text-white/50 uppercase tracking-wider mb-2">
                       Controlled via ArenaOS:
                     </div>
@@ -343,7 +316,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
                   </div>
 
                   {/* Live Telemetry Drawer */}
-                  <div className="p-3.5 rounded-xl bg-black/40 border border-white/[0.08] grid grid-cols-2 gap-3 text-left">
+                  <div className="hidden p-3.5 rounded-xl bg-black/40 border border-white/[0.08] grid grid-cols-2 gap-3 text-left">
                     <div>
                       <div className="text-[10px] font-mono text-white/40 uppercase">Lockscreen State</div>
                       <div className="text-xs font-mono text-white font-medium flex items-center gap-1 mt-0.5">
@@ -367,21 +340,21 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
 
         {/* TAB 2: LIVE MESH ARCHITECTURE */}
         {activeTab === 'architecture' && (
-          <div className="mt-8 rounded-2xl bg-gradient-to-b from-white/[0.05] to-white/[0.02] border border-white/[0.1] p-6 sm:p-10 backdrop-blur-xl">
-            <div className="max-w-3xl mx-auto text-center mb-8">
+          <div className="mt-3 rounded-2xl bg-gradient-to-b from-white/[0.05] to-white/[0.02] border border-white/[0.1] p-3 backdrop-blur-xl">
+            <div className="hidden">
               <span className="text-xs font-mono text-[#00F0FF] uppercase tracking-widest">
                 Distributed High-Availability Topology
               </span>
-              <h3 className="font-display font-bold text-2xl sm:text-3xl text-white mt-2">
+              <h3 className="font-display font-bold text-xl sm:text-2xl text-white mt-1">
                 How 4 Independent Arenas Act as One Single Entity
               </h3>
-              <p className="text-sm sm:text-base text-white/60 mt-2">
+              <p className="hidden">
                 If the internet fluctuates in Katargam or power switches in Varachha, local client PCs remain strictly locked and billing timers tick offline, syncing back the moment connection restores.
               </p>
             </div>
 
             {/* Interactive Architecture Control Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-6 p-3 rounded-xl bg-white/[0.03] border border-white/10 text-xs">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-3 p-2 rounded-xl bg-white/[0.03] border border-white/10 text-xs">
               <div className="flex items-center gap-2">
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#CCFF00]/10 text-[#CCFF00] font-mono font-medium">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00] animate-ping" />
@@ -433,7 +406,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
             </div>
 
             {/* Live Interactive Connecting Mesh Map */}
-            <div className="relative w-full rounded-2xl bg-[#070709] border border-white/15 p-4 sm:p-8 overflow-hidden shadow-2xl">
+            <div className="relative w-full rounded-2xl bg-[#070709] border border-white/15 p-2 sm:p-3 overflow-hidden shadow-2xl">
               {/* Sci-Fi Grid Background */}
               <div 
                 className="absolute inset-0 opacity-20 pointer-events-none"
@@ -444,7 +417,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
               />
 
               {/* Dynamic Connecting SVG Canvas */}
-              <div className="relative w-full aspect-[16/10] min-h-[380px] max-h-[500px]">
+              <div className="relative w-full h-[clamp(230px,calc(100svh-520px),460px)]">
                 <svg
                   viewBox="0 0 800 500"
                   className="absolute inset-0 w-full h-full pointer-events-none select-none"
@@ -736,7 +709,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
                     setSelectedBranchId('adajan');
                     playClick();
                   }}
-                  className={`absolute top-2 left-2 sm:top-4 sm:left-4 z-20 cursor-pointer p-3 sm:p-4 rounded-xl backdrop-blur-md transition-all duration-300 border ${
+                  className={`absolute top-2 left-2 sm:top-4 sm:left-4 z-20 cursor-pointer p-2.5 sm:p-3 rounded-xl backdrop-blur-md transition-all duration-300 border ${
                     selectedBranchId === 'adajan'
                       ? 'bg-white/[0.12] border-[#00F0FF] shadow-[0_0_25px_rgba(0,240,255,0.3)] scale-105'
                       : 'bg-black/80 border-white/15 hover:border-white/30 hover:bg-black/95'
@@ -763,7 +736,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
                     <span className="text-white/40">•</span>
                     <span className="text-white/60">Honey Park</span>
                   </div>
-                  <div className="mt-1.5 pt-1.5 border-t border-white/10 text-[10px] font-mono text-white/50 flex justify-between">
+                  <div className="hidden">
                     <span>WALLETS: 14k+</span>
                     <span className="text-[#00F0FF]">SYNCHRONIZED</span>
                   </div>
@@ -775,7 +748,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
                     setSelectedBranchId('varachha');
                     playClick();
                   }}
-                  className={`absolute top-2 right-2 sm:top-4 sm:right-4 z-20 cursor-pointer p-3 sm:p-4 rounded-xl backdrop-blur-md transition-all duration-300 border text-right ${
+                  className={`absolute top-2 right-2 sm:top-4 sm:right-4 z-20 cursor-pointer p-2.5 sm:p-3 rounded-xl backdrop-blur-md transition-all duration-300 border text-right ${
                     selectedBranchId === 'varachha'
                       ? 'bg-white/[0.12] border-[#FF3366] shadow-[0_0_25px_rgba(255,51,102,0.3)] scale-105'
                       : 'bg-black/80 border-white/15 hover:border-white/30 hover:bg-black/95'
@@ -802,7 +775,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
                     <span className="text-white/40">•</span>
                     <span className="text-[#CCFF00]">80 RTX 4080s</span>
                   </div>
-                  <div className="mt-1.5 pt-1.5 border-t border-white/10 text-[10px] font-mono text-white/50 flex justify-between">
+                  <div className="hidden">
                     <span className="text-rose-400">96% OCCUPANCY</span>
                     <span>VIP SUITES SYNCED</span>
                   </div>
@@ -814,7 +787,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
                     setSelectedBranchId('citylight');
                     playClick();
                   }}
-                  className={`absolute bottom-2 left-2 sm:bottom-4 sm:left-4 z-20 cursor-pointer p-3 sm:p-4 rounded-xl backdrop-blur-md transition-all duration-300 border ${
+                  className={`absolute bottom-2 left-2 sm:bottom-4 sm:left-4 z-20 cursor-pointer p-2.5 sm:p-3 rounded-xl backdrop-blur-md transition-all duration-300 border ${
                     selectedBranchId === 'citylight'
                       ? 'bg-white/[0.12] border-[#00FF88] shadow-[0_0_25px_rgba(0,255,136,0.3)] scale-105'
                       : 'bg-black/80 border-white/15 hover:border-white/30 hover:bg-black/95'
@@ -841,7 +814,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
                     <span className="text-white/40">•</span>
                     <span className="text-white/60">Citylight Rd</span>
                   </div>
-                  <div className="mt-1.5 pt-1.5 border-t border-white/10 text-[10px] font-mono text-white/50 flex justify-between">
+                  <div className="hidden">
                     <span>TOURNAMENT MODE</span>
                     <span className="text-emerald-400">POS ONLINE</span>
                   </div>
@@ -853,7 +826,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
                     setSelectedBranchId('katargam');
                     playClick();
                   }}
-                  className={`absolute bottom-2 right-2 sm:bottom-4 sm:right-4 z-20 cursor-pointer p-3 sm:p-4 rounded-xl backdrop-blur-md transition-all duration-300 border text-right ${
+                  className={`absolute bottom-2 right-2 sm:bottom-4 sm:right-4 z-20 cursor-pointer p-2.5 sm:p-3 rounded-xl backdrop-blur-md transition-all duration-300 border text-right ${
                     selectedBranchId === 'katargam'
                       ? 'bg-white/[0.12] border-[#FFBB00] shadow-[0_0_25px_rgba(255,187,0,0.3)] scale-105'
                       : 'bg-black/80 border-white/15 hover:border-white/30 hover:bg-black/95'
@@ -880,7 +853,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
                     <span className="text-white/40">•</span>
                     <span className="text-[#CCFF00]">55 High-Hz PCs</span>
                   </div>
-                  <div className="mt-1.5 pt-1.5 border-t border-white/10 text-[10px] font-mono text-white/50 flex justify-between">
+                  <div className="hidden">
                     <span className="text-amber-400">HARDWARE LOCK</span>
                     <span>100% REVENUE AUDITED</span>
                   </div>
@@ -889,7 +862,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
               </div>
 
               {/* Live Mesh Console / Packet Telemetry Stream */}
-              <div className="mt-4 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs font-mono">
+              <div className="mt-2 pt-2 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs font-mono">
                 <div className="flex items-center gap-2 text-white/80">
                   <span className="w-2 h-2 rounded-full bg-[#CCFF00] animate-pulse" />
                   <span className="text-white/40 font-mono">LIVE_LOG:</span>
@@ -908,54 +881,20 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
 
             </div>
 
-            {/* Feature Matrix for Multi-Branch */}
-
-            {/* Feature Matrix for Multi-Branch */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                <div className="w-8 h-8 rounded-lg bg-[#CCFF00]/10 flex items-center justify-center text-[#CCFF00] mb-3">
-                  <Wallet className="w-4 h-4" />
-                </div>
-                <h4 className="font-display font-semibold text-white text-base">Closed-Loop Gamer Wallet</h4>
-                <p className="text-xs sm:text-sm text-white/60 mt-1 leading-relaxed">
-                  A regular can recharge ₹2,000 at Adajan Honey Park, head across town to Varachha for a tournament, and their hourly rates & balance deduct effortlessly.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                <div className="w-8 h-8 rounded-lg bg-[#00F0FF]/10 flex items-center justify-center text-[#00F0FF] mb-3">
-                  <ShieldCheck className="w-4 h-4" />
-                </div>
-                <h4 className="font-display font-semibold text-white text-base">EOD Cash Drawer Audit</h4>
-                <p className="text-xs sm:text-sm text-white/60 mt-1 leading-relaxed">
-                  Every shift change requires staff to count the till. ArenaOS cross-references UPI, card, and cash bookings down to ₹1 before the shift can close.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                <div className="w-8 h-8 rounded-lg bg-emerald-400/10 flex items-center justify-center text-emerald-400 mb-3">
-                  <UtensilsCrossed className="w-4 h-4" />
-                </div>
-                <h4 className="font-display font-semibold text-white text-base">In-Seat Food & Drink</h4>
-                <p className="text-xs sm:text-sm text-white/60 mt-1 leading-relaxed">
-                  Players order Red Bulls and snacks right on the PC screen. Orders dispatch directly to kitchen thermal printers without distracting gameplay.
-                </p>
-              </div>
-            </div>
           </div>
         )}
 
         {/* Bottom Editorial Call-to-Action Bar */}
-        <div className="mt-12 rounded-2xl bg-gradient-to-r from-white/[0.04] via-white/[0.02] to-white/[0.04] border border-white/[0.08] p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 backdrop-blur-md">
+        <div className="mt-3 rounded-2xl bg-gradient-to-r from-white/[0.04] via-white/[0.02] to-white/[0.04] border border-white/[0.08] p-3 sm:p-4 flex flex-col md:flex-row items-center justify-between gap-6 backdrop-blur-md">
           <div className="flex items-center gap-4 text-left">
-            <div className="w-14 h-14 rounded-2xl bg-black border border-white/20 p-2.5 shrink-0 flex items-center justify-center shadow-lg">
+            <div className="w-10 h-10 rounded-xl bg-black border border-white/20 p-2.5 shrink-0 flex items-center justify-center shadow-lg">
               <img src="/appleesports-logo.svg" alt="Apple Esports" className="w-full h-full object-contain filter drop-shadow-[0_0_10px_rgba(202,36,24,0.7)]" />
             </div>
             <div>
-              <div className="font-display font-semibold text-white text-lg sm:text-xl">
+              <div className="font-display font-semibold text-white text-base sm:text-lg">
                 Want to see how Apple Esports runs this live?
               </div>
-              <p className="text-xs sm:text-sm text-white/60 mt-0.5">
+              <p className="hidden">
                 Every PC, every bill, every shift — running on this exact system in Surat.
               </p>
             </div>
@@ -969,7 +908,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
                   onOpenDemo();
                 }}
                 onMouseEnter={() => playHover()}
-                className="inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold bg-[#CCFF00] hover:bg-[#b8e600] text-black px-6 py-3.5 rounded-xl transition-all shadow-[0_0_25px_rgba(204,255,0,0.25)] hover:shadow-[0_0_35px_rgba(204,255,0,0.4)] w-full md:w-auto shrink-0 group"
+                className="inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold bg-[#CCFF00] hover:bg-[#b8e600] text-black px-5 py-2.5 rounded-xl transition-all shadow-[0_0_25px_rgba(204,255,0,0.25)] hover:shadow-[0_0_35px_rgba(204,255,0,0.4)] w-full md:w-auto shrink-0 group"
               >
                 <span>Book Demo</span>
                 <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

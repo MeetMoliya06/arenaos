@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Monitor, Wallet, Utensils, KeySquare, FileText, Globe2, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import { Monitor, Wallet, Utensils, KeySquare, FileText, Globe2 } from 'lucide-react';
 import { ModuleId, ModuleInfo } from '../types';
 import { PCSessionMockup } from './PCSessionMockup';
 import { WalletMockup } from './WalletMockup';
@@ -54,117 +54,174 @@ const MODULES: ModuleInfo[] = [
   },
 ];
 
+const ICONS: Record<ModuleId, React.ReactNode> = {
+  'pc-session': <Monitor className="w-4 h-4" />,
+  'digital-wallet': <Wallet className="w-4 h-4" />,
+  'fnb-ordering': <Utensils className="w-4 h-4" />,
+  'cash-register': <KeySquare className="w-4 h-4" />,
+  'eod-audit': <FileText className="w-4 h-4" />,
+  'multi-branch': <Globe2 className="w-4 h-4" />,
+};
+
 export const ProductWalkthrough: React.FC = () => {
-  const [activeModuleId, setActiveModuleId] = useState<ModuleId>('pc-session');
-  const activeModule = MODULES.find(m => m.id === activeModuleId) || MODULES[0];
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [idx, setIdx] = useState(0);
+  const [local, setLocal] = useState(0); // 0..1 progress inside current step
+  const fitRef = useRef<HTMLDivElement>(null);
+  const activeModule = MODULES[idx];
+  const N = MODULES.length;
+
+  // Drive the active step from scroll position through the tall track
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const el = trackRef.current;
+      if (!el) return;
+      const total = el.offsetHeight - window.innerHeight;
+      const p = total > 0 ? Math.min(Math.max(-el.getBoundingClientRect().top / total, 0), 0.9999) : 0;
+      const i = Math.floor(p * N);
+      setIdx(prev => (prev === i ? prev : i));
+      setLocal(p * N - i);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [N]);
+
+  // Shrink the pinned stage so it always fits the screen height
+  useLayoutEffect(() => {
+    const fit = () => {
+      const el = fitRef.current;
+      if (!el) return;
+      el.style.zoom = '1';
+      const avail = window.innerHeight - 112; // navbar + breathing room
+      const need = el.offsetHeight;
+      el.style.zoom = need > avail ? String(Math.max(avail / need, 0.6)) : '1';
+    };
+    fit();
+    window.addEventListener('resize', fit);
+    return () => window.removeEventListener('resize', fit);
+  }, [idx]);
+
+  const select = (i: number) => {
+    const el = trackRef.current;
+    if (!el) return;
+    playClick();
+    const total = el.offsetHeight - window.innerHeight;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: top + ((i + 0.5) / N) * total, behavior: 'smooth' });
+  };
 
   const renderActiveMockup = () => {
-    switch (activeModuleId) {
-      case 'pc-session':
-        return <PCSessionMockup />;
-      case 'digital-wallet':
-        return <WalletMockup />;
-      case 'fnb-ordering':
-        return <FnBMockup />;
-      case 'cash-register':
-        return <CashRegisterMockup />;
-      case 'eod-audit':
-        return <EODAuditMockup />;
-      case 'multi-branch':
-        return <MultiBranchMockup />;
-      default:
-        return <PCSessionMockup />;
+    switch (activeModule.id) {
+      case 'pc-session': return <PCSessionMockup />;
+      case 'digital-wallet': return <WalletMockup />;
+      case 'fnb-ordering': return <FnBMockup />;
+      case 'cash-register': return <CashRegisterMockup />;
+      case 'eod-audit': return <EODAuditMockup />;
+      case 'multi-branch': return <MultiBranchMockup />;
+      default: return <PCSessionMockup />;
     }
   };
 
   return (
-    <section id="modules" className="py-10 md:py-16 bg-[#08080A] border-t border-white/10 relative">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
+    <section id="modules" className="bg-[#08080A] border-t border-white/10 relative">
+      <style>{`@keyframes wtIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }`}</style>
 
-        {/* Section Header */}
-        <div className="mb-8">
-          <div className="text-xs text-arena-lime mb-2 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-arena-lime" />
-            <span>What it does</span>
-          </div>
-          <h2 className="font-semibold text-3xl sm:text-4xl md:text-5xl tracking-tight text-white max-w-3xl leading-tight">
-            Everything your café needs, in one system.
-          </h2>
-          <p className="text-arena-muted text-base max-w-2xl mt-2">
-            Click a feature to try it.
-          </p>
-        </div>
+      {/* Tall track: scrolling through it walks through the steps */}
+      <div ref={trackRef} style={{ height: `${N * 90 + 60}vh` }} className="relative">
+        <div className="sticky top-0 min-h-screen flex flex-col justify-center pt-20 pb-6 overflow-hidden">
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#CCFF00]/[0.04] blur-[140px] rounded-full pointer-events-none" />
 
-        {/* Console Layout: Left Selector vs Right Live Interactive Mockup */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <div ref={fitRef} className="max-w-6xl w-full mx-auto px-4 md:px-8 relative">
+            <div className="text-center max-w-2xl mx-auto mb-6">
+              <h2 className="font-semibold text-2xl sm:text-3xl md:text-4xl tracking-tight text-white leading-tight">
+                Everything your café needs, in one system.
+              </h2>
+              <p className="text-arena-muted text-sm mt-2">Keep scrolling to follow one night at the counter.</p>
+            </div>
 
-          {/* Left: Module Switcher List */}
-          <div className="lg:col-span-4 space-y-1.5">
-            {MODULES.map(module => {
-              const isActive = module.id === activeModuleId;
+        {/* Stepper */}
+        <div className="overflow-x-auto md:overflow-visible pt-4 -mt-4 pb-2 -mx-4 px-4 md:mx-0 md:px-0">
+          <div className="relative flex min-w-[640px] md:min-w-0">
+            {MODULES.map((m, i) => {
+              const done = i < idx;
+              const active = i === idx;
               return (
                 <button
-                  key={module.id}
-                  onClick={() => {
-                    playClick();
-                    setActiveModuleId(module.id);
-                  }}
+                  key={m.id}
+                  onClick={() => select(i)}
                   onMouseEnter={() => playHover()}
-                  className={`w-full p-3 rounded-lg text-left transition-colors border flex items-center justify-between group ${
-                    isActive
-                      ? 'bg-white/[0.04] border-arena-lime/60 text-white'
-                      : 'bg-white/[0.01] border-white/10 text-arena-muted hover:border-white/20 hover:text-white'
-                  }`}
+                  className="relative flex-1 flex flex-col items-center gap-2 group px-1"
                 >
-                  <div>
-                    <div className="flex items-center gap-2 mb-0.5">
-                      <span className={`text-xs ${isActive ? 'text-arena-lime' : 'text-arena-subtle'}`}>
-                        {module.code}
-                      </span>
-                    </div>
-                    <div className="font-semibold text-sm tracking-tight text-white">
-                      {module.title}
-                    </div>
-                    <div className="text-xs text-arena-muted line-clamp-1 mt-0.5">
-                      {module.tagline}
-                    </div>
-                  </div>
-
-                  <ChevronRight className={`w-4 h-4 transition-transform ${
-                    isActive ? 'text-arena-lime translate-x-1' : 'text-arena-subtle group-hover:text-white'
-                  }`} />
+                  {/* connector to next */}
+                  {i < MODULES.length - 1 && (
+                    <span className="absolute top-5 left-1/2 w-full h-px bg-white/10">
+                      <span
+                        className="block h-full bg-[#CCFF00]"
+                        style={{ width: done ? '100%' : active ? `${local * 100}%` : '0%' }}
+                      />
+                    </span>
+                  )}
+                  <span
+                    className={`relative z-10 w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                      active
+                        ? 'bg-[#CCFF00] border-[#CCFF00] text-black shadow-[0_0_24px_rgba(204,255,0,0.4)] scale-110'
+                        : done
+                        ? 'bg-[#13150A] border-[#CCFF00]/50 text-[#CCFF00]'
+                        : 'bg-[#0E0F14] border-white/15 text-[#8A8A93] group-hover:text-white group-hover:border-white/30'
+                    }`}
+                  >
+                    {ICONS[m.id]}
+                  </span>
+                  <span className={`text-xs font-medium text-center leading-tight transition-colors ${active ? 'text-white' : 'text-[#8A8A93] group-hover:text-white'}`}>
+                    {m.title}
+                  </span>
                 </button>
               );
             })}
-
-            {/* Quick Summary Box */}
-            <div className="mt-4 p-4 bg-white/[0.02] border border-white/10 rounded-lg">
-              <div className="text-arena-lime text-xs mb-1.5">
-                <span>{activeModule.code} overview</span>
-              </div>
-              <p className="text-arena-muted text-xs leading-relaxed mb-3">
-                {activeModule.description}
-              </p>
-              <div className="grid grid-cols-2 gap-2 pt-2.5 border-t border-white/10">
-                {activeModule.stats.map((stat, i) => (
-                  <div key={i}>
-                    <div className="text-white font-semibold text-sm">{stat.value}</div>
-                    <div className="text-xs text-arena-subtle">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
+        </div>
 
-          {/* Right: Live Interactive Mockup Viewport */}
-          <div className="lg:col-span-8">
-            <div className="relative">
+        {/* Stage */}
+        <div className="mt-6">
+          <div className="relative">
+            <div className="absolute -inset-3 rounded-3xl bg-gradient-to-b from-[#CCFF00]/[0.07] to-transparent blur-xl pointer-events-none" />
+            <div key={activeModule.id} className="relative" style={{ animation: 'wtIn 400ms ease' }}>
               {renderActiveMockup()}
             </div>
           </div>
 
+          {/* Caption */}
+          <div key={activeModule.id + 'c'} className="mt-5 flex flex-col md:flex-row md:items-center justify-between gap-5" style={{ animation: 'wtIn 400ms ease' }}>
+            <div className="max-w-2xl">
+              <div className="flex items-baseline gap-3">
+                <span className="text-[#CCFF00] font-mono text-sm">{activeModule.code}</span>
+                <h3 className="text-xl md:text-2xl font-semibold text-white tracking-tight">{activeModule.tagline}</h3>
+              </div>
+              <p className="text-sm text-arena-muted leading-relaxed mt-2">{activeModule.description}</p>
+            </div>
+            <div className="flex gap-2.5 shrink-0">
+              {activeModule.stats.map(st => (
+                <div key={st.label} className="px-4 py-2.5 rounded-lg bg-white/[0.03] border border-white/10">
+                  <div className="text-white font-semibold text-sm">{st.value}</div>
+                  <div className="text-[11px] text-arena-subtle">{st.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-
+      </div>
+        </div>
       </div>
     </section>
   );

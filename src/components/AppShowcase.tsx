@@ -31,35 +31,35 @@ const SCENES: SceneDef[] = [
     label: 'PC Sessions',
     icon: <Monitor className="w-3.5 h-3.5" />,
     type: 'animated',
-    durationMs: 7000,
+    durationMs: 4200,
   },
   {
     id: 'wallet',
     label: 'Member Wallet',
     icon: <Wallet className="w-3.5 h-3.5" />,
     type: 'animated',
-    durationMs: 6000,
+    durationMs: 3800,
   },
   {
     id: 'fnb',
     label: 'Food Orders',
     icon: <Utensils className="w-3.5 h-3.5" />,
     type: 'animated',
-    durationMs: 7000,
+    durationMs: 4200,
   },
   {
     id: 'billing',
     label: 'Billing & Cash',
     icon: <KeySquare className="w-3.5 h-3.5" />,
     type: 'animated',
-    durationMs: 6000,
+    durationMs: 3800,
   },
   {
     id: 'multi-branch',
     label: 'All Branches',
     icon: <Globe2 className="w-3.5 h-3.5" />,
     type: 'animated',
-    durationMs: 6000,
+    durationMs: 3800,
   },
 ];
 
@@ -85,7 +85,7 @@ export const AppShowcase: React.FC = () => {
       setProgress(0);
       startTimeRef.current = Date.now();
       setTimeout(() => setIsTransitioning(false), 50);
-    }, 300);
+    }, 150);
   }, [activeIdx]);
 
   const nextScene = useCallback(() => {
@@ -186,12 +186,12 @@ export const AppShowcase: React.FC = () => {
         </div>
 
         {/* ──── Scene Viewport ──── */}
-        <div className="relative min-h-[420px] md:min-h-[460px] bg-[#0A0B0E] overflow-hidden">
+        <div className="relative min-h-[420px] md:min-h-[clamp(380px,calc(100svh-330px),460px)] bg-[#0A0B0E] overflow-hidden">
           <div
-            className={`absolute inset-0 transition-opacity duration-300 ${
+            className={`absolute inset-0 transition-opacity duration-150 ${
               isTransitioning ? 'opacity-0 scale-[0.98]' : 'opacity-100 scale-100'
             }`}
-            style={{ transition: 'opacity 300ms ease, transform 300ms ease' }}
+            style={{ transition: 'opacity 150ms ease, transform 150ms ease' }}
           >
             {activeScene.type === 'video' && activeScene.videoSrc ? (
               <VideoScene src={activeScene.videoSrc} poster={activeScene.videoPoster} />
@@ -286,7 +286,7 @@ const PCSessionScene: React.FC = () => {
 
   useEffect(() => {
     if (isLocked) return;
-    const iv = setInterval(() => setSeconds(s => (s > 0 ? s - 1 : 0)), 1000);
+    const iv = setInterval(() => setSeconds(s => (s > 0 ? s - 1 : 0)), 400);
     return () => clearInterval(iv);
   }, [isLocked]);
 
@@ -295,13 +295,13 @@ const PCSessionScene: React.FC = () => {
     const t1 = setTimeout(() => {
       setIsLocked(true);
       setShowToast(true);
-      setTimeout(() => setShowToast(false), 2000);
-    }, 3000);
+      setTimeout(() => setShowToast(false), 1200);
+    }, 1300);
     const t2 = setTimeout(() => {
       setIsLocked(false);
       setShowToast(true);
-      setTimeout(() => setShowToast(false), 2000);
-    }, 5500);
+      setTimeout(() => setShowToast(false), 1200);
+    }, 2800);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
@@ -407,13 +407,13 @@ const WalletScene: React.FC = () => {
 
   // Auto-demo: recharge animation
   useEffect(() => {
-    const t1 = setTimeout(() => setShowRecharge(true), 1500);
+    const t1 = setTimeout(() => setShowRecharge(true), 500);
     const t2 = setTimeout(() => {
       setShowRecharge(false);
       setBalance(980);
       setShowConfirm(true);
-      setTimeout(() => setShowConfirm(false), 2000);
-    }, 3500);
+      setTimeout(() => setShowConfirm(false), 1400);
+    }, 1700);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
@@ -479,7 +479,7 @@ const WalletScene: React.FC = () => {
                 <div className="text-white font-medium text-sm">Processing UPI Recharge...</div>
                 <div className="text-[#8A8A93] text-xs mt-1">₹500 + ₹50 bonus</div>
                 <div className="mt-3 w-32 h-1 bg-white/10 rounded-full overflow-hidden mx-auto">
-                  <div className="h-full bg-[#CCFF00] rounded-full animate-[progressFill_2s_ease_forwards]" />
+                  <div className="h-full bg-[#CCFF00] rounded-full animate-[progressFill_1.1s_ease_forwards]" />
                 </div>
               </div>
             </div>
@@ -527,12 +527,12 @@ const FnBScene: React.FC = () => {
 
   // Auto-demo: add items then send to kitchen
   useEffect(() => {
-    const t1 = setTimeout(() => setOrderItems(['Monster Energy']), 1000);
-    const t2 = setTimeout(() => setOrderItems(['Monster Energy', 'Cheese Maggi']), 2000);
-    const t3 = setTimeout(() => setOrderItems(['Monster Energy', 'Cheese Maggi', 'Peri Nachos']), 3000);
-    const t4 = setTimeout(() => setKitchenStatus('sent'), 4000);
-    const t5 = setTimeout(() => setKitchenStatus('preparing'), 5000);
-    const t6 = setTimeout(() => setKitchenStatus('ready'), 6500);
+    const t1 = setTimeout(() => setOrderItems(['Monster Energy']), 450);
+    const t2 = setTimeout(() => setOrderItems(['Monster Energy', 'Cheese Maggi']), 900);
+    const t3 = setTimeout(() => setOrderItems(['Monster Energy', 'Cheese Maggi', 'Peri Nachos']), 1350);
+    const t4 = setTimeout(() => setKitchenStatus('sent'), 1900);
+    const t5 = setTimeout(() => setKitchenStatus('preparing'), 2500);
+    const t6 = setTimeout(() => setKitchenStatus('ready'), 3200);
     return () => { [t1, t2, t3, t4, t5, t6].forEach(clearTimeout); };
   }, []);
 
@@ -658,8 +658,8 @@ const BillingScene: React.FC = () => {
   const [paymentStep, setPaymentStep] = useState<'review' | 'split' | 'done'>('review');
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPaymentStep('split'), 2500);
-    const t2 = setTimeout(() => setPaymentStep('done'), 5000);
+    const t1 = setTimeout(() => setPaymentStep('split'), 1200);
+    const t2 = setTimeout(() => setPaymentStep('done'), 2400);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
@@ -783,7 +783,7 @@ const MultiBranchScene: React.FC = () => {
 
   // Auto-cycle branches
   useEffect(() => {
-    const iv = setInterval(() => setActiveBranch(p => (p + 1) % 4), 1500);
+    const iv = setInterval(() => setActiveBranch(p => (p + 1) % 4), 800);
     return () => clearInterval(iv);
   }, []);
 
@@ -791,8 +791,8 @@ const MultiBranchScene: React.FC = () => {
   useEffect(() => {
     const t = setTimeout(() => {
       setSyncPulse(true);
-      setTimeout(() => setSyncPulse(false), 1500);
-    }, 3000);
+      setTimeout(() => setSyncPulse(false), 1200);
+    }, 1500);
     return () => clearTimeout(t);
   }, []);
 
