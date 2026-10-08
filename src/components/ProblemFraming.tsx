@@ -10,61 +10,68 @@ const LEAKS = [
   {
     id: 'time',
     icon: Clock,
-    title: 'Unbilled Extra Minutes',
-    problem: 'Regulars ask counter staff for "just 5 more minutes". Without hardware enforcement, that turns into 20 unbilled minutes per PC every day.',
-    solution: 'Automatic hardware lock at 00:00:00',
+    title: 'Players stay past their time',
+    problem: 'A gamer says "just 5 more minutes" and nobody stops them. A few minutes a day, on every PC, adds up to real money.',
+    solution: 'The PC locks by itself when time ends',
+    summary: 'Every extra minute they play is a minute you don\'t get paid for.',
+    fix: 'The screen locks. To keep playing, they pay first.',
   },
   {
     id: 'cash',
     icon: Banknote,
-    title: 'Shift Handover Cash Leaks',
-    problem: 'Cash drawers are counted haphazardly during shift swaps. When money falls short, neither cashier takes ownership and the owner absorbs the loss.',
-    solution: 'Note-by-note denomination till audit',
+    title: 'Cash goes missing at shift change',
+    problem: 'The drawer is counted by eye when staff swap. If money is short, nobody knows who is responsible, so you pay for it.',
+    solution: 'Staff count every note on screen, so shortages have a name',
+    summary: 'Money is short and nobody can say whose mistake it was.',
+    fix: 'The shortage is caught on the spot and saved against the cashier.',
   },
   {
     id: 'fnb',
     icon: UtensilsCrossed,
-    title: 'Unbilled Drinks & Snacks',
-    problem: 'Counter staff hand out energy drinks, chips and water without generating a bill, so stock falls without matching revenue.',
-    solution: 'In-seat digital orders linked to gamer bill',
+    title: 'Snacks leave without a bill',
+    problem: 'Staff hand out a drink or a Maggi and forget to write it down. Stock goes down, but your sales don\'t go up.',
+    solution: 'Players order from their seat and it lands on their bill',
+    summary: 'Stuff leaves the shelf, but no money comes in.',
+    fix: 'Every order is added to that player\'s bill automatically.',
   },
   {
     id: 'offline',
     icon: WifiOff,
-    title: 'Cloud Disconnection Panic',
-    problem: 'When broadband drops, browser-based tools freeze. Sessions can\'t be billed and players walk out without paying.',
-    solution: '100% offline local area network mesh',
+    title: 'Internet drops, billing stops',
+    problem: 'Online tools freeze when the internet goes down. Customers leave without paying because you can\'t make a bill.',
+    solution: 'Works without internet and syncs later',
+    summary: 'Your billing tool needs the internet, so it stops with it.',
+    fix: 'Everything keeps running inside the café. It syncs when the internet is back.',
   },
 ];
 
-const PHASE_MS = 4200;
+const PHASE_MS = 2500;
 const TICK_MS = 100;
 
 /* ───────── Visuals ───────── */
 
 const TimeVisual: React.FC<{ on: boolean; tick: number }> = ({ on, tick }) => {
-  const over = Math.min(tick * 36, 1200); // simulated overtime seconds, up to 20 min
+  const over = Math.min(tick * 60, 1200);
   const mm = String(Math.floor(over / 60)).padStart(2, '0');
   const ss = String(over % 60).padStart(2, '0');
   return (
     <div className="h-full flex flex-col items-center justify-center text-center gap-3">
-      <div className="text-[10px] font-mono uppercase tracking-widest text-[#5C5C66]">PC 07 · Adajan · ₹80/hr</div>
+      <div className="text-xs text-[#8A8A93]">Example: PC 7 · ₹80 per hour</div>
       {on ? (
         <>
-          <Lock className="w-12 h-12 text-[#CCFF00]" style={{ animation: 'pfPop 400ms ease' }} />
-          <div className="font-mono text-4xl md:text-5xl font-bold text-[#CCFF00] tabular-nums">00:00:00</div>
-          <div className="text-sm text-white">Rig locked. Keyboard and mouse off.</div>
-          <div className="px-3 py-1.5 rounded-md border border-[#CCFF00]/30 bg-[#CCFF00]/[0.07] text-xs font-mono text-[#CCFF00]">
-            Unlock = registered payment
+          <Lock className="w-14 h-14 text-[#CCFF00]" style={{ animation: 'pfPop 400ms ease' }} />
+          <div className="text-xl md:text-2xl font-semibold text-white">Time is up. The PC locks.</div>
+          <div className="px-4 py-2 rounded-lg border border-[#CCFF00]/30 bg-[#CCFF00]/[0.07] text-sm text-[#CCFF00]">
+            Player pays at the counter to unlock
           </div>
         </>
       ) : (
         <>
-          <Monitor className="w-12 h-12 text-rose-400 pf-blink" />
-          <div className="font-mono text-4xl md:text-5xl font-bold text-rose-400 tabular-nums">+00:{mm}:{ss}</div>
-          <div className="text-sm text-[#B4B4BB]">Time's up, but the PC is still running.</div>
-          <div className="px-3 py-1.5 rounded-md border border-rose-500/30 bg-rose-500/[0.07] text-xs font-mono text-rose-300">
-            Unbilled: ₹{Math.round((over / 3600) * 80)}
+          <Monitor className="w-14 h-14 text-rose-400 pf-blink" />
+          <div className="text-xl md:text-2xl font-semibold text-white">Time is up, but they keep playing</div>
+          <div className="font-mono text-3xl font-bold text-rose-400 tabular-nums">+{mm}:{ss} free play</div>
+          <div className="px-4 py-2 rounded-lg border border-rose-500/30 bg-rose-500/[0.07] text-sm text-rose-300">
+            You lose ₹{Math.round((over / 3600) * 80)} on this PC
           </div>
         </>
       )}
@@ -81,12 +88,12 @@ const NOTES = [
 ];
 
 const CashVisual: React.FC<{ on: boolean; tick: number }> = ({ on, tick }) => {
-  const shown = on ? Math.min(Math.floor(tick / 4), NOTES.length) : 0;
+  const shown = on ? Math.min(Math.floor(tick / 2.5), NOTES.length) : 0;
   return (
     <div className="h-full flex flex-col justify-center gap-3">
       <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-[#5C5C66]">
-        <span>Shift handover · 02:00</span>
-        <span>Expected ₹14,280</span>
+        <span>Staff change · 2:00 am</span>
+        <span>Drawer should have ₹14,280</span>
       </div>
       {on ? (
         <>
@@ -109,20 +116,20 @@ const CashVisual: React.FC<{ on: boolean; tick: number }> = ({ on, tick }) => {
             className="px-3 py-2 rounded-md border border-[#CCFF00]/30 bg-[#CCFF00]/[0.07] text-xs font-mono text-[#CCFF00] transition-opacity duration-300"
             style={{ opacity: shown >= NOTES.length ? 1 : 0 }}
           >
-            ₹800 short, caught at handover. Logged against Rahul_S.
+            Found ₹800 short right away. It is saved against Rahul, who counted.
           </div>
         </>
       ) : (
         <>
           <div className="py-6 rounded-lg bg-white/[0.02] border border-white/[0.06] text-center">
-            <div className="text-xs text-[#8A8A93]">Counted by eye</div>
+            <div className="text-sm text-[#8A8A93]">Cashier counts by eye and guesses</div>
             <div className="font-mono text-3xl font-bold text-white mt-1">≈ ₹13,480</div>
           </div>
           <div className="px-3 py-2.5 rounded-md border border-rose-500/30 bg-rose-500/[0.07] flex items-center justify-between text-xs font-mono text-rose-300">
-            <span>Short</span>
+            <span>Money missing</span>
             <span className="pf-blink text-base font-bold">−₹800</span>
           </div>
-          <div className="text-xs text-[#8A8A93] text-center">Nobody owns it. The owner absorbs the loss.</div>
+          <div className="text-xs text-[#8A8A93] text-center">Nobody knows whose mistake it was. You pay for it.</div>
         </>
       )}
     </div>
@@ -137,15 +144,15 @@ const ORDERS = [
 ];
 
 const FnbVisual: React.FC<{ on: boolean; tick: number }> = ({ on, tick }) => {
-  const shown = on ? Math.min(Math.floor(tick / 5) + 1, ORDERS.length) : 0;
+  const shown = on ? Math.min(Math.floor(tick / 3) + 1, ORDERS.length) : 0;
   const taken = 14;
   const billed = on ? taken : 9;
   return (
     <div className="h-full flex flex-col justify-center gap-4">
       <div className="space-y-2.5">
         {[
-          { label: 'Taken from stock', val: taken, color: '#8A8A93' },
-          { label: 'Billed', val: billed, color: on ? '#CCFF00' : '#FB7185' },
+          { label: 'Items taken off the shelf', val: taken, color: '#8A8A93' },
+          { label: 'Items put on a bill', val: billed, color: on ? '#CCFF00' : '#FB7185' },
         ].map(b => (
           <div key={b.label}>
             <div className="flex justify-between text-xs mb-1">
@@ -153,7 +160,7 @@ const FnbVisual: React.FC<{ on: boolean; tick: number }> = ({ on, tick }) => {
               <span className="font-mono text-white">{b.val}</span>
             </div>
             <div className="h-2 rounded-full bg-white/[0.06] overflow-hidden">
-              <div className="h-full rounded-full transition-all duration-700" style={{ width: `${(b.val / taken) * 100}%`, background: b.color }} />
+              <div className="h-full rounded-full transition-all duration-300" style={{ width: `${(b.val / taken) * 100}%`, background: b.color }} />
             </div>
           </div>
         ))}
@@ -167,13 +174,13 @@ const FnbVisual: React.FC<{ on: boolean; tick: number }> = ({ on, tick }) => {
               style={{ opacity: i < shown ? 1 : 0.12 }}
             >
               <span className="text-[#B4B4BB]"><span className="font-mono text-[#5C5C66]">{o.pc}</span> · {o.item}</span>
-              <span className="font-mono text-[#CCFF00]">{o.amt} billed</span>
+              <span className="font-mono text-[#CCFF00]">{o.amt} added to bill</span>
             </div>
           ))}
         </div>
       ) : (
         <div className="px-3 py-3 rounded-md border border-rose-500/30 bg-rose-500/[0.07] text-xs font-mono text-rose-300 text-center">
-          5 drinks gone, no bill. Stock down, revenue flat.
+          5 items gone and not billed. You lose that money.
         </div>
       )}
     </div>
@@ -181,13 +188,13 @@ const FnbVisual: React.FC<{ on: boolean; tick: number }> = ({ on, tick }) => {
 };
 
 const OfflineVisual: React.FC<{ on: boolean; tick: number }> = ({ on, tick }) => {
-  const queued = Math.min(tick, 14);
+  const queued = Math.min(tick * 2, 14);
   return (
     <div className="h-full flex flex-col justify-center gap-4">
       <div className="flex items-center justify-between text-xs">
-        <span className="text-[#8A8A93] font-mono uppercase tracking-widest text-[10px]">Broadband · 21:12</span>
+        <span className="text-[#8A8A93] font-mono uppercase tracking-widest text-[10px]">Internet · 9:12 pm</span>
         <span className="px-2 py-0.5 rounded font-mono text-[11px] bg-rose-500/10 text-rose-300 border border-rose-500/30 flex items-center gap-1">
-          <WifiOff className="w-3 h-3" /> Internet down
+          <WifiOff className="w-3 h-3" /> No internet
         </span>
       </div>
 
@@ -202,29 +209,29 @@ const OfflineVisual: React.FC<{ on: boolean; tick: number }> = ({ on, tick }) =>
               ))}
             </div>
             <div className="h-1 rounded-full bg-[#CCFF00]/60" />
-            <div className="mt-1.5 text-[10px] font-mono text-[#CCFF00] text-center">LOCAL NETWORK · STATIONS + COUNTER</div>
+            <div className="mt-1.5 text-[10px] font-mono text-[#CCFF00] text-center">ALL PCs + COUNTER TALK TO EACH OTHER</div>
           </div>
           <div className="flex items-center justify-between text-xs font-mono">
-            <span className="text-white flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-[#CCFF00]" /> Billing still running</span>
-            <span className="text-[#CCFF00]">{queued} bills queued to sync</span>
+            <span className="text-white flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-[#CCFF00]" /> Billing keeps working</span>
+            <span className="text-[#CCFF00]">{queued} bills waiting to upload</span>
           </div>
         </>
       ) : (
         <>
           <div className="p-5 rounded-lg bg-white/[0.02] border border-white/[0.08] flex flex-col items-center gap-2">
             <Loader2 className="w-8 h-8 text-rose-400 animate-spin" />
-            <div className="text-sm text-white">Billing tool not responding</div>
-            <div className="text-xs text-[#8A8A93]">Waiting for cloud…</div>
+            <div className="text-sm text-white">Billing tool is stuck</div>
+            <div className="text-xs text-[#8A8A93]">Waiting for the internet…</div>
           </div>
           <div className="flex items-center justify-between px-3 py-2.5 rounded-md border border-rose-500/30 bg-rose-500/[0.07] text-xs font-mono text-rose-300">
-            <span>Sessions can't be billed</span>
+            <span>Can't make bills</span>
             <span className="flex gap-1">
               {[0, 1, 2].map(i => (
-                <X key={i} className="w-3.5 h-3.5" style={{ opacity: tick > 8 + i * 6 ? 1 : 0.2 }} />
+                <X key={i} className="w-3.5 h-3.5" style={{ opacity: tick > 4 + i * 4 ? 1 : 0.2 }} />
               ))}
             </span>
           </div>
-          <div className="text-xs text-[#8A8A93] text-center">3 gamers walk out without paying.</div>
+          <div className="text-xs text-[#8A8A93] text-center">3 players walk out without paying.</div>
         </>
       )}
     </div>
@@ -289,7 +296,7 @@ export const ProblemFraming: React.FC<ProblemFramingProps> = ({ onOpenDemo }) =>
         .pf-blink { animation: pfBlink 1.2s ease-in-out infinite; }
       `}</style>
       <div
-        className="absolute inset-0 pointer-events-none transition-opacity duration-700"
+        className="absolute inset-0 pointer-events-none transition-opacity duration-300"
         style={{ background: `radial-gradient(60% 50% at 70% 60%, ${on ? 'rgba(204,255,0,0.06)' : 'rgba(251,113,133,0.07)'}, transparent 70%)` }}
       />
 
@@ -298,13 +305,13 @@ export const ProblemFraming: React.FC<ProblemFramingProps> = ({ onOpenDemo }) =>
           <div className="max-w-3xl">
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-rose-400 mb-2">
               <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
-              <span>The Reality of Gaming Cafés</span>
+              <span>Where your money goes</span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-white leading-tight">
-              Spreadsheets and manual timers leak revenue every single shift.
+              Money quietly slips out of your café every day.
             </h2>
             <p className="mt-2 text-sm sm:text-base text-[#9999A0] leading-relaxed">
-              Lost profit rarely comes from theft. It leaks away quietly, one small gap at a time.
+              It is not theft. It is four small things nobody is watching. Tap each one to see it.
             </p>
           </div>
           <button
@@ -354,7 +361,7 @@ export const ProblemFraming: React.FC<ProblemFramingProps> = ({ onOpenDemo }) =>
                     <p className={`text-xs leading-relaxed mt-1 ${active ? 'text-[#8A8A93]' : 'text-[#6B6B77] line-clamp-1'}`}>{l.problem}</p>
                     {active && (
                       <div className="mt-2 text-xs">
-                        <span className="text-[#8A8A93]">ArenaOS solution: </span>
+                        <span className="text-[#8A8A93]">With ArenaOS: </span>
                         <span className="text-[#CCFF00] font-medium">{l.solution}</span>
                       </div>
                     )}
@@ -369,7 +376,7 @@ export const ProblemFraming: React.FC<ProblemFramingProps> = ({ onOpenDemo }) =>
             <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/[0.06] bg-[#0E0F14]">
               <div className="flex items-center gap-2 text-xs font-mono text-[#8A8A93]">
                 <span className="w-1.5 h-1.5 rounded-full pf-blink" style={{ background: accent }} />
-                {on ? 'The ArenaOS Standard' : 'The Legacy Café Model'}
+                {on ? 'With ArenaOS' : 'How it works today'}
               </div>
               <div className="relative grid grid-cols-2 p-0.5 rounded-full bg-black/40 border border-white/[0.08] text-[11px] font-medium">
                 <span
@@ -377,7 +384,7 @@ export const ProblemFraming: React.FC<ProblemFramingProps> = ({ onOpenDemo }) =>
                   style={{ left: on ? '50%' : '2px', background: on ? '#CCFF00' : '#F43F5E' }}
                 />
                 <button onClick={() => flip(false)} className={`relative z-10 px-4 py-1 rounded-full text-center whitespace-nowrap transition-colors ${!on ? 'text-white' : 'text-[#8A8A93]'}`}>
-                  Without
+                  Today
                 </button>
                 <button onClick={() => flip(true)} className={`relative z-10 px-4 py-1 rounded-full text-center whitespace-nowrap transition-colors ${on ? 'text-black' : 'text-[#8A8A93]'}`}>
                   With ArenaOS
@@ -387,13 +394,19 @@ export const ProblemFraming: React.FC<ProblemFramingProps> = ({ onOpenDemo }) =>
             <div className="flex-1 p-5 md:p-6">
               <Visual key={`${LEAKS[idx].id}-${on}`} on={on} tick={tick} />
             </div>
+            <div className="px-5 py-3 border-t border-white/[0.06] flex items-center gap-3 text-sm" style={{ background: on ? 'rgba(204,255,0,0.05)' : 'rgba(244,63,94,0.06)' }}>
+              <span className="w-6 h-6 rounded-full flex items-center justify-center shrink-0" style={{ background: accent }}>
+                {on ? <Check className="w-3.5 h-3.5 text-black" /> : <X className="w-3.5 h-3.5 text-black" />}
+              </span>
+              <span className="text-white">{on ? LEAKS[idx].fix : LEAKS[idx].summary}</span>
+            </div>
             <div className="h-[2px] bg-white/[0.05]">
               <div className="h-full transition-none" style={{ width: `${Math.min((tick * TICK_MS) / PHASE_MS, 1) * 100}%`, background: accent }} />
             </div>
           </div>
         </div>
 
-        <p className="mt-3 text-xs text-[#6B6B77]">Zero hardware replacements required. Works on any Windows PC.</p>
+        <p className="mt-3 text-xs text-[#6B6B77]">No new equipment needed. Works on the Windows PCs you already have.</p>
       </div>
     </section>
   );

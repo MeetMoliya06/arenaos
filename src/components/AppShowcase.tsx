@@ -30,36 +30,46 @@ const SCENES: SceneDef[] = [
     id: 'pc-session',
     label: 'PC Sessions',
     icon: <Monitor className="w-3.5 h-3.5" />,
-    type: 'animated',
-    durationMs: 4200,
+    type: 'video',
+    videoSrc: '/demo/pc-session.mp4',
+    videoPoster: '/demo/pc-session.jpg',
+    durationMs: 9867,
   },
   {
     id: 'wallet',
     label: 'Member Wallet',
     icon: <Wallet className="w-3.5 h-3.5" />,
-    type: 'animated',
-    durationMs: 3800,
+    type: 'video',
+    videoSrc: '/demo/wallet.mp4',
+    videoPoster: '/demo/wallet.jpg',
+    durationMs: 10038,
   },
   {
     id: 'fnb',
     label: 'Food Orders',
     icon: <Utensils className="w-3.5 h-3.5" />,
-    type: 'animated',
-    durationMs: 4200,
+    type: 'video',
+    videoSrc: '/demo/fnb.mp4',
+    videoPoster: '/demo/fnb.jpg',
+    durationMs: 12286,
   },
   {
     id: 'billing',
     label: 'Billing & Cash',
     icon: <KeySquare className="w-3.5 h-3.5" />,
-    type: 'animated',
-    durationMs: 3800,
+    type: 'video',
+    videoSrc: '/demo/billing.mp4',
+    videoPoster: '/demo/billing.jpg',
+    durationMs: 7962,
   },
   {
     id: 'multi-branch',
     label: 'All Branches',
     icon: <Globe2 className="w-3.5 h-3.5" />,
-    type: 'animated',
-    durationMs: 3800,
+    type: 'video',
+    videoSrc: '/demo/multi-branch.mp4',
+    videoPoster: '/demo/multi-branch.jpg',
+    durationMs: 6629,
   },
 ];
 
@@ -186,7 +196,7 @@ export const AppShowcase: React.FC = () => {
         </div>
 
         {/* ──── Scene Viewport ──── */}
-        <div className="relative min-h-[420px] md:min-h-[clamp(380px,calc(100svh-330px),460px)] bg-[#0A0B0E] overflow-hidden">
+        <div className={`relative bg-[#0A0B0E] overflow-hidden ${activeScene.type === 'video' ? 'aspect-[16/9]' : 'min-h-[420px] md:min-h-[clamp(380px,calc(100svh-330px),460px)]'}`}>
           <div
             className={`absolute inset-0 transition-opacity duration-150 ${
               isTransitioning ? 'opacity-0 scale-[0.98]' : 'opacity-100 scale-100'
@@ -227,6 +237,7 @@ const VideoScene: React.FC<{ src: string; poster?: string }> = ({ src, poster })
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    if (videoRef.current) videoRef.current.playbackRate = 1.75;
     videoRef.current?.play().catch(() => {});
   }, [src]);
 
@@ -241,13 +252,15 @@ const VideoScene: React.FC<{ src: string; poster?: string }> = ({ src, poster })
 
   return (
     <video
+      key={src}
       ref={videoRef}
       src={src}
       poster={poster}
       muted
+      autoPlay
       loop
       playsInline
-      className="w-full h-full object-contain bg-[#0A0B0E]"
+      className="w-full h-full object-cover bg-[#0A0B0E]"
     />
   );
 };

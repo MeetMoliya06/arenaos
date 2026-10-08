@@ -1,12 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Monitor, Wallet, Utensils, KeySquare, FileText, Globe2 } from 'lucide-react';
 import { ModuleId, ModuleInfo } from '../types';
-import { PCSessionMockup } from './PCSessionMockup';
-import { WalletMockup } from './WalletMockup';
-import { FnBMockup } from './FnBMockup';
-import { CashRegisterMockup } from './CashRegisterMockup';
-import { EODAuditMockup } from './EODAuditMockup';
-import { MultiBranchMockup } from './MultiBranchMockup';
 import { playClick, playHover } from '../audio/soundEffects';
 
 const MODULES: ModuleInfo[] = [
@@ -63,6 +57,30 @@ const ICONS: Record<ModuleId, React.ReactNode> = {
   'multi-branch': <Globe2 className="w-4 h-4" />,
 };
 
+const RealClip: React.FC<{ name: string; title?: string; children?: React.ReactNode }> = ({ name, title, children }) => (
+  <div className="bg-[#111114] border border-white/10 rounded-xl overflow-hidden relative left-1/2 -translate-x-1/2" style={{ width: 'min(calc(100vw - 32px), 1560px, calc((100svh - 335px) * 16 / 9))' }}>
+    <div className="bg-[#161619] px-4 py-2.5 border-b border-white/10 flex items-center gap-2 text-sm text-arena-muted">
+      <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+      <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
+      <span className="ml-3 font-mono text-xs truncate">ArenaOS{title ? ` — ${title}` : ''}</span>
+    </div>
+    <div className="relative">
+      <video
+        key={name}
+        src={`/demo/${name}.mp4`}
+        poster={`/demo/${name}.jpg`}
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="block w-full aspect-[16/9] object-cover bg-[#0A0B0E]"
+      />
+      {children}
+    </div>
+  </div>
+);
+
 export const ProductWalkthrough: React.FC = () => {
   const trackRef = useRef<HTMLDivElement>(null);
   const [idx, setIdx] = useState(0);
@@ -105,7 +123,8 @@ export const ProductWalkthrough: React.FC = () => {
       el.style.zoom = '1';
       const avail = window.innerHeight - 112; // navbar + breathing room
       const need = el.offsetHeight;
-      el.style.zoom = need > avail ? String(Math.max(avail / need, 0.6)) : '1';
+      el.style.zoom = '1';
+      void need; void avail;
     };
     fit();
     window.addEventListener('resize', fit);
@@ -121,17 +140,35 @@ export const ProductWalkthrough: React.FC = () => {
     window.scrollTo({ top: top + ((i + 0.5) / N) * total, behavior: 'smooth' });
   };
 
-  const renderActiveMockup = () => {
-    switch (activeModule.id) {
-      case 'pc-session': return <PCSessionMockup />;
-      case 'digital-wallet': return <WalletMockup />;
-      case 'fnb-ordering': return <FnBMockup />;
-      case 'cash-register': return <CashRegisterMockup />;
-      case 'eod-audit': return <EODAuditMockup />;
-      case 'multi-branch': return <MultiBranchMockup />;
-      default: return <PCSessionMockup />;
-    }
+  const CLIPS: Record<string, string> = {
+    'pc-session': 'pc-session',
+    'digital-wallet': 'wallet',
+    'fnb-ordering': 'fnb',
+    'cash-register': 'billing',
+    'eod-audit': 'cash-register',
+    'multi-branch': 'multi-branch',
   };
+  const renderActiveMockup = () => (
+    <RealClip name={CLIPS[activeModule.id] ?? 'pc-session'} title={activeModule.title}>
+      <div key={activeModule.id + 'c'} className="absolute inset-x-0 bottom-0 px-5 md:px-7 pt-24 pb-5 bg-gradient-to-t from-black/95 via-black/75 to-transparent flex flex-col md:flex-row md:items-end justify-between gap-4" style={{ animation: 'wtIn 400ms ease' }}>
+        <div className="max-w-2xl">
+          <div className="flex items-baseline gap-3">
+            <span className="text-[#CCFF00] font-mono text-sm">{activeModule.code}</span>
+            <h3 className="text-xl md:text-2xl font-semibold text-white tracking-tight">{activeModule.tagline}</h3>
+          </div>
+          <p className="text-sm md:text-base text-white/80 leading-relaxed mt-1.5">{activeModule.description}</p>
+        </div>
+        <div className="hidden md:flex gap-2.5 shrink-0">
+          {activeModule.stats.map(st => (
+            <div key={st.label} className="px-4 py-2 rounded-lg bg-black/50 backdrop-blur border border-white/15">
+              <div className="text-white font-semibold text-sm">{st.value}</div>
+              <div className="text-[11px] text-white/60">{st.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </RealClip>
+  );
 
   return (
     <section id="modules" className="bg-[#08080A] border-t border-white/10 relative">
@@ -201,24 +238,6 @@ export const ProductWalkthrough: React.FC = () => {
             </div>
           </div>
 
-          {/* Caption */}
-          <div key={activeModule.id + 'c'} className="mt-5 flex flex-col md:flex-row md:items-center justify-between gap-5" style={{ animation: 'wtIn 400ms ease' }}>
-            <div className="max-w-2xl">
-              <div className="flex items-baseline gap-3">
-                <span className="text-[#CCFF00] font-mono text-sm">{activeModule.code}</span>
-                <h3 className="text-xl md:text-2xl font-semibold text-white tracking-tight">{activeModule.tagline}</h3>
-              </div>
-              <p className="text-sm text-arena-muted leading-relaxed mt-2">{activeModule.description}</p>
-            </div>
-            <div className="flex gap-2.5 shrink-0">
-              {activeModule.stats.map(st => (
-                <div key={st.label} className="px-4 py-2.5 rounded-lg bg-white/[0.03] border border-white/10">
-                  <div className="text-white font-semibold text-sm">{st.value}</div>
-                  <div className="text-[11px] text-arena-subtle">{st.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
         </div>

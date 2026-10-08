@@ -11,7 +11,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemo }) => {
 
 
   return (
-    <section className="relative min-h-screen flex items-center pt-20 pb-8 overflow-hidden border-b border-white/[0.08]">
+    <section className="relative min-h-screen flex items-center pt-28 pb-10 overflow-hidden border-b border-white/[0.08]">
       {/* Background glow & subtle grid */}
       <div className="absolute inset-0 bg-tech-grid opacity-60 pointer-events-none" />
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#CCFF00]/[0.03] blur-[120px] rounded-full pointer-events-none" />
@@ -20,29 +20,29 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemo }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
           {/* Left Column: Product Positioning & Value */}
-          <div className="lg:col-span-6 flex flex-col justify-center">
+          <div className="lg:col-span-5 flex flex-col justify-center">
 
             {/* Eyebrow */}
-            <div className="flex items-center gap-2.5 text-sm mb-5">
+            <div className="flex items-center gap-2.5 text-sm mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00]" />
-              <span className="text-[#EDEDEF] font-medium">Esports &amp; Gaming Lounge OS</span>
+              <span className="text-[#EDEDEF] font-medium">Software for gaming cafés</span>
               <span className="text-white/20">·</span>
-              <span className="text-[#6B6B77] font-mono text-xs">v2.4 Production</span>
+              <span className="text-[#6B6B77] font-mono text-xs">Live now</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-5xl sm:text-6xl md:text-[4.25rem] font-semibold tracking-tight leading-[1.05] mb-6">
-              <span className="text-white">Zero unbilled minutes.</span>{' '}
-              <span className="text-[#8A8A93]">Absolute control from desk to station.</span>
+            <h1 className="text-5xl sm:text-6xl lg:text-[3.25rem] xl:text-[3.75rem] font-semibold tracking-tight leading-[1.08] mb-5">
+              <span className="text-white">Never miss a paid minute.</span>{' '}
+              <span className="text-[#8A8A93]">Run your gaming café from one screen.</span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-base sm:text-lg text-[#9999A0] max-w-lg mb-9 leading-relaxed">
-              Hardware-enforced PC lockscreens, instant member wallets, in-seat café ordering, and automated shift till reconciliations.
+            <p className="text-lg sm:text-xl text-[#9999A0] max-w-xl mb-7 leading-relaxed" style={{ textWrap: "balance" }}>
+              Every PC locks when time is up. Players pay and order food from their seat. You always know where the money is.
             </p>
 
             {/* Primary Action Row */}
-            <div className="flex flex-wrap items-center gap-5 mb-10">
+            <div className="flex flex-wrap items-center gap-5 mb-8">
               <button
                 onClick={() => {
                   playClick();
@@ -60,24 +60,24 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemo }) => {
                 onClick={() => playClick()}
                 className="text-[#B4B4BB] hover:text-white text-sm font-medium transition-colors flex items-center gap-2"
               >
-                <span>View Features</span>
+                <span>See How It Works</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </a>
             </div>
 
             {/* Proof strip */}
-            <div className="pt-7 border-t border-white/[0.08] flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-[#8A8A93]">
-              <span><strong className="text-white font-semibold">240+</strong> rigs live</span>
+            <div className="pt-6 border-t border-white/[0.08] flex flex-wrap items-center gap-x-5 gap-y-2 text-base text-[#8A8A93]">
+              <span><strong className="text-white font-semibold">240+</strong> PCs</span>
               <span className="text-white/20">•</span>
-              <span><strong className="text-white font-semibold">₹0</strong> timer leakage</span>
+              <span><strong className="text-white font-semibold">₹0</strong> free minutes lost</span>
               <span className="text-white/20">•</span>
-              <span><strong className="text-white font-semibold">Offline</strong> LAN resilient</span>
+              <span><strong className="text-white font-semibold">Works</strong> offline</span>
             </div>
 
           </div>
 
           {/* Right Column: Cursor-style Auto-Cycling Product Showcase */}
-          <div className="lg:col-span-6 relative">
+          <div className="lg:col-span-7 relative">
             <AppShowcase />
           </div>
 

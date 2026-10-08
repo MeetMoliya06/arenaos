@@ -55,7 +55,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDemo }) => {
         </div>
 
         {/* Links Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 py-6 border-b border-white/10 text-sm">
+        <div className="grid grid-cols-2 gap-6 py-6 border-b border-white/10 text-sm">
           <div>
             <div className="text-white font-medium mb-2.5">Platform</div>
             <ul className="space-y-1.5 text-xs sm:text-sm">
@@ -64,16 +64,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDemo }) => {
               <li><a href="#modules" className="hover:text-white transition-colors">In-seat food kiosk</a></li>
               <li><a href="#modules" className="hover:text-white transition-colors">Cash drawer sync</a></li>
               <li><a href="#modules" className="hover:text-white transition-colors">EOD shift handover</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <div className="text-white font-medium mb-2.5">Our branches</div>
-            <ul className="space-y-1.5 text-xs sm:text-sm">
-              <li><span className="text-white">Adajan</span>, Surat</li>
-              <li><span className="text-white">Katargam</span>, Surat</li>
-              <li><span className="text-white">Citylight</span>, Surat</li>
-              <li><span className="text-white">Varachha</span>, Surat</li>
             </ul>
           </div>
 
