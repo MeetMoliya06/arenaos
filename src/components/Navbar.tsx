@@ -47,7 +47,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
           onClick={(e) => handleNavClick('top', e)} 
           className="rounded outline-none focus-visible:ring-1 focus-visible:ring-[#CCFF00] transition-opacity hover:opacity-90"
         >
-          <Logo markClassName="w-10 h-10 md:w-11 md:h-11" wordmarkClassName="h-7 md:h-8" />
+          <Logo markClassName="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11" wordmarkClassName="h-5 sm:h-7 md:h-8" />
         </a>
 
         {/* Zone 2: Clean Text Navigation Links */}
@@ -91,7 +91,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
               onOpenDemo();
             }}
             onMouseEnter={() => playHover()}
-            className="group relative inline-flex items-center justify-center gap-2 px-5 py-2.5 md:px-6 md:py-2.5 bg-[#CCFF00] hover:bg-[#d8ff33] text-[#08090B] font-bold text-sm tracking-tight rounded-lg transition-all duration-200 shadow-[0_0_24px_rgba(204,255,0,0.3)] hover:shadow-[0_0_36px_rgba(204,255,0,0.55)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer"
+            className="group relative inline-flex items-center justify-center gap-1.5 whitespace-nowrap px-3 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-2.5 bg-[#CCFF00] hover:bg-[#d8ff33] text-[#08090B] font-bold text-xs sm:text-sm tracking-tight rounded-lg transition-all duration-200 shadow-[0_0_24px_rgba(204,255,0,0.3)] hover:shadow-[0_0_36px_rgba(204,255,0,0.55)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer"
           >
             <span>Book Live Demo</span>
             <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

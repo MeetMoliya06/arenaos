@@ -11,7 +11,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemo }) => {
 
 
   return (
-    <section className="relative min-h-screen flex items-center pt-28 pb-10 overflow-hidden border-b border-white/[0.08]">
+    <section className="relative min-h-screen flex items-start lg:items-center pt-28 pb-10 overflow-hidden border-b border-white/[0.08]">
       {/* Background glow & subtle grid */}
       <div className="absolute inset-0 bg-tech-grid opacity-60 pointer-events-none" />
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#CCFF00]/[0.03] blur-[120px] rounded-full pointer-events-none" />
@@ -66,11 +66,11 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemo }) => {
             </div>
 
             {/* Proof strip */}
-            <div className="pt-6 border-t border-white/[0.08] flex flex-wrap items-center gap-x-5 gap-y-2 text-base text-[#8A8A93]">
+            <div className="pt-6 border-t border-white/[0.08] flex flex-wrap items-center gap-x-4 sm:gap-x-5 gap-y-2 text-sm sm:text-base text-[#8A8A93]">
               <span><strong className="text-white font-semibold">240+</strong> PCs</span>
-              <span className="text-white/20">•</span>
+              <span className="hidden sm:inline text-white/20">•</span>
               <span><strong className="text-white font-semibold">₹0</strong> free minutes lost</span>
-              <span className="text-white/20">•</span>
+              <span className="hidden sm:inline text-white/20">•</span>
               <span><strong className="text-white font-semibold">Works</strong> offline</span>
             </div>
 

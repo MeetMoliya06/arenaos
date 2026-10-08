@@ -131,6 +131,15 @@ export const ProductWalkthrough: React.FC = () => {
     return () => window.removeEventListener('resize', fit);
   }, [idx]);
 
+  // Keep the active step visible in the scrollable stepper on small screens
+  useEffect(() => {
+    const b = document.querySelector<HTMLElement>(`[data-step="${idx}"]`);
+    const sc = b?.closest<HTMLElement>('.overflow-x-auto');
+    if (b && sc && sc.scrollWidth > sc.clientWidth) {
+      sc.scrollTo({ left: b.offsetLeft - sc.clientWidth / 2 + b.clientWidth / 2, behavior: 'smooth' });
+    }
+  }, [idx]);
+
   const select = (i: number) => {
     const el = trackRef.current;
     if (!el) return;
@@ -150,15 +159,15 @@ export const ProductWalkthrough: React.FC = () => {
   };
   const renderActiveMockup = () => (
     <RealClip name={CLIPS[activeModule.id] ?? 'pc-session'} title={activeModule.title}>
-      <div key={activeModule.id + 'c'} className="absolute inset-x-0 bottom-0 px-5 md:px-7 pt-24 pb-5 bg-gradient-to-t from-black/95 via-black/75 to-transparent flex flex-col md:flex-row md:items-end justify-between gap-4" style={{ animation: 'wtIn 400ms ease' }}>
+      <div key={activeModule.id + 'c'} className="md:absolute md:inset-x-0 md:bottom-0 px-4 md:px-7 py-4 md:pt-24 md:pb-5 bg-[#0D0D0F] md:bg-transparent md:bg-gradient-to-t md:from-black/95 md:via-black/75 md:to-transparent flex flex-col md:flex-row md:items-end justify-between gap-3 md:gap-4" style={{ animation: 'wtIn 400ms ease' }}>
         <div className="max-w-2xl">
           <div className="flex items-baseline gap-3">
             <span className="text-[#CCFF00] font-mono text-sm">{activeModule.code}</span>
-            <h3 className="text-xl md:text-2xl font-semibold text-white tracking-tight">{activeModule.tagline}</h3>
+            <h3 className="text-lg md:text-2xl font-semibold text-white tracking-tight">{activeModule.tagline}</h3>
           </div>
-          <p className="text-sm md:text-base text-white/80 leading-relaxed mt-1.5">{activeModule.description}</p>
+          <p className="text-sm md:text-base text-white/75 leading-relaxed mt-1.5">{activeModule.description}</p>
         </div>
-        <div className="hidden md:flex gap-2.5 shrink-0">
+        <div className="flex gap-2 md:gap-2.5 shrink-0">
           {activeModule.stats.map(st => (
             <div key={st.label} className="px-4 py-2 rounded-lg bg-black/50 backdrop-blur border border-white/15">
               <div className="text-white font-semibold text-sm">{st.value}</div>
@@ -196,6 +205,7 @@ export const ProductWalkthrough: React.FC = () => {
               return (
                 <button
                   key={m.id}
+                  data-step={i}
                   onClick={() => select(i)}
                   onMouseEnter={() => playHover()}
                   className="relative flex-1 flex flex-col items-center gap-2 group px-1"
