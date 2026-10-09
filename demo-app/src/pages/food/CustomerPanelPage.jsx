@@ -365,7 +365,7 @@ export default function CustomerPanelPage() {
               </div>
             </div>
             <h1 className="font-heading font-extrabold text-2xl tracking-wider text-text uppercase">
-              Apple Esports <span className="text-accent">Cafe Menu</span>
+              ArenaOS <span className="text-accent">Cafe Menu</span>
             </h1>
             <p className="text-text-3 text-sm mt-1">Order food & drinks directly to your PC</p>
           </div>
@@ -647,7 +647,7 @@ export default function CustomerPanelPage() {
                           {/* Direct Order Button */}
                           <button
                             onClick={() => setDirectOrderModalItem({ item, quantity: qty })}
-                            className="px-2.5 py-1.5 rounded-lg bg-accent text-white font-heading font-bold text-[10px] uppercase hover:bg-accent/80 transition-colors shadow-sm shadow-accent/15"
+                            className="px-2.5 py-1.5 rounded-lg bg-accent text-black font-heading font-bold text-[10px] uppercase hover:bg-accent/80 transition-colors shadow-sm shadow-accent/15"
                           >
                             Order
                           </button>

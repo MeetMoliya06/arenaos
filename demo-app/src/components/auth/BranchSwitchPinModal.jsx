@@ -87,7 +87,7 @@ export default function BranchSwitchPinModal({ isOpen, branch, onClose, onConfir
                 <div
                   key={i}
                   className={`w-4 h-4 rounded-full border-2 transition-all ${
-                    i < pin.length ? 'bg-accent border-accent shadow-[0_0_10px_rgba(220,38,38,0.5)]' : 'bg-bg-3 border-border'
+                    i < pin.length ? 'bg-accent border-accent shadow-[0_0_10px_rgba(204, 255, 0,0.5)]' : 'bg-bg-3 border-border'
                   }`}
                 />
               ))}

@@ -304,7 +304,7 @@ export default function CreditsPage() {
                       {credit.status?.toLowerCase() !== 'cleared' && (
                         <button
                           onClick={() => openClearModal(credit)}
-                          className="px-4 py-1.5 bg-accent/10 hover:bg-accent text-accent hover:text-white border border-accent/30 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-all"
+                          className="px-4 py-1.5 bg-accent/10 hover:bg-accent text-accent hover:text-black border border-accent/30 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-all"
                         >
                           Clear
                         </button>
@@ -465,7 +465,7 @@ export default function CreditsPage() {
               <button
                 onClick={handleClearCredit}
                 disabled={isClearing}
-                className="px-6 py-2 bg-accent hover:bg-accent-dark text-white shadow-[0_0_10px_rgba(220,38,38,0.3)] rounded-lg font-bold text-xs uppercase tracking-wider transition-colors flex items-center gap-2 disabled:opacity-50"
+                className="px-6 py-2 bg-accent hover:bg-accent-dark text-black shadow-[0_0_10px_rgba(204, 255, 0,0.3)] rounded-lg font-bold text-xs uppercase tracking-wider transition-colors flex items-center gap-2 disabled:opacity-50"
               >
                 {isClearing ? 'Processing...' : 'Confirm Clear'}
               </button>

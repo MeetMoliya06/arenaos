@@ -171,7 +171,7 @@ export default function OnlineDeskPage() {
       {data && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Summary Card */}
-          <div className="col-span-1 border border-accent/30 bg-bg-2 rounded-xl p-6 shadow-[0_0_30px_rgba(255,51,102,0.05)] h-fit">
+          <div className="col-span-1 border border-accent/30 bg-bg-2 rounded-xl p-6 shadow-[0_0_30px_rgba(204,255,0,0.05)] h-fit">
             <h3 className="text-sm font-heading font-bold uppercase tracking-wider text-text-2 mb-4">Total Online Collected</h3>
             <div className="text-4xl font-mono font-bold text-accent mb-2">
               ₹{data.totalOnlineSales.toFixed(2)}

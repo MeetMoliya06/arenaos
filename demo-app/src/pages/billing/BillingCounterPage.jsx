@@ -286,7 +286,7 @@ export default function BillingCounterPage() {
       {pendingWalkins.length > 0 && (
         <div className="mt-4 flex flex-col gap-3">
           {pendingWalkins.map((req, idx) => (
-            <div key={idx} className="bg-accent/10 border border-accent/40 rounded-xl p-4 flex items-center justify-between shadow-[0_0_15px_rgba(220,38,38,0.15)] animate-pulse-glow">
+            <div key={idx} className="bg-accent/10 border border-accent/40 rounded-xl p-4 flex items-center justify-between shadow-[0_0_15px_rgba(204, 255, 0,0.15)] animate-pulse-glow">
                <div>
                  <div className="flex items-center gap-2 mb-1">
                    <div className="w-2 h-2 rounded-full bg-accent animate-ping" />
@@ -305,7 +305,7 @@ export default function BillingCounterPage() {
                  </button>
                  <button 
                    onClick={() => handleApproveWalkin(req)} 
-                   className="px-6 py-2 bg-accent hover:bg-accent-dark text-white border border-accent/50 shadow-[0_0_10px_rgba(220,38,38,0.3)] rounded-md transition-all font-bold uppercase tracking-wider text-sm flex items-center gap-2"
+                   className="px-6 py-2 bg-accent hover:bg-accent-dark text-black border border-accent/50 shadow-[0_0_10px_rgba(204, 255, 0,0.3)] rounded-md transition-all font-bold uppercase tracking-wider text-sm flex items-center gap-2"
                  >
                    Approve & Start
                  </button>

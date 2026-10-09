@@ -400,7 +400,7 @@ export default function BillDetailsPanel({ bill, onBillUpdate, onPaymentSuccess,
                 }}
                 className={`py-2 rounded-lg border text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all ${
                   payMethod === id
-                    ? 'bg-accent/15 border-accent text-accent shadow-[0_0_8px_rgba(255,51,102,0.2)]'
+                    ? 'bg-accent/15 border-accent text-accent shadow-[0_0_8px_rgba(204,255,0,0.2)]'
                     : 'bg-bg-2 border-border text-text-3 hover:border-accent/40 hover:text-text-2'
                 }`}
               >
@@ -588,7 +588,7 @@ export default function BillDetailsPanel({ bill, onBillUpdate, onPaymentSuccess,
                   <button
                     onClick={handleComplete}
                     disabled={!canComplete || processing}
-                    className="w-full py-2.5 rounded-lg bg-accent border border-accent/80 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-accent-dark transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-[0_0_10px_rgba(255,51,102,0.3)]"
+                    className="w-full py-2.5 rounded-lg bg-accent border border-accent/80 text-black text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-accent-dark transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-[0_0_10px_rgba(204,255,0,0.3)]"
                   >
                     {processing ? (
                       <div className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
@@ -619,7 +619,7 @@ export default function BillDetailsPanel({ bill, onBillUpdate, onPaymentSuccess,
               disabled={processing || !canComplete}
               className={`sticky bottom-0 w-full py-3.5 rounded-lg text-sm font-bold uppercase tracking-widest flex items-center justify-center gap-2 transition-all bg-bg-3/80 backdrop-blur-sm ${
                 canComplete && !processing
-                  ? 'border border-accent text-accent hover:bg-bg-3/95 shadow-[0_0_14px_rgba(255,51,102,0.15)]'
+                  ? 'border border-accent text-accent hover:bg-bg-3/95 shadow-[0_0_14px_rgba(204,255,0,0.15)]'
                   : 'border border-border text-text-3 cursor-not-allowed opacity-60'
               }`}
             >

@@ -106,7 +106,7 @@ export default function EodPaymentSummaryBar({ report, targetDate, height, onHei
                 onClick={() => setActiveTab(tab.key)}
                 className={`px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-widest transition-colors ${
                   activeTab === tab.key
-                    ? 'bg-accent text-white'
+                    ? 'bg-accent text-black'
                     : 'text-text-3 hover:text-text-2 hover:bg-bg-2'
                 }`}
               >

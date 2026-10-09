@@ -1,15 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* ═══════════════════════════════════════════
-   Apple Esports — Gaming Café Base Styles
+   ArenaOS — Base Styles
    ═══════════════════════════════════════════ */
 
 
 @layer base {
+  .font-mono, .font-heading { font-variant-numeric: tabular-nums; }
+
   * {
     -webkit-tap-highlight-color: transparent;
   }

@@ -32,7 +32,7 @@ function drawHeader(doc, title, subtitle) {
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(16);
   doc.setTextColor(...ACCENT_RGB);
-  doc.text('APPLE ESPORTS', PAGE_MARGIN, 36);
+  doc.text('ARENAOS', PAGE_MARGIN, 36);
 
   doc.setFontSize(13);
   doc.setTextColor(...TEXT_DARK);

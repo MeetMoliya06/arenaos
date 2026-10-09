@@ -132,10 +132,10 @@ export default function LoginPage() {
             animate={{ scale: 1 }}
             transition={{ duration: 0.5 }}
             src={`${import.meta.env.BASE_URL}logo.png`}
-            alt="Apple Esports"
-            className="h-20 w-auto mx-auto mb-4 drop-shadow-[0_0_15px_rgba(220,38,38,0.5)]"
+            alt="ArenaOS"
+            className="h-20 w-auto mx-auto mb-4 drop-shadow-[0_0_15px_rgba(204, 255, 0,0.5)]"
           />
-          <h1 className="font-heading text-3xl font-bold mb-1 tracking-wide text-text">APPLE ESPORTS</h1>
+          <h1 className="font-heading text-3xl font-bold mb-1 tracking-wide text-text">ARENAOS</h1>
           <p className="text-accent text-[11px] font-mono tracking-[0.2em] uppercase">
             Enterprise ERP System
           </p>
@@ -174,7 +174,7 @@ export default function LoginPage() {
               <div className="text-xs text-text-2 leading-relaxed space-y-2">
                 <p className="text-text font-semibold">What to check</p>
                 <ul className="list-disc list-inside space-y-1 text-text-3">
-                  <li>On the counter PC: is <span className="font-mono text-text-2">Apple Esports</span> running?</li>
+                  <li>On the counter PC: is <span className="font-mono text-text-2">ArenaOS</span> running?</li>
                   <li>On a gaming PC: is it still connected to the shop network?</li>
                   <li>If the counter PC was just switched on, give it a minute to start.</li>
                 </ul>

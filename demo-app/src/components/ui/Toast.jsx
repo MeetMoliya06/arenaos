@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════
 // Gaming Café ERP — Toast Notification Component
-// Apple Esports style: slide-in from bottom-right, neon glow, progress bar
+// ArenaOS style: slide-in from bottom-right, neon glow, progress bar
 // ═══════════════════════════════════════════════════════════
 
 import { useState, useEffect, useCallback, useRef, createContext, useContext } from 'react';
@@ -70,7 +70,7 @@ function Toast({ toast, onClose }) {
       border: 'border-l-accent',
       progressBarBg: 'bg-accent',
       title: 'Success',
-      glow: 'shadow-[0_0_20px_rgba(220,38,38,0.18)]',
+      glow: 'shadow-[0_0_20px_rgba(204, 255, 0,0.18)]',
       titleColor: 'text-accent'
     },
     error: {

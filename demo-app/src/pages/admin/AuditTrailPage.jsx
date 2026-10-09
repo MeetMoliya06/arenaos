@@ -163,7 +163,7 @@ export default function AuditTrailPage() {
                 onClick={() => setRangeDays(p.days)}
                 className={`px-2.5 py-1.5 rounded text-[11px] font-medium transition-colors ${
                   rangeDays === p.days
-                    ? 'bg-accent text-white'
+                    ? 'bg-accent text-black'
                     : 'bg-bg-3 text-text-2 hover:text-text border border-border'
                 }`}
               >

@@ -678,7 +678,7 @@ export default function CashRegisterPage() {
 
       {/* STEP 3: Finalize Shift */}
       {register.status === 'Verified' && (
-        <div className="flex-1 flex flex-col items-center justify-center border border-accent/30 bg-bg-2 rounded-xl p-8 text-center shadow-[0_0_30px_rgba(255,51,102,0.1)]">
+        <div className="flex-1 flex flex-col items-center justify-center border border-accent/30 bg-bg-2 rounded-xl p-8 text-center shadow-[0_0_30px_rgba(204,255,0,0.1)]">
           <div className="w-20 h-20 bg-accent/10 text-accent rounded-full flex items-center justify-center mb-6">
             <Calculator className="w-10 h-10" />
           </div>
@@ -862,7 +862,7 @@ export default function CashRegisterPage() {
               (closesTradingDay && (coverAmount === '' || nextDayFloat === '')) ||
               (dayCloseNeedsReason && !nextDayFloatReason.trim())
             }
-            className="w-full max-w-md py-4 rounded-xl font-bold uppercase tracking-widest text-sm transition-all bg-accent hover:bg-accent-hover text-white shadow-lg shadow-accent/20 flex justify-center items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full max-w-md py-4 rounded-xl font-bold uppercase tracking-widest text-sm transition-all bg-accent hover:bg-accent-hover text-black shadow-lg shadow-accent/20 flex justify-center items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {isClosing ? (
               <div className="w-5 h-5 rounded-full border-2 border-white border-t-transparent animate-spin" />

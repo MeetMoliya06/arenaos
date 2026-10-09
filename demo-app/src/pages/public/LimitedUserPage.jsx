@@ -62,7 +62,7 @@ export default function LimitedUserPage() {
                 <h1 className="font-heading text-4xl font-bold text-text mb-3 tracking-wide uppercase">
                   Which Branch?
                 </h1>
-                <p className="text-text-2 font-body text-lg">Select the Apple Esports location you're at.</p>
+                <p className="text-text-2 font-body text-lg">Select the ArenaOS location you're at.</p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -72,7 +72,7 @@ export default function LimitedUserPage() {
                     whileHover={{ scale: 1.03, translateY: -4 }}
                     whileTap={{ scale: 0.97 }}
                     onClick={() => handleSelectBranch(branch)}
-                    className="card group bg-bg-2/80 backdrop-blur-xl border-border/60 shadow-xl shadow-black/50 p-7 hover:border-accent hover:shadow-[0_0_20px_rgba(220,38,38,0.15)] cursor-pointer transition-all duration-300 flex items-center gap-5"
+                    className="card group bg-bg-2/80 backdrop-blur-xl border-border/60 shadow-xl shadow-black/50 p-7 hover:border-accent hover:shadow-[0_0_20px_rgba(204, 255, 0,0.15)] cursor-pointer transition-all duration-300 flex items-center gap-5"
                   >
                     <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center border border-accent/30 group-hover:bg-accent/20 transition-colors shrink-0">
                       <MapPin className="w-6 h-6 text-accent" />
@@ -104,12 +104,12 @@ export default function LimitedUserPage() {
               exit={{ opacity: 0 }}
               className="card bg-bg-2/80 backdrop-blur-xl border-accent/20 shadow-xl shadow-black/50 p-10 text-center"
             >
-              <div className="w-20 h-20 bg-accent/10 border border-accent/30 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_20px_rgba(220,38,38,0.2)]">
+              <div className="w-20 h-20 bg-accent/10 border border-accent/30 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_20px_rgba(204, 255, 0,0.2)]">
                 <MonitorPlay className="w-10 h-10 text-accent" />
               </div>
 
               <h1 className="font-heading text-3xl font-bold text-text mb-2 tracking-wide uppercase">
-                Welcome to Apple Esports
+                Welcome to ArenaOS
               </h1>
 
               <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 px-4 py-1.5 rounded-full mb-6">

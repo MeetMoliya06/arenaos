@@ -251,7 +251,7 @@ export default function PcLockScreen() {
           whileHover={{ scale: 1.03, translateY: -5 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setStep('walkin')}
-          className="card group relative flex flex-col items-center text-center p-8 bg-bg-2/80 backdrop-blur-xl border-border/60 shadow-xl shadow-black/50 hover:border-accent hover:shadow-[0_0_20px_rgba(220,38,38,0.15)] cursor-pointer transition-all duration-300"
+          className="card group relative flex flex-col items-center text-center p-8 bg-bg-2/80 backdrop-blur-xl border-border/60 shadow-xl shadow-black/50 hover:border-accent hover:shadow-[0_0_20px_rgba(204, 255, 0,0.15)] cursor-pointer transition-all duration-300"
         >
           <UserPlus className="w-16 h-16 text-accent mb-6 group-hover:scale-110 transition-transform" />
           <h2 className="font-heading text-3xl font-bold text-text mb-3 tracking-wider uppercase">WALK-IN USER</h2>
@@ -262,7 +262,7 @@ export default function PcLockScreen() {
           whileHover={{ scale: 1.03, translateY: -5 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setStep('member_login')}
-          className="card group relative flex flex-col items-center text-center p-8 bg-bg-2/80 backdrop-blur-xl border-border/60 shadow-xl shadow-black/50 hover:border-accent hover:shadow-[0_0_20px_rgba(220,38,38,0.15)] cursor-pointer transition-all duration-300"
+          className="card group relative flex flex-col items-center text-center p-8 bg-bg-2/80 backdrop-blur-xl border-border/60 shadow-xl shadow-black/50 hover:border-accent hover:shadow-[0_0_20px_rgba(204, 255, 0,0.15)] cursor-pointer transition-all duration-300"
         >
           <UserCheck className="w-16 h-16 text-accent mb-6 group-hover:scale-110 transition-transform" />
           <h2 className="font-heading text-3xl font-bold text-text mb-3 tracking-wider uppercase">MEMBER</h2>
@@ -317,7 +317,7 @@ export default function PcLockScreen() {
 
       {walkinRequested ? (
         <div className="py-8 flex flex-col items-center">
-          <div className="w-20 h-20 bg-accent/10 border border-accent/30 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(220,38,38,0.2)]">
+          <div className="w-20 h-20 bg-accent/10 border border-accent/30 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(204, 255, 0,0.2)]">
             <Clock className="w-10 h-10 text-accent animate-pulse" />
           </div>
           <h2 className="font-heading text-2xl font-bold text-text mb-4 uppercase tracking-widest">Request Sent!</h2>
@@ -332,7 +332,7 @@ export default function PcLockScreen() {
         </div>
       ) : (
         <>
-          <div className="w-16 h-16 bg-accent/10 border border-accent/30 rounded-full flex items-center justify-center mx-auto mb-4 shadow-[0_0_15px_rgba(220,38,38,0.2)]">
+          <div className="w-16 h-16 bg-accent/10 border border-accent/30 rounded-full flex items-center justify-center mx-auto mb-4 shadow-[0_0_15px_rgba(204, 255, 0,0.2)]">
             <UserPlus className="w-8 h-8 text-accent" />
           </div>
           <h1 className="font-heading text-2xl font-bold text-text mb-6 tracking-wide uppercase">Walk-in Session</h1>
@@ -367,7 +367,7 @@ export default function PcLockScreen() {
                       onClick={() => setSelectedPlan(plan)}
                       className={`p-3 rounded-lg border transition-all flex flex-col items-center justify-center gap-1 ${
                         selectedPlan?.id === plan.id 
-                          ? 'bg-accent/20 border-accent shadow-[0_0_10px_rgba(220,38,38,0.2)] text-text' 
+                          ? 'bg-accent/20 border-accent shadow-[0_0_10px_rgba(204, 255, 0,0.2)] text-text' 
                           : 'bg-bg-3 border-border hover:border-text-3 text-text-2'
                       }`}
                     >
@@ -384,7 +384,7 @@ export default function PcLockScreen() {
           <button
             onClick={handleWalkinRequest}
             disabled={isRequestingWalkin || !walkinName.trim()}
-            className="w-full bg-accent hover:bg-accent-dark text-white font-semibold py-3 px-4 rounded-sm transition-all duration-200 flex items-center justify-center shadow-[0_0_15px_rgba(220,38,38,0.3)] disabled:opacity-50 disabled:cursor-not-allowed border border-accent/50 gap-2"
+            className="w-full bg-accent hover:bg-accent-dark text-black font-semibold py-3 px-4 rounded-sm transition-all duration-200 flex items-center justify-center shadow-[0_0_15px_rgba(204, 255, 0,0.3)] disabled:opacity-50 disabled:cursor-not-allowed border border-accent/50 gap-2"
           >
             {isRequestingWalkin ? <Loader2 className="w-5 h-5 animate-spin" /> : (
               <>
@@ -414,7 +414,7 @@ export default function PcLockScreen() {
       </button>
 
       <div className="text-center mb-8 mt-4">
-        <div className="w-16 h-16 bg-accent/10 border border-accent/30 rounded-full flex items-center justify-center mx-auto mb-4 shadow-[0_0_15px_rgba(220,38,38,0.2)]">
+        <div className="w-16 h-16 bg-accent/10 border border-accent/30 rounded-full flex items-center justify-center mx-auto mb-4 shadow-[0_0_15px_rgba(204, 255, 0,0.2)]">
           <UserCheck className="w-8 h-8 text-accent" />
         </div>
         <h1 className="font-heading text-3xl font-bold text-text tracking-wide uppercase">Member Login</h1>
@@ -454,7 +454,7 @@ export default function PcLockScreen() {
             <button
               type="submit"
               disabled={isSendingReset || !forgotEmail}
-              className="w-full bg-accent hover:bg-accent-dark text-white font-semibold py-3 px-4 rounded-sm transition-all duration-200 flex items-center justify-center shadow-[0_0_15px_rgba(220,38,38,0.3)] disabled:opacity-50 disabled:cursor-not-allowed border border-accent/50 mt-4"
+              className="w-full bg-accent hover:bg-accent-dark text-black font-semibold py-3 px-4 rounded-sm transition-all duration-200 flex items-center justify-center shadow-[0_0_15px_rgba(204, 255, 0,0.3)] disabled:opacity-50 disabled:cursor-not-allowed border border-accent/50 mt-4"
             >
               {isSendingReset ? <Loader2 className="w-5 h-5 animate-spin" /> : <span className="font-heading text-lg tracking-wider uppercase font-bold">Send Reset Link</span>}
             </button>
@@ -528,7 +528,7 @@ export default function PcLockScreen() {
         <button
           type="submit"
           disabled={isLoggingIn || !identifier || !password}
-          className="w-full bg-accent hover:bg-accent-dark text-white font-semibold py-3 px-4 rounded-sm transition-all duration-200 flex items-center justify-center shadow-[0_0_15px_rgba(220,38,38,0.3)] disabled:opacity-50 disabled:cursor-not-allowed border border-accent/50 mt-4"
+          className="w-full bg-accent hover:bg-accent-dark text-black font-semibold py-3 px-4 rounded-sm transition-all duration-200 flex items-center justify-center shadow-[0_0_15px_rgba(204, 255, 0,0.3)] disabled:opacity-50 disabled:cursor-not-allowed border border-accent/50 mt-4"
         >
           {isLoggingIn ? <Loader2 className="w-5 h-5 animate-spin" /> : <span className="font-heading text-lg tracking-wider uppercase font-bold">Login</span>}
         </button>
@@ -591,7 +591,7 @@ export default function PcLockScreen() {
               onClick={() => setSelectedPlan(plan)}
               className={`p-4 rounded-lg border transition-all flex flex-col items-center justify-center gap-2 ${
                 selectedPlan?.id === plan.id 
-                  ? 'bg-accent/20 border-accent shadow-[0_0_15px_rgba(220,38,38,0.2)]' 
+                  ? 'bg-accent/20 border-accent shadow-[0_0_15px_rgba(204, 255, 0,0.2)]' 
                   : 'bg-bg-3 border-border hover:border-text-3'
               }`}
             >
@@ -617,7 +617,7 @@ export default function PcLockScreen() {
         <button
           onClick={handleStartSession}
           disabled={isStarting || !selectedPlan || (!selectedPlan.isPostpaid && (profile?.gamingBalance || 0) < selectedPlan.price)}
-          className="w-full bg-accent hover:bg-accent-dark text-white font-semibold py-3 px-4 rounded-sm transition-all duration-200 flex items-center justify-center shadow-[0_0_15px_rgba(220,38,38,0.3)] disabled:opacity-50 disabled:cursor-not-allowed border border-accent/50 gap-2"
+          className="w-full bg-accent hover:bg-accent-dark text-black font-semibold py-3 px-4 rounded-sm transition-all duration-200 flex items-center justify-center shadow-[0_0_15px_rgba(204, 255, 0,0.3)] disabled:opacity-50 disabled:cursor-not-allowed border border-accent/50 gap-2"
         >
           {isStarting ? (
             <Loader2 className="w-5 h-5 animate-spin" />
@@ -639,9 +639,9 @@ export default function PcLockScreen() {
   // If session is awaiting billing, block everything and show logo
   if (sessionData?.sessionStatus === 'awaiting_billing') {
     return (
-      <div className="w-full h-full bg-black/95 flex flex-col items-center justify-center p-8 text-center relative border-2 border-accent shadow-[0_0_50px_rgba(255,51,102,0.3)]">
-        <img src="https://appleesports.in/apple-touch-icon.png" alt="Apple Esports" className="w-48 h-48 mb-8 animate-pulse shadow-[0_0_50px_rgba(255,51,102,0.5)] rounded-full" />
-        <h1 className="text-5xl font-heading font-bold text-text uppercase tracking-[0.2em] mb-4 drop-shadow-[0_0_15px_rgba(255,51,102,0.8)]">Session Ended</h1>
+      <div className="w-full h-full bg-black/95 flex flex-col items-center justify-center p-8 text-center relative border-2 border-accent shadow-[0_0_50px_rgba(204,255,0,0.3)]">
+        <img src="/live-demo/logo.png" alt="ArenaOS" className="w-48 h-48 mb-8 animate-pulse shadow-[0_0_50px_rgba(204,255,0,0.5)] rounded-full" />
+        <h1 className="text-5xl font-heading font-bold text-text uppercase tracking-[0.2em] mb-4 drop-shadow-[0_0_15px_rgba(204,255,0,0.8)]">Session Ended</h1>
         <p className="text-xl text-text-2 font-mono uppercase tracking-widest flex items-center gap-3">
             <Loader2 className="w-6 h-6 animate-spin text-neon-orange" />
             Awaiting Billing at Counter...
@@ -665,7 +665,7 @@ export default function PcLockScreen() {
 
       <div className="relative z-10 w-full py-8 my-auto">
         {walletEmpty && (
-          <div className="mx-auto bg-neon-red/10 border border-neon-red/30 p-6 rounded-xl max-w-md animate-in zoom-in mb-8 text-center backdrop-blur-md shadow-[0_0_30px_rgba(255,51,102,0.2)]">
+          <div className="mx-auto bg-neon-red/10 border border-neon-red/30 p-6 rounded-xl max-w-md animate-in zoom-in mb-8 text-center backdrop-blur-md shadow-[0_0_30px_rgba(204,255,0,0.2)]">
             <AlertTriangle className="w-12 h-12 text-neon-red mx-auto mb-4 animate-pulse" />
             <h2 className="font-heading text-2xl font-bold text-neon-red tracking-wide uppercase mb-2">Session Ended</h2>
             <p className="text-neon-red font-body font-bold text-lg">

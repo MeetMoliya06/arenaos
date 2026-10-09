@@ -196,7 +196,7 @@ export default function SetupPage() {
           <button
             type="submit"
             disabled={loading || (isOperator && branches.length === 0)}
-            className="w-full bg-accent hover:bg-red-700 text-white font-bold py-3 rounded transition-colors uppercase tracking-widest mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-accent hover:bg-accent-dark text-black font-bold py-3 rounded transition-colors uppercase tracking-widest mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Processing..." : "Finish Setup"}
           </button>

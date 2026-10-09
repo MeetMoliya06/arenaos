@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════
 // Gaming Café ERP — Topbar Component
-// Apple Esports style: logo, live badge, clock, date,
+// ArenaOS style: logo, live badge, clock, date,
 // branch selector, user info, notifications
 // ═══════════════════════════════════════════════════════════
 
@@ -179,10 +179,10 @@ export default function Topbar({ onToggleSidebar, sidebarOpen, onLogoutClick }) 
 
         {/* Logo */}
         <div className="flex items-center gap-2.5">
-          <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Apple Esports" className="h-8 w-auto flex-shrink-0" />
+          <img src={`${import.meta.env.BASE_URL}logo.png`} alt="ArenaOS" className="h-8 w-auto flex-shrink-0" />
           <div className="hidden sm:block">
             <div className="font-heading text-lg font-bold tracking-wider leading-tight text-text">
-              Apple Esports
+              ArenaOS
             </div>
             <div className="text-[9px] text-text-2 font-mono tracking-widest">
               GAMING CAFÉ ERP · v2.0

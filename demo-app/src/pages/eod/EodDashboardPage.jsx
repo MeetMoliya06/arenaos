@@ -609,7 +609,7 @@ export default function EodDashboardPage() {
                 }`}
               >
                 {pcBillCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 bg-accent text-white text-[9px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-md">
+                  <span className="absolute -top-1.5 -right-1.5 bg-accent text-black text-[9px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-md">
                     {pcBillCount}
                   </span>
                 )}

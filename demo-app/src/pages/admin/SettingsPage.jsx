@@ -688,7 +688,7 @@ export default function SettingsPage() {
               required 
               defaultValue={branchDrawer.data?.name} 
               className="form-control" 
-              placeholder="e.g. Apple Esports VIP"
+              placeholder="e.g. ArenaOS VIP"
             />
           </div>
           

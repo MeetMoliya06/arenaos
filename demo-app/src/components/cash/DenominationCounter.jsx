@@ -99,7 +99,7 @@ export default function DenominationCounter({ expectedTotal, onVerified }) {
           <div className={`text-3xl font-mono font-bold ${
             isExactMatch ? 'text-neon-blue drop-shadow-[0_0_10px_rgba(0,255,255,0.3)]' :
             variance > 0 ? 'text-neon-purple drop-shadow-[0_0_10px_rgba(153,51,255,0.3)]' :
-            'text-neon-red drop-shadow-[0_0_10px_rgba(255,51,102,0.3)]'
+            'text-neon-red drop-shadow-[0_0_10px_rgba(204,255,0,0.3)]'
           }`}>
             {variance > 0 ? '+' : ''}₹{variance}
           </div>

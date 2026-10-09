@@ -236,7 +236,7 @@ export default function CreateFoodOrderModal({ onClose, onOrderPlaced, initialPc
             <div className="p-4 border-t border-border bg-bg-3">
               <div className="flex justify-between items-center mb-4">
                 <span className="text-text-2 uppercase tracking-wider font-bold text-xs">Total</span>
-                <span className="font-mono font-bold text-2xl text-accent drop-shadow-[0_0_8px_rgba(255,51,102,0.3)]">
+                <span className="font-mono font-bold text-2xl text-accent drop-shadow-[0_0_8px_rgba(204,255,0,0.3)]">
                   ₹{cartTotal}
                 </span>
               </div>

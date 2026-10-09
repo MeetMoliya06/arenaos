@@ -69,7 +69,7 @@ export default function BranchConflictBanner() {
             cannot be separated afterwards, and every figure on screen for this branch is being
             overwritten several times a minute by whichever PC reported last.{' '}
             {isSuperAdmin
-              ? 'Stop the Apple Esports API service on whichever one is not the real counter PC.'
+              ? 'Stop the ArenaOS API service on whichever one is not the real counter PC.'
               : 'Tell Head Office — one of these two machines is not the real counter PC.'}
           </p>
         </div>

@@ -119,7 +119,7 @@ export default function OverlayMemberLoginScreen() {
 
       <div className="flex-1 flex flex-col">
         <div className="text-center mb-6">
-          <div className="w-12 h-12 bg-accent/10 border border-accent/30 rounded-full flex items-center justify-center mx-auto mb-3 shadow-[0_0_15px_rgba(220,38,38,0.2)]">
+          <div className="w-12 h-12 bg-accent/10 border border-accent/30 rounded-full flex items-center justify-center mx-auto mb-3 shadow-[0_0_15px_rgba(204, 255, 0,0.2)]">
             <UserCheck className="w-6 h-6 text-accent" />
           </div>
           <p className="text-text-2 font-body text-xs">Login to start a session directly from your Member Amount.</p>
@@ -158,7 +158,7 @@ export default function OverlayMemberLoginScreen() {
               <button
                 type="submit"
                 disabled={isLoading || !forgotEmail}
-                className="w-full bg-accent hover:bg-accent-dark text-white font-semibold py-2.5 px-4 rounded-sm transition-all duration-200 flex items-center justify-center mt-6 shadow-[0_0_15px_rgba(220,38,38,0.3)] disabled:opacity-50 disabled:cursor-not-allowed border border-accent/50"
+                className="w-full bg-accent hover:bg-accent-dark text-black font-semibold py-2.5 px-4 rounded-sm transition-all duration-200 flex items-center justify-center mt-6 shadow-[0_0_15px_rgba(204, 255, 0,0.3)] disabled:opacity-50 disabled:cursor-not-allowed border border-accent/50"
               >
                 {isLoading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -225,7 +225,7 @@ export default function OverlayMemberLoginScreen() {
           <button
             type="submit"
             disabled={isLoading || !identifier || !password}
-            className="w-full bg-accent hover:bg-accent-dark text-white font-semibold py-2.5 px-4 rounded-sm transition-all duration-200 flex items-center justify-center mt-6 shadow-[0_0_15px_rgba(220,38,38,0.3)] disabled:opacity-50 disabled:cursor-not-allowed border border-accent/50"
+            className="w-full bg-accent hover:bg-accent-dark text-black font-semibold py-2.5 px-4 rounded-sm transition-all duration-200 flex items-center justify-center mt-6 shadow-[0_0_15px_rgba(204, 255, 0,0.3)] disabled:opacity-50 disabled:cursor-not-allowed border border-accent/50"
           >
             {isLoading ? (
               <Loader2 className="w-4 h-4 animate-spin" />

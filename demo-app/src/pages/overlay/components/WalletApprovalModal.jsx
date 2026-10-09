@@ -35,7 +35,7 @@ export default function WalletApprovalModal() {
       <motion.div 
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="w-full max-w-sm bg-bg-2 border border-accent/40 shadow-[0_0_30px_rgba(255,51,102,0.2)] rounded-2xl p-6 flex flex-col items-center text-center relative overflow-hidden"
+        className="w-full max-w-sm bg-bg-2 border border-accent/40 shadow-[0_0_30px_rgba(204,255,0,0.2)] rounded-2xl p-6 flex flex-col items-center text-center relative overflow-hidden"
       >
         {isSuccess ? (
           <div className="flex flex-col items-center justify-center py-6">
@@ -73,7 +73,7 @@ export default function WalletApprovalModal() {
               <button 
                 onClick={handleApprove}
                 disabled={processing}
-                className="flex-[2] py-3 rounded-xl bg-accent border border-accent/80 text-white font-bold uppercase tracking-widest text-xs hover:bg-accent-dark shadow-[0_0_15px_rgba(255,51,102,0.4)] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex-[2] py-3 rounded-xl bg-accent border border-accent/80 text-black font-bold uppercase tracking-widest text-xs hover:bg-accent-dark shadow-[0_0_15px_rgba(204,255,0,0.4)] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {processing ? (
                   <Loader2 className="w-4 h-4 animate-spin" />

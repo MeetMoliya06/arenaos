@@ -104,7 +104,7 @@ export default function SetupPcPage() {
       <div className="relative z-10 w-full max-w-md">
         <div className="card bg-bg-2/80 backdrop-blur-xl border-border/60 shadow-xl shadow-black/50 p-8 hover:border-accent transition-colors duration-300">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-accent/10 border border-accent/30 rounded-full flex items-center justify-center mx-auto mb-4 shadow-[0_0_15px_rgba(220,38,38,0.2)]">
+            <div className="w-16 h-16 bg-accent/10 border border-accent/30 rounded-full flex items-center justify-center mx-auto mb-4 shadow-[0_0_15px_rgba(204, 255, 0,0.2)]">
               <MonitorSmartphone className="w-8 h-8 text-accent" />
             </div>
             <h1 className="font-heading text-3xl font-bold text-text tracking-wide uppercase">Setup Dedicated PC</h1>
@@ -177,7 +177,7 @@ export default function SetupPcPage() {
             <button
               type="submit"
               disabled={!selectedPcId || isSaving}
-              className="w-full bg-accent hover:bg-accent-dark text-white font-semibold py-3 px-4 rounded-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(220,38,38,0.3)] disabled:opacity-50 disabled:cursor-not-allowed border border-accent/50"
+              className="w-full bg-accent hover:bg-accent-dark text-black font-semibold py-3 px-4 rounded-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(204, 255, 0,0.3)] disabled:opacity-50 disabled:cursor-not-allowed border border-accent/50"
             >
               {isSaving ? <Loader2 className="w-5 h-5 animate-spin" /> : <CheckCircle className="w-5 h-5" />}
               <span className="font-heading text-lg tracking-wider uppercase font-bold">Save Configuration</span>

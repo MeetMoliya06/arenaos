@@ -273,7 +273,7 @@ export default function PaymentEngineModal({ bill, onClose, onPaymentSuccess }) 
               )}
               <div className="flex justify-between items-center pt-2 border-t border-border">
                 <span className="font-bold text-text uppercase tracking-wider text-sm">Grand Total</span>
-                <span className="font-mono font-bold text-2xl text-accent drop-shadow-[0_0_8px_rgba(255,51,102,0.3)]">
+                <span className="font-mono font-bold text-2xl text-accent drop-shadow-[0_0_8px_rgba(204,255,0,0.3)]">
                   ₹{formatMoney(total)}
                 </span>
               </div>
@@ -543,7 +543,7 @@ export default function PaymentEngineModal({ bill, onClose, onPaymentSuccess }) 
               disabled={loading || Math.abs(totalInput - total) > 0.01}
               className={`w-full py-3.5 rounded-lg text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all ${
                 Math.abs(totalInput - total) <= 0.01 && !loading
-                  ? 'bg-accent/10 border border-accent text-accent hover:bg-accent/20 shadow-[0_0_12px_rgba(255,51,102,0.2)]'
+                  ? 'bg-accent/10 border border-accent text-accent hover:bg-accent/20 shadow-[0_0_12px_rgba(204,255,0,0.2)]'
                   : 'bg-bg-2 border border-border text-text-3 cursor-not-allowed'
               }`}
             >

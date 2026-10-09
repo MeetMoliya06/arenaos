@@ -34,8 +34,8 @@ export default function UserFlowSelectionPage() {
             animate={{ scale: 1 }}
             transition={{ duration: 0.5 }}
             src={`${import.meta.env.BASE_URL}logo.png`} 
-            alt="Apple Esports" 
-            className="h-20 w-auto mx-auto mb-6 drop-shadow-[0_0_15px_rgba(220,38,38,0.5)]"
+            alt="ArenaOS" 
+            className="h-20 w-auto mx-auto mb-6 drop-shadow-[0_0_15px_rgba(204, 255, 0,0.5)]"
           />
           <motion.h1 
             initial={{ opacity: 0, y: -20 }}
@@ -62,7 +62,7 @@ export default function UserFlowSelectionPage() {
             whileHover={{ scale: 1.03, translateY: -5 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => navigate('/user/limited')}
-            className="card group relative flex flex-col items-center text-center p-10 bg-bg-2/80 backdrop-blur-xl border-border/60 shadow-xl shadow-black/50 hover:border-accent hover:shadow-[0_0_20px_rgba(220,38,38,0.15)] cursor-pointer transition-all duration-300"
+            className="card group relative flex flex-col items-center text-center p-10 bg-bg-2/80 backdrop-blur-xl border-border/60 shadow-xl shadow-black/50 hover:border-accent hover:shadow-[0_0_20px_rgba(204, 255, 0,0.15)] cursor-pointer transition-all duration-300"
           >
             <UserPlus className="w-12 h-12 text-accent mb-6 group-hover:scale-110 transition-transform" />
             <h2 className="font-heading text-2xl font-bold text-text mb-3 tracking-wider">WALK-IN USER</h2>
@@ -76,7 +76,7 @@ export default function UserFlowSelectionPage() {
             whileHover={{ scale: 1.03, translateY: -5 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => navigate('/user/member-login')}
-            className="card group relative flex flex-col items-center text-center p-10 bg-bg-2/80 backdrop-blur-xl border-border/60 shadow-xl shadow-black/50 hover:border-accent hover:shadow-[0_0_20px_rgba(220,38,38,0.15)] cursor-pointer transition-all duration-300"
+            className="card group relative flex flex-col items-center text-center p-10 bg-bg-2/80 backdrop-blur-xl border-border/60 shadow-xl shadow-black/50 hover:border-accent hover:shadow-[0_0_20px_rgba(204, 255, 0,0.15)] cursor-pointer transition-all duration-300"
           >
             <UserCheck className="w-12 h-12 text-accent mb-6 group-hover:scale-110 transition-transform" />
             <h2 className="font-heading text-2xl font-bold text-text mb-3 tracking-wider">MEMBER</h2>

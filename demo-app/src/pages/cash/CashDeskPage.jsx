@@ -276,7 +276,7 @@ export default function CashDeskPage() {
               </span>
             )}
           </div>
-          <div className={`font-mono text-5xl font-bold tracking-tight ${isDrawerNegative ? 'text-neon-red' : 'text-accent drop-shadow-[0_0_12px_rgba(255,51,102,0.3)]'}`}>
+          <div className={`font-mono text-5xl font-bold tracking-tight ${isDrawerNegative ? 'text-neon-red' : 'text-accent drop-shadow-[0_0_12px_rgba(204,255,0,0.3)]'}`}>
             ₹{expectedDrawerCash}
           </div>
           <p className="text-text-3 text-xs mt-3 italic">

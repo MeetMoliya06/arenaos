@@ -144,10 +144,10 @@ export default function LoginPage() {
             animate={{ scale: 1 }}
             transition={{ duration: 0.5 }}
             src={`${import.meta.env.BASE_URL}logo.png`} 
-            alt="Apple Esports" 
-            className="h-20 w-auto mx-auto mb-4 drop-shadow-[0_0_15px_rgba(220,38,38,0.5)]"
+            alt="ArenaOS" 
+            className="h-20 w-auto mx-auto mb-4 drop-shadow-[0_0_15px_rgba(204, 255, 0,0.5)]"
           />
-          <h1 className="font-heading text-3xl font-bold text-text mb-1 tracking-wide">APPLE ESPORTS</h1>
+          <h1 className="font-heading text-3xl font-bold text-text mb-1 tracking-wide">ARENAOS</h1>
           <p className="text-accent text-[11px] font-mono tracking-[0.2em] uppercase">Enterprise ERP System</p>
         </div>
 
@@ -217,7 +217,7 @@ export default function LoginPage() {
                   <button 
                     type="submit" 
                     disabled={isLoading}
-                    className="btn-primary w-full mt-4 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(220,38,38,0.3)]"
+                    className="btn-primary w-full mt-4 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(204, 255, 0,0.3)]"
                   >
                     {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Send Reset Link'}
                   </button>
@@ -378,7 +378,7 @@ export default function LoginPage() {
               <button 
                 type="submit" 
                 disabled={isLoading}
-                className="btn-primary w-full mt-6 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(220,38,38,0.3)]"
+                className="btn-primary w-full mt-6 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(204, 255, 0,0.3)]"
               >
                 {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Super Admin Access'}
               </button>

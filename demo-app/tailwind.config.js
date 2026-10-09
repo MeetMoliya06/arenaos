@@ -8,28 +8,28 @@ export default {
   theme: {
     extend: {
       // ═══════════════════════════════════════════
-      // Apple Esports — Gaming Café Design System
-      // Colors extracted from UI prototype
+      // ArenaOS design system (matches the marketing site)
       // ═══════════════════════════════════════════
       colors: {
         // Background hierarchy
         bg: {
-          DEFAULT: '#0a0d14',
-          2: '#0f1420',
-          3: '#141926',
-          4: '#1a2035',
+          DEFAULT: '#08090B',
+          2: '#0D0D0F',
+          3: '#131316',
+          4: '#18181C',
         },
         // Borders
         border: {
-          DEFAULT: '#1e2840',
-          2: '#253050',
+          DEFAULT: 'rgba(255, 255, 255, 0.08)',
+          2: 'rgba(255, 255, 255, 0.16)',
         },
         // Accent (primary brand color — red)
         accent: {
-          DEFAULT: '#dc2626',
-          dark: '#b91c1c',
-          dim: 'rgba(220, 38, 38, 0.08)',
-          glow: 'rgba(220, 38, 38, 0.15)',
+          DEFAULT: '#CCFF00',
+          dark: '#b8e600',
+          hover: '#d8ff33',
+          dim: 'rgba(204, 255, 0, 0.08)',
+          glow: 'rgba(204, 255, 0, 0.15)',
         },
         // Status colors from SOP PC states
         neon: {
@@ -69,15 +69,15 @@ export default {
         },
         // Text hierarchy
         text: {
-          DEFAULT: '#e8eaf0',
-          2: '#8892a8',
-          3: '#4a5568',
+          DEFAULT: '#EDEDEF',
+          2: '#8A8A93',
+          3: '#5C5C66',
         },
       },
       fontFamily: {
-        heading: ['Rajdhani', 'sans-serif'],
-        mono: ['DM Mono', 'monospace'],
-        body: ['Inter', 'sans-serif'],
+        heading: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['Inter', 'system-ui', 'sans-serif'],
+        body: ['Inter', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         sm: '8px',

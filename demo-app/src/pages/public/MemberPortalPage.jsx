@@ -164,7 +164,7 @@ export default function MemberPortalPage() {
 
       <header className="relative z-10 w-full px-8 py-4 bg-bg-2/80 backdrop-blur-md border-b border-border/50 flex items-center justify-between shadow-lg">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-accent-dark flex items-center justify-center shadow-[0_0_15px_rgba(255,51,102,0.4)]">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-accent-dark flex items-center justify-center shadow-[0_0_15px_rgba(204,255,0,0.4)]">
             <User className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -322,7 +322,7 @@ export default function MemberPortalPage() {
                         onClick={() => setSelectedPc(pc)}
                         className={`p-4 rounded-xl border cursor-pointer transition-all duration-200 flex flex-col items-center justify-center gap-2
                           ${selectedPc?.id === pc.id
-                            ? 'bg-accent/20 border-accent shadow-[0_0_15px_rgba(220,38,38,0.2)]'
+                            ? 'bg-accent/20 border-accent shadow-[0_0_15px_rgba(204, 255, 0,0.2)]'
                             : 'bg-bg-3 border-border hover:border-text-2'
                           }`}
                       >
@@ -350,7 +350,7 @@ export default function MemberPortalPage() {
                         className="p-4 bg-accent/10 border border-accent/30 rounded-xl flex items-center justify-between"
                       >
                         <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-accent rounded-lg flex items-center justify-center text-bg font-bold font-mono shadow-[0_0_10px_rgba(220,38,38,0.4)] text-sm">
+                          <div className="w-12 h-12 bg-accent rounded-lg flex items-center justify-center text-bg font-bold font-mono shadow-[0_0_10px_rgba(204, 255, 0,0.4)] text-sm">
                             {selectedPc.name}
                           </div>
                           <div>
@@ -361,7 +361,7 @@ export default function MemberPortalPage() {
                         <button
                           onClick={handleStartSession}
                           disabled={isStarting}
-                          className="bg-accent hover:bg-accent-dark text-bg px-8 py-3 font-heading font-bold tracking-wider uppercase text-lg rounded-md flex items-center gap-2 disabled:opacity-50 transition-colors shadow-[0_0_15px_rgba(220,38,38,0.3)]"
+                          className="bg-accent hover:bg-accent-dark text-bg px-8 py-3 font-heading font-bold tracking-wider uppercase text-lg rounded-md flex items-center gap-2 disabled:opacity-50 transition-colors shadow-[0_0_15px_rgba(204, 255, 0,0.3)]"
                         >
                           {isStarting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Start Session'}
                         </button>

@@ -207,7 +207,7 @@ function OverlayContent({ isMinimized, setIsMinimized }) {
               bubbleDrag.onPointerUp(e);
               if (!bubbleDrag.wasDragged()) setIsMinimized(false);
             }}
-            className="w-14 h-14 bg-bg-2/90 backdrop-blur-xl border border-accent/50 rounded-full flex items-center justify-center text-accent shadow-[0_0_15px_rgba(220,38,38,0.3)] hover:bg-accent/20 transition-all cursor-move touch-none select-none"
+            className="w-14 h-14 bg-bg-2/90 backdrop-blur-xl border border-accent/50 rounded-full flex items-center justify-center text-accent shadow-[0_0_15px_rgba(204, 255, 0,0.3)] hover:bg-accent/20 transition-all cursor-move touch-none select-none"
           >
             <Maximize2 className="w-5 h-5 pointer-events-none" />
           </div>
@@ -233,7 +233,7 @@ function OverlayContent({ isMinimized, setIsMinimized }) {
       >
         <div className="flex items-center gap-3 pointer-events-none">
           <div className="w-2.5 h-2.5 rounded-full bg-neon-green animate-pulse shadow-[0_0_8px_#22d3a6]" />
-          <span className="font-heading font-bold tracking-widest uppercase text-accent">Apple Esports</span>
+          <span className="font-heading font-bold tracking-widest uppercase text-accent">ArenaOS</span>
         </div>
         <button
           onClick={() => setIsMinimized(true)}

@@ -131,7 +131,7 @@ export default function MemberTimeSelectionScreen() {
                 onClick={() => setSelectedPlan(plan)}
                 className={`p-3 rounded-lg border transition-all flex flex-col items-center justify-center gap-1 text-center ${
                   selectedPlan?.id === plan.id 
-                    ? 'bg-accent/20 border-accent shadow-[0_0_10px_rgba(220,38,38,0.2)]' 
+                    ? 'bg-accent/20 border-accent shadow-[0_0_10px_rgba(204, 255, 0,0.2)]' 
                     : 'bg-bg-3 border-border hover:border-text-3'
                 }`}
               >
@@ -158,7 +158,7 @@ export default function MemberTimeSelectionScreen() {
           <button
             onClick={handleStartSession}
             disabled={isStarting || !selectedPlan || (!selectedPlan.isPostpaid && profile.gamingBalance < selectedPlan.price)}
-            className="w-full bg-accent hover:bg-accent-dark text-white font-semibold py-3 px-4 rounded-sm transition-all duration-200 flex items-center justify-center shadow-[0_0_15px_rgba(220,38,38,0.3)] disabled:opacity-50 disabled:cursor-not-allowed border border-accent/50 gap-2"
+            className="w-full bg-accent hover:bg-accent-dark text-black font-semibold py-3 px-4 rounded-sm transition-all duration-200 flex items-center justify-center shadow-[0_0_15px_rgba(204, 255, 0,0.3)] disabled:opacity-50 disabled:cursor-not-allowed border border-accent/50 gap-2"
           >
             {isStarting ? (
               <Loader2 className="w-5 h-5 animate-spin" />

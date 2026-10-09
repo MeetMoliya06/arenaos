@@ -262,7 +262,7 @@ export default function PcDetailPanel({
               </button>
               <button
                 onClick={() => onApproveWalkin?.(walkinReq)}
-                className="py-1.5 rounded border border-accent/40 bg-accent text-white text-[10px] font-bold uppercase tracking-wider hover:bg-accent-dark transition-colors"
+                className="py-1.5 rounded border border-accent/40 bg-accent text-black text-[10px] font-bold uppercase tracking-wider hover:bg-accent-dark transition-colors"
               >
                 Approve
               </button>

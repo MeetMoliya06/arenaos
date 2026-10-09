@@ -172,7 +172,7 @@ function EmployeeDetailView({ employee, onBack }) {
         <button onClick={onBack} className="flex items-center gap-2 text-text-2 hover:text-text text-sm font-semibold transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to Records
         </button>
-        <button onClick={handlePrint} className="flex items-center gap-2 px-4 py-2 bg-accent/10 hover:bg-accent text-accent hover:text-white border border-accent/30 rounded-lg text-sm font-bold uppercase tracking-wider transition-all">
+        <button onClick={handlePrint} className="flex items-center gap-2 px-4 py-2 bg-accent/10 hover:bg-accent text-accent hover:text-black border border-accent/30 rounded-lg text-sm font-bold uppercase tracking-wider transition-all">
           <Printer className="w-4 h-4" /> Print / Save PDF
         </button>
       </div>
@@ -182,7 +182,7 @@ function EmployeeDetailView({ employee, onBack }) {
         <div className="print-header no-print hidden" />
         {/* Print-only header */}
         <div className="hidden print:block text-center mb-6">
-          <h1 className="text-2xl font-bold">Apple Esports</h1>
+          <h1 className="text-2xl font-bold">ArenaOS</h1>
           <p className="text-sm text-gray-500">Employee Joining Form — Official Record</p>
         </div>
 
@@ -604,7 +604,7 @@ export default function EmployeeFormsPage() {
               <div className="text-center py-16 bg-bg-2 border border-border rounded-xl">
                 <FileText className="w-12 h-12 mx-auto mb-3 text-text-3 opacity-30" />
                 <p className="text-sm font-bold uppercase tracking-wider text-text-3">No employee records found</p>
-                <button onClick={() => setTab('new')} className="mt-4 px-4 py-2 bg-accent/10 hover:bg-accent text-accent hover:text-white border border-accent/30 rounded-lg text-sm font-bold transition-all">
+                <button onClick={() => setTab('new')} className="mt-4 px-4 py-2 bg-accent/10 hover:bg-accent text-accent hover:text-black border border-accent/30 rounded-lg text-sm font-bold transition-all">
                   Add First Employee
                 </button>
               </div>
@@ -649,7 +649,7 @@ export default function EmployeeFormsPage() {
                         </td>
                         <td className="p-4 text-right">
                           <div className="flex items-center justify-end gap-2">
-                            <button onClick={() => setSelectedEmployee(emp)} className="px-3 py-1.5 bg-accent/10 hover:bg-accent text-accent hover:text-white border border-accent/30 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-all">
+                            <button onClick={() => setSelectedEmployee(emp)} className="px-3 py-1.5 bg-accent/10 hover:bg-accent text-accent hover:text-black border border-accent/30 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-all">
                               View
                             </button>
                             <button
@@ -854,7 +854,7 @@ export default function EmployeeFormsPage() {
                 <CheckCircle2 className="w-4 h-4" /> Declaration
               </h3>
               <p className="text-xs text-text-2 leading-relaxed">
-                By submitting this form, the employee declares that all information provided is true, complete, and accurate. Any false information will be their sole responsibility. They confirm having read and accepted all terms and conditions provided by Apple Esports.
+                By submitting this form, the employee declares that all information provided is true, complete, and accurate. Any false information will be their sole responsibility. They confirm having read and accepted all terms and conditions provided by ArenaOS.
               </p>
               <label className="flex items-center gap-3 cursor-pointer select-none pt-2 border-t border-border/50">
                 <input type="checkbox" required className="w-4 h-4 rounded border-border bg-bg-3 text-neon-orange focus:ring-neon-orange focus:ring-offset-bg-2 cursor-pointer" />
@@ -869,7 +869,7 @@ export default function EmployeeFormsPage() {
                 Cancel
               </button>
               <button type="submit" disabled={isSubmitting}
-                className="px-8 py-2.5 bg-accent hover:bg-accent/90 text-white rounded-lg text-sm font-bold uppercase tracking-wider transition-all disabled:opacity-50 flex items-center gap-2">
+                className="px-8 py-2.5 bg-accent hover:bg-accent/90 text-black rounded-lg text-sm font-bold uppercase tracking-wider transition-all disabled:opacity-50 flex items-center gap-2">
                 {isSubmitting ? <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
                 Submit Joining Form
               </button>

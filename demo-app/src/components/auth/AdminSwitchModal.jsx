@@ -168,7 +168,7 @@ export default function AdminSwitchModal({ isOpen, onClose }) {
                     <div 
                       key={i} 
                       className={`w-4 h-4 rounded-full border-2 transition-all ${
-                        i < pin.length ? 'bg-accent border-accent shadow-[0_0_10px_rgba(220,38,38,0.5)]' : 'bg-bg-3 border-border'
+                        i < pin.length ? 'bg-accent border-accent shadow-[0_0_10px_rgba(204, 255, 0,0.5)]' : 'bg-bg-3 border-border'
                       }`} 
                     />
                   ))}
@@ -217,7 +217,7 @@ export default function AdminSwitchModal({ isOpen, onClose }) {
                   type="button"
                   disabled={loading}
                   onClick={() => handleSubmit()}
-                  className="col-span-3 mt-2 bg-accent hover:bg-accent/90 border border-accent/50 rounded-lg text-sm font-bold text-white transition-all active:scale-95 py-3 shadow-[0_0_10px_rgba(220,38,38,0.3)] uppercase tracking-widest disabled:opacity-50 disabled:pointer-events-none"
+                  className="col-span-3 mt-2 bg-accent hover:bg-accent/90 border border-accent/50 rounded-lg text-sm font-bold text-black transition-all active:scale-95 py-3 shadow-[0_0_10px_rgba(204, 255, 0,0.3)] uppercase tracking-widest disabled:opacity-50 disabled:pointer-events-none"
                 >
                   {loading ? 'Switching…' : 'Confirm Switch'}
                 </button>

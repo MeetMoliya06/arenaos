@@ -37,7 +37,7 @@ export default function OverlayNavBar() {
             className={({ isActive }) => `
               flex flex-col items-center justify-center w-16 h-14 rounded-lg transition-all duration-200
               ${isActive 
-                ? 'text-accent bg-accent/10 shadow-[inset_0_-2px_0_rgba(220,38,38,1)]' 
+                ? 'text-accent bg-accent/10 shadow-[inset_0_-2px_0_rgba(204, 255, 0,1)]' 
                 : 'text-text-3 hover:text-text-2 hover:bg-white/5'}
             `}
           >

@@ -49,8 +49,8 @@ export default function LandingGatewayPage() {
         <div className="text-center mb-12">
           <motion.img
             initial={{ scale: 0.9 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}
-            src={`${import.meta.env.BASE_URL}logo.png`} alt="Apple Esports"
-            className="h-20 w-auto mx-auto mb-5 drop-shadow-[0_0_15px_rgba(220,38,38,0.5)]"
+            src={`${import.meta.env.BASE_URL}logo.png`} alt="ArenaOS"
+            className="h-20 w-auto mx-auto mb-5 drop-shadow-[0_0_15px_rgba(204, 255, 0,0.5)]"
           />
           <motion.h1 initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="font-heading text-4xl md:text-5xl font-bold tracking-wide text-text mb-3">
             LIVE PRODUCT DEMO
@@ -68,7 +68,7 @@ export default function LandingGatewayPage() {
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.1 }}
               whileHover={{ scale: 1.03, translateY: -5 }} whileTap={{ scale: 0.97 }}
               onClick={() => enter(role)}
-              className="card group relative flex flex-col items-center text-center p-8 bg-bg-2/80 backdrop-blur-xl border-border/60 shadow-xl shadow-black/50 hover:border-accent hover:shadow-[0_0_20px_rgba(220,38,38,0.15)] cursor-pointer transition-all duration-300"
+              className="card group relative flex flex-col items-center text-center p-8 bg-bg-2/80 backdrop-blur-xl border-border/60 shadow-xl shadow-black/50 hover:border-accent hover:shadow-[0_0_20px_rgba(204, 255, 0,0.15)] cursor-pointer transition-all duration-300"
             >
               {role.badge && (
                 <span className="absolute top-3 right-3 inline-flex items-center gap-1 text-[10px] font-mono uppercase tracking-wider text-accent border border-accent/40 rounded-full px-2 py-0.5">

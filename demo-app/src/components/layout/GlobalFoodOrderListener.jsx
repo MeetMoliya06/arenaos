@@ -139,7 +139,7 @@ export default function GlobalFoodOrderListener() {
               initial={{ opacity: 0, y: 50, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="bg-bg-2 border border-accent shadow-[0_0_30px_rgba(220,38,38,0.3)] rounded-lg p-5 w-[400px]"
+              className="bg-bg-2 border border-accent shadow-[0_0_30px_rgba(204, 255, 0,0.3)] rounded-lg p-5 w-[400px]"
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center shrink-0">
@@ -180,7 +180,7 @@ export default function GlobalFoodOrderListener() {
               <div className="flex gap-3">
                 <button
                   onClick={() => handleAcknowledge(orderId)}
-                  className="flex-1 bg-accent hover:bg-accent-dark text-white rounded-sm py-2 text-sm font-semibold flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(220,38,38,0.4)] transition-colors"
+                  className="flex-1 bg-accent hover:bg-accent-dark text-black rounded-sm py-2 text-sm font-semibold flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(204, 255, 0,0.4)] transition-colors"
                 >
                   <Check className="w-4 h-4" /> Acknowledge
                 </button>

@@ -438,7 +438,7 @@ export default function MainDashboardPage() {
             <motion.div 
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
-              className="mt-6 bg-bg-2 border border-neon-red/50 rounded-lg p-5 shadow-[0_0_15px_rgba(255,51,102,0.1)]"
+              className="mt-6 bg-bg-2 border border-neon-red/50 rounded-lg p-5 shadow-[0_0_15px_rgba(204,255,0,0.1)]"
             >
               <div className="flex items-center justify-between mb-4 border-b border-border/50 pb-3">
                 <div className="flex items-center gap-2 text-neon-red">

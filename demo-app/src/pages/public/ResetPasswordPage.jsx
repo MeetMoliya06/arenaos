@@ -152,7 +152,7 @@ export default function ResetPasswordPage() {
               <button
                 type="submit"
                 disabled={loading || !email || !token}
-                className="w-full bg-accent hover:bg-red-700 text-white font-bold py-3 rounded transition-colors uppercase tracking-widest mt-6 disabled:opacity-50"
+                className="w-full bg-accent hover:bg-accent-dark text-black font-bold py-3 rounded transition-colors uppercase tracking-widest mt-6 disabled:opacity-50"
               >
                 {loading ? "Resetting..." : "Save Password"}
               </button>

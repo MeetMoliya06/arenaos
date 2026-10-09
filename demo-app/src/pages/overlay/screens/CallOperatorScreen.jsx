@@ -60,7 +60,7 @@ export default function CallOperatorScreen() {
           relative w-48 h-48 rounded-full flex flex-col items-center justify-center transition-all duration-300
           ${cooldown > 0 
             ? 'bg-bg-3 border-2 border-border opacity-50 cursor-not-allowed' 
-            : 'bg-accent/10 border-2 border-accent shadow-[0_0_50px_rgba(220,38,38,0.3)] hover:scale-105 active:scale-95 hover:bg-accent/20'
+            : 'bg-accent/10 border-2 border-accent shadow-[0_0_50px_rgba(204, 255, 0,0.3)] hover:scale-105 active:scale-95 hover:bg-accent/20'
           }
         `}
       >

@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════════════
 // Gaming Café ERP — Sidebar Navigation
 // SOP §19: Dashboard-level permission control
-// Apple Esports — collapsible sidebar with role-based visibility
+// ArenaOS — collapsible sidebar with role-based visibility
 // ═══════════════════════════════════════════════════════════
 
 import { useEffect, useState, useCallback } from 'react';

@@ -48,7 +48,7 @@ export const printBill = async (billId, fullBillObject = null) => {
           </head>
           <body>
             <div class="text-center border-b">
-              <h2 style="margin:0; font-size: 18px;">APPLE ESPORTS</h2>
+              <h2 style="margin:0; font-size: 18px;">ARENAOS</h2>
               <p style="margin:2px 0;">Gaming Cafe</p>
               <p style="margin:2px 0; font-size: 10px;">CREDIT SETTLEMENT RECEIPT</p>
             </div>
@@ -122,7 +122,7 @@ export const printBill = async (billId, fullBillObject = null) => {
           </head>
           <body>
             <div class="text-center border-b">
-              <h2 style="margin:0; font-size: 18px;">APPLE ESPORTS</h2>
+              <h2 style="margin:0; font-size: 18px;">ARENAOS</h2>
               <p style="margin:2px 0;">Gaming Cafe</p>
               <p style="margin:2px 0; font-size: 10px;">MEMBER AMOUNT TOP-UP RECEIPT</p>
             </div>
@@ -210,7 +210,7 @@ export const printBill = async (billId, fullBillObject = null) => {
           </head>
           <body>
             <div class="text-center border-b">
-              <h2 style="margin:0; font-size: 18px;">APPLE ESPORTS</h2>
+              <h2 style="margin:0; font-size: 18px;">ARENAOS</h2>
               <p style="margin:2px 0;">Gaming Cafe</p>
               <p style="margin:2px 0; font-size: 10px;">Tax Invoice</p>
             </div>
