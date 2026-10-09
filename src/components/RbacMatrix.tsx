@@ -138,7 +138,7 @@ export const RbacMatrix: React.FC = () => {
   };
 
   return (
-    <section id="rbac" className="min-h-screen flex items-center pt-20 pb-8 bg-[#08080A] border-t border-white/10 relative overflow-hidden">
+    <section id="rbac" className="min-h-screen flex items-center pt-20 pb-8 border-t border-white/10 relative overflow-hidden">
       <style>{`
         @keyframes rbFlip { from { opacity: 0; transform: perspective(500px) rotateX(-40deg) translateY(8px); } to { opacity: 1; transform: none; } }
         @keyframes rbShake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }

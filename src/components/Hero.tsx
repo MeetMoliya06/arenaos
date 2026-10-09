@@ -12,9 +12,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemo }) => {
 
   return (
     <section className="relative min-h-screen flex items-start lg:items-center pt-28 pb-10 overflow-hidden border-b border-white/[0.08]">
-      {/* Background glow & subtle grid */}
-      <div className="absolute inset-0 bg-tech-grid opacity-60 pointer-events-none" />
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#CCFF00]/[0.03] blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl w-full mx-auto px-4 md:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">

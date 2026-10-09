@@ -14,11 +14,11 @@ interface LogoProps {
   wordmarkClassName?: string;
 }
 
-export const Logo: React.FC<LogoProps> = ({ className = '', markClassName, wordmarkClassName = 'h-6' }) => (
+export const Logo: React.FC<LogoProps> = ({ className = '', markClassName, wordmarkClassName = 'h-5' }) => (
   <span className={`flex items-center gap-2.5 ${className}`}>
     <LogoMark className={markClassName} />
     <img
-      src="/logo-wordmark.png"
+      src="/logo-wordmark-trim.png"
       alt="ArenaOS"
       className={`w-auto object-contain arenaos-wordmark transition-all duration-300 ${wordmarkClassName}`}
     />

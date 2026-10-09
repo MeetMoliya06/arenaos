@@ -25,9 +25,9 @@ export default {
         }
       },
       fontFamily: {
-        display: ['"Space Grotesk"', 'Inter', 'sans-serif'],
-        sans: ['Inter', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace'],
+        display: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
         'lime-sm': 'none',

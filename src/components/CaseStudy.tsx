@@ -12,6 +12,7 @@ import {
   Zap
 } from 'lucide-react';
 import { playHover, playClick } from '../audio/soundEffects';
+import { LogoMark } from './Logo';
 
 interface BranchInfo {
   id: string;
@@ -90,7 +91,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
   const [selectedBranchId, setSelectedBranchId] = useState<string>('varachha');
   const [activeTab, setActiveTab] = useState<'branches' | 'architecture'>('architecture');
   const [simulatingType, setSimulatingType] = useState<'wallet' | 'fnb' | 'lock' | null>(null);
-  const [telemetryLog, setTelemetryLog] = useState<string>('Surat Master Relay connected to 4 branches (Varachha, Adajan, Citylight, Katargam). Ping: 3.2ms.');
+  const [telemetryLog, setTelemetryLog] = useState<string>('ArenaOS Core connected to 4 Apple Esports branches (Varachha, Adajan, Citylight, Katargam). Ping: 3.2ms.');
 
   const triggerSimulation = (type: 'wallet' | 'fnb' | 'lock') => {
     setSimulatingType(type);
@@ -112,7 +113,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
   const selectedBranch = BRANCHES_DATA.find((b) => b.id === selectedBranchId) || BRANCHES_DATA[0];
 
   return (
-    <section id="proof" className="relative min-h-screen flex items-center bg-[#0A0A0B] text-[#EDEDEF] pt-20 pb-6 border-t border-white/[0.08] overflow-hidden">
+    <section id="proof" className="relative min-h-screen flex items-center text-[#EDEDEF] pt-20 pb-6 border-t border-white/[0.08] overflow-hidden">
       {/* Dynamic ambient background glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[#CCFF00]/[0.035] blur-[150px] pointer-events-none rounded-full" />
       <div className="absolute bottom-10 right-10 w-[500px] h-[400px] bg-[#00F0FF]/[0.03] blur-[140px] pointer-events-none rounded-full" />
@@ -131,7 +132,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
           <div className="flex items-center justify-center gap-2 text-xs font-semibold tracking-wider uppercase text-[#CCFF00] mb-2">
             <span className="w-2 h-2 rounded-full bg-[#CCFF00] animate-pulse" />
-            <span>Verified Production Deployment</span>
+            <span>Live Client Deployment</span>
             <span className="text-white/20">·</span>
             <span className="text-[#9999A0]">Surat, Gujarat</span>
           </div>
@@ -147,20 +148,18 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
                 />
               </div>
               <span>Apple Esports</span>
+              <span className="text-[#9999A0] font-normal">· our client</span>
             </div>
             <span className="text-white/20">·</span>
-            <span>4 Elite Venues</span>
+            <span>4 Venues</span>
             <span className="text-white/20">·</span>
             <span>240+ High-Spec Rigs</span>
             <span className="text-white/20">·</span>
-            <span className="text-emerald-400 font-medium">100% Hardware Locked</span>
+            <span className="text-white font-medium">100% Hardware Locked</span>
           </div>
 
           <h2 className="font-display font-semibold text-2xl sm:text-3xl md:text-4xl tracking-tight leading-[1.1] text-white">
-            The Engine Behind Surat&apos;s 
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#CCFF00] via-white to-[#00F0FF]">
-              Premier Esports Empire.
-            </span>
+            ArenaOS, Deployed at Apple Esports.
           </h2>
 
         </div>
@@ -679,13 +678,9 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
                     {/* Main Core Container */}
                     <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-2xl bg-gradient-to-br from-[#18181D] to-[#0A0A0C] border-2 border-[#CCFF00] p-3 flex flex-col items-center justify-center text-center shadow-[0_0_35px_rgba(204,255,0,0.3)] transition-transform duration-300 group-hover:scale-105">
                       
-                      {/* Apple Esports Logo Emblem */}
+                      {/* ArenaOS Logo Emblem */}
                       <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-black border border-white/20 p-1.5 flex items-center justify-center shadow-md mb-1.5 group-hover:border-[#CCFF00]/50 transition-colors">
-                        <img 
-                          src="/appleesports-logo.svg" 
-                          alt="Apple Esports" 
-                          className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(202,36,24,0.8)]" 
-                        />
+                        <LogoMark className="w-full h-full" />
                         <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#CCFF00] ring-2 ring-black animate-ping" />
                       </div>
 
@@ -693,7 +688,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
                         ArenaOS Core
                       </div>
                       <div className="text-[10px] sm:text-xs font-mono text-[#CCFF00] font-semibold mt-0.5">
-                        Surat Master Hub
+                        Apple Esports Hub
                       </div>
                       <div className="text-[9px] font-mono text-white/40 mt-1 flex items-center gap-1">
                         <Activity className="w-2.5 h-2.5 text-emerald-400" />
@@ -883,39 +878,6 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
 
           </div>
         )}
-
-        {/* Bottom Editorial Call-to-Action Bar */}
-        <div className="mt-3 rounded-2xl bg-gradient-to-r from-white/[0.04] via-white/[0.02] to-white/[0.04] border border-white/[0.08] p-3 sm:p-4 flex flex-col md:flex-row items-center justify-between gap-6 backdrop-blur-md">
-          <div className="flex items-center gap-4 text-left">
-            <div className="w-10 h-10 rounded-xl bg-black border border-white/20 p-2.5 shrink-0 flex items-center justify-center shadow-lg">
-              <img src="/appleesports-logo.svg" alt="Apple Esports" className="w-full h-full object-contain filter drop-shadow-[0_0_10px_rgba(202,36,24,0.7)]" />
-            </div>
-            <div>
-              <div className="font-display font-semibold text-white text-base sm:text-lg">
-                Want to see how Apple Esports runs this live?
-              </div>
-              <p className="hidden">
-                Every PC, every bill, every shift — running on this exact system in Surat.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3 w-full md:w-auto">
-            {onOpenDemo && (
-              <button
-                onClick={() => {
-                  playClick();
-                  onOpenDemo();
-                }}
-                onMouseEnter={() => playHover()}
-                className="inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold bg-[#CCFF00] hover:bg-[#b8e600] text-black px-5 py-2.5 rounded-xl transition-all shadow-[0_0_25px_rgba(204,255,0,0.25)] hover:shadow-[0_0_35px_rgba(204,255,0,0.4)] w-full md:w-auto shrink-0 group"
-              >
-                <span>Book Demo</span>
-                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </button>
-            )}
-          </div>
-        </div>
 
       </div>
     </section>

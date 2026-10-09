@@ -10,12 +10,15 @@
   body {
     background-color: #08090B;
     color: #EDEDEF;
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
     cursor: default;
     -webkit-font-smoothing: antialiased;
     letter-spacing: -0.01em;
   }
+
+  /* One font everywhere: stop tabular/mono styling from changing letterforms */
+  .font-mono { font-variant-numeric: tabular-nums; }
 
   /* Custom subtle scrollbar */
   ::-webkit-scrollbar {

@@ -40,7 +40,13 @@ export function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#08090B] text-[#EDEDEF] selection:bg-[#CCFF00] selection:text-black relative">
+    <div className="min-h-screen bg-[#08090B] text-[#EDEDEF] selection:bg-[#CCFF00] selection:text-black relative isolate">
+      {/* Shared site background (same grid + soft lime glow as the hero) */}
+      <div aria-hidden="true" className="fixed inset-0 -z-10 pointer-events-none">
+        <div className="absolute inset-0 bg-tech-grid opacity-60" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#CCFF00]/[0.03] blur-[120px] rounded-full" />
+      </div>
+
       {/* Preloader */}
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 
