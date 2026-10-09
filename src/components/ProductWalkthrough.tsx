@@ -115,7 +115,7 @@ export const ProductWalkthrough: React.FC = () => {
                 {/* Strip: always visible once the next card stacks over */}
                 <div className="flex items-center justify-between" style={{ height: 'var(--strip)' }}>
                   <div className="flex items-baseline gap-3 min-w-0">
-                    <span className="font-mono text-xs md:text-sm text-[#CCFF00]">{m.code}</span>
+                    <span className="font-mono text-[14px] md:text-xs text-[#CCFF00]">{m.code}</span>
                     <h3 className="text-xl md:text-3xl font-semibold tracking-tight truncate">{m.title}</h3>
                   </div>
                 </div>
