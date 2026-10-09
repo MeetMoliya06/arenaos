@@ -140,6 +140,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
                 System: <span className="text-[#CCFF00]">Online</span>
               </span>
             </div>
+            <a
+              href="/live-demo/"
+              onClick={() => playClick()}
+              onMouseEnter={() => playHover()}
+              className="hidden sm:inline-flex items-center justify-center whitespace-nowrap px-3.5 py-2 sm:px-5 sm:py-2.5 border border-white/15 text-white font-semibold text-xs sm:text-sm tracking-tight rounded-lg transition-all hover:bg-white/5 active:scale-[0.98]"
+            >
+              Try Live Demo
+            </a>
             <button
               onClick={() => {
                 playClick();

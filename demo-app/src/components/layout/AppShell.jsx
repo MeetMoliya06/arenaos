@@ -1,0 +1,214 @@
+// ═══════════════════════════════════════════════════════════
+// Gaming Café ERP — AppShell Layout
+// Wraps all authenticated pages with Topbar + Sidebar + Content area
+// SOP §6.3: Operator shift start/end modals
+// ═══════════════════════════════════════════════════════════
+
+import { useState, useEffect, useCallback } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import Topbar from './Topbar';
+import Sidebar from './Sidebar';
+import BranchRequired from './BranchRequired';
+import { useAuth } from '../../contexts/AuthContext';
+import ShiftStartModal from '../shift/ShiftStartModal';
+import DemoBar from './DemoBar';
+import ShiftGapModal from '../shift/ShiftGapModal';
+import ShiftTakeoverModal from '../shift/ShiftTakeoverModal';
+import GlobalFoodOrderListener from './GlobalFoodOrderListener';
+import GlobalNotificationListener from './GlobalNotificationListener';
+import BranchConflictBanner from './BranchConflictBanner';
+
+const SIDEBAR_WIDTH_KEY = 'sidebar_width';
+const SIDEBAR_COLLAPSED_KEY = 'sidebar_collapsed';
+const DEFAULT_SIDEBAR_WIDTH = 240;
+
+export default function AppShell() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(
+    () => localStorage.getItem(SIDEBAR_COLLAPSED_KEY) === 'true'
+  );
+  const [sidebarWidth, setSidebarWidth] = useState(() => {
+    const saved = parseInt(localStorage.getItem(SIDEBAR_WIDTH_KEY), 10);
+    return Number.isFinite(saved) ? saved : DEFAULT_SIDEBAR_WIDTH;
+  });
+  const { user, isOperator, logout, fetchCurrentUser } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    localStorage.setItem(SIDEBAR_COLLAPSED_KEY, String(sidebarCollapsed));
+  }, [sidebarCollapsed]);
+
+  useEffect(() => {
+    localStorage.setItem(SIDEBAR_WIDTH_KEY, String(sidebarWidth));
+  }, [sidebarWidth]);
+
+  // Expose the sidebar's current desktop offset as a CSS var so other
+  // viewport-fixed elements (e.g. SessionActivityLog) can track it instead
+  // of assuming a hardcoded 240px sidebar width.
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      '--sidebar-offset',
+      sidebarCollapsed ? '0px' : `${sidebarWidth}px`
+    );
+  }, [sidebarCollapsed, sidebarWidth]);
+
+  // On large screens the hamburger collapses/expands the sidebar in place;
+  // on small screens it opens/closes the off-canvas drawer.
+  const handleToggleSidebar = useCallback(() => {
+    if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
+      setSidebarCollapsed((c) => !c);
+    } else {
+      setSidebarOpen((o) => !o);
+    }
+  }, []);
+
+  // ── Shift Start Modal: show for operators on first login ──
+  const [showShiftStart, setShowShiftStart] = useState(false);
+  const [shiftStartDone, setShiftStartDone] = useState(false);
+
+  // Read from sessionStorage rather than held in state, so refreshing the page cannot lose
+  // the question - a refresh would otherwise be the easiest way to avoid answering it.
+  const [pendingGap, setPendingGap] = useState(() => {
+    try { return JSON.parse(sessionStorage.getItem('pendingShiftGap') || 'null'); }
+    catch { return null; }
+  });
+
+  // Somebody else's shift, left open, that this operator has to close before they can start.
+  // Held the same way and for the same reason — except this one is also enforced by the server,
+  // which has issued no shift at all until the handover is finished.
+  const [pendingTakeover, setPendingTakeover] = useState(() => {
+    try { return JSON.parse(sessionStorage.getItem('pendingShiftTakeover') || 'null'); }
+    catch { return null; }
+  });
+
+  // Check if operator needs to do shift start checklist
+  // We store a flag in sessionStorage so it doesn't show again on page refresh mid-shift
+  useEffect(() => {
+    if (!isOperator || !user) return;
+
+    const sessionKey = `shift_start_done_${user.id || user.username}`;
+    const alreadyDone = sessionStorage.getItem(sessionKey);
+
+    if (!alreadyDone) {
+      setShowShiftStart(true);
+      setShiftStartDone(false);
+    } else {
+      setShiftStartDone(true);
+    }
+  }, [isOperator, user]);
+
+  const handleShiftStartComplete = useCallback(() => {
+    if (user) {
+      const sessionKey = `shift_start_done_${user.id || user.username}`;
+      sessionStorage.setItem(sessionKey, 'true');
+    }
+    setShowShiftStart(false);
+    setShiftStartDone(true);
+  }, [user]);
+
+  // Called from Topbar when operator clicks Logout. Ending a shift and closing the register
+  // are the same action from the operator's side, so "Logout" sends them straight to the real
+  // close flow (Cash Register's Lock → Count → Close) instead of a separate modal that used to
+  // collect its own cash count and throw it away — see CashRegisterPage.handleCloseShift,
+  // which is the thing that actually logs the operator out once the drawer is closed.
+  const handleRequestLogout = useCallback(() => {
+    if (isOperator) {
+      navigate('/app/cash-register');
+    } else {
+      // Super admin: logout directly
+      logout();
+    }
+  }, [isOperator, logout, navigate]);
+
+  // The handover is done and the server has issued this operator a shift at last. The user in
+  // the browser was stored without one, so it is refetched rather than patched — the shift id is
+  // what every shift-scoped call is about to be made with, and guessing it here would be one
+  // more place for it to be wrong.
+  const handleTakeoverCompleted = useCallback(async () => {
+    sessionStorage.removeItem('pendingShiftTakeover');
+    setPendingTakeover(null);
+    await fetchCurrentUser();
+  }, [fetchCurrentUser]);
+
+  return (
+    <div className="min-h-screen bg-bg flex flex-col">
+      {/* Fixed Topbar */}
+      <Topbar
+        onToggleSidebar={handleToggleSidebar}
+        sidebarOpen={sidebarOpen}
+        onLogoutClick={handleRequestLogout}
+      />
+
+      {/* Content area: Sidebar + Main */}
+      <div className="flex flex-1">
+        {/* Sidebar */}
+        <Sidebar
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          collapsed={sidebarCollapsed}
+          width={sidebarWidth}
+          onWidthChange={setSidebarWidth}
+        />
+
+        {/* Main content area.
+
+            Left empty while a handover is outstanding. This operator has no shift yet, so every
+            page behind the modal would fire calls the server is right to refuse, and they would
+            load into a dashboard nobody is meant to be looking at. */}
+        <main className="flex-1 min-w-0 overflow-auto">
+          <div className="p-3 sm:p-4 max-w-[1600px]">
+            {!pendingTakeover && (
+              <>
+                {/* Above the page, on every page. While two PCs are both claiming one
+                    branch, every figure below this line is unreliable — and which screen
+                    you happen to be on has nothing to do with whether you need to know. */}
+                <BranchConflictBanner />
+                <BranchRequired>
+                  <Outlet />
+                </BranchRequired>
+              </>
+            )}
+          </div>
+        </main>
+      </div>
+
+      {/* ── Explain the gap first (blocks everything, cannot be dismissed) ──
+          Shown before the shift-start modal on purpose: what happened to the last shift is a
+          question about the past, and it must not be possible to start trading on top of an
+          unexplained hole. */}
+      {isOperator && pendingGap?.shiftId && (
+        <ShiftGapModal
+          shiftId={pendingGap.shiftId}
+          unattendedMinutes={pendingGap.unattendedMinutes || 0}
+          onAnswered={() => setPendingGap(null)}
+        />
+      )}
+
+      {/* ── Somebody else's shift, left open (blocks everything, cannot be dismissed) ──
+          After the gap question, which is about this operator's own last shift, and before the
+          shift-start checklist, which cannot run yet: there is no shift to start until the
+          drawer that is already on the counter has been counted and handed over. */}
+      {isOperator && !pendingGap?.shiftId && pendingTakeover && (
+        <ShiftTakeoverModal
+          pending={pendingTakeover}
+          onCompleted={handleTakeoverCompleted}
+        />
+      )}
+
+      {/* ── Shift Start Modal (blocks operator until complete) ── */}
+      {isOperator && !pendingGap?.shiftId && !pendingTakeover && showShiftStart && (
+        <ShiftStartModal onComplete={handleShiftStartComplete} />
+      )}
+
+      <DemoBar />
+
+      {/* Global Background Listeners — off until this operator actually has a shift. */}
+      {!pendingTakeover && (
+        <>
+          <GlobalFoodOrderListener />
+          <GlobalNotificationListener />
+        </>
+      )}
+    </div>
+  );
+}

@@ -40,16 +40,25 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemo }) => {
 
             {/* Primary Action Row */}
             <div className="flex flex-wrap items-center gap-5 mb-8">
+              <a
+                href="/live-demo/"
+                onClick={() => playClick()}
+                onMouseEnter={() => playHover()}
+                className="px-6 py-3.5 bg-[#CCFF00] text-[#0A0A0B] font-semibold text-sm rounded-lg transition-all hover:bg-[#b8e600] active:scale-[0.98] flex items-center gap-2.5"
+              >
+                <span>Try the Live Demo</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+
               <button
                 onClick={() => {
                   playClick();
                   onOpenDemo();
                 }}
                 onMouseEnter={() => playHover()}
-                className="px-6 py-3.5 bg-[#CCFF00] text-[#0A0A0B] font-semibold text-sm rounded-lg transition-all hover:bg-[#b8e600] active:scale-[0.98] flex items-center gap-2.5"
+                className="px-6 py-3.5 border border-white/15 text-white font-semibold text-sm rounded-lg transition-all hover:bg-white/5 active:scale-[0.98] flex items-center gap-2.5"
               >
-                <span>Book Live Demo</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>Book a Walkthrough</span>
               </button>
 
               <a
