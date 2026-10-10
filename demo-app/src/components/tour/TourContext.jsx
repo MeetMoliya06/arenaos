@@ -23,12 +23,12 @@ const write = (v) => {
 export const armTour = () => write({ step: 0 });
 
 export function TourProvider({ children }) {
-  const { user, isOperator, isSuperAdmin } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [state, setState] = useState(read); // { step } | null
 
-  const steps = useMemo(() => stepsFor({ isOperator, isSuperAdmin }), [isOperator, isSuperAdmin]);
+  const steps = useMemo(() => stepsFor(user?.role), [user?.role]);
   const step = state ? steps[state.step] : null;
   const active = !!(user && step && pathname.startsWith('/app'));
 

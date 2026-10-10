@@ -139,7 +139,7 @@ const superadmin = [
   { route: '/app/settings', title: "That's the owner view", body: 'Switch role from the bar below to try the counter as an operator.' },
 ];
 
-export function stepsFor({ isOperator, isSuperAdmin }) {
-  if (isOperator) return operator;
-  return isSuperAdmin && !isOperator ? superadmin : admin;
+export function stepsFor(role) {
+  if (role === 'operator') return operator;
+  return role === 'super_admin' ? superadmin : admin;
 }

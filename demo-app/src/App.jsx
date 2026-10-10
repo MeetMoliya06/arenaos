@@ -4,6 +4,7 @@
 // SOP §19.2: Dashboard-level permission control
 // ═══════════════════════════════════════════════════════════
 
+import { lazy } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { SocketProvider } from './contexts/SocketContext';
@@ -15,63 +16,35 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import AppShell from './components/layout/AppShell';
 import { ROLES, DASHBOARDS } from './config/constants';
 
-// ── Auth Pages ──
-import OperatorLoginPage from './pages/auth/OperatorLoginPage';
-import AdminLoginPage from './pages/auth/AdminLoginPage';
-import SuperAdminLoginPage from './pages/auth/SuperAdminLoginPage';
 import UnauthorizedPage from './pages/auth/UnauthorizedPage';
 import NotFoundPage from './pages/NotFoundPage';
-
-// ── Public User Pages ──
 import LandingGatewayPage from './pages/public/LandingGatewayPage';
-import UserFlowSelectionPage from './pages/public/UserFlowSelectionPage';
-import MemberLoginPage from './pages/public/MemberLoginPage';
-import LimitedUserPage from './pages/public/LimitedUserPage';
-import MemberPortalPage from './pages/public/MemberPortalPage';
-import SetupPage from './pages/public/SetupPage';
-import ForgotPasswordPage from './pages/public/ForgotPasswordPage';
-import ResetPasswordPage from './pages/public/ResetPasswordPage';
-import UserOverlayApp from './pages/overlay/UserOverlayApp';
-import SetupPcPage from './pages/admin/SetupPcPage';
+import DemoGate, { DemoLockedPage } from './components/layout/DemoGate';
+import { firstOpenRoute } from './config/demoAccess';
 
-// ── Operations ──
-import BillingCounterPage from './pages/billing/BillingCounterPage';
-import SessionsPage from './pages/sessions/SessionsPage';
-import ReservationsPage from './pages/reservations/ReservationsPage';
-import FoodOrdersPage from './pages/food/FoodOrdersPage';
-import CustomerPanelPage from './pages/food/CustomerPanelPage';
+// ── Pages open in the demo (lazy: each role only downloads what it is allowed to open) ──
+const SessionsPage = lazy(() => import('./pages/sessions/SessionsPage'));
+const BillingCounterPage = lazy(() => import('./pages/billing/BillingCounterPage'));
+const FoodOrdersPage = lazy(() => import('./pages/food/FoodOrdersPage'));
+const MembersPage = lazy(() => import('./pages/members/MembersPage'));
+const MainDashboardPage = lazy(() => import('./pages/dashboard/MainDashboardPage'));
+const ReportsPage = lazy(() => import('./pages/admin/ReportsPage'));
+const SettingsPage = lazy(() => import('./pages/admin/SettingsPage'));
+const AuditTrailPage = lazy(() => import('./pages/admin/AuditTrailPage'));
 
-// ── Finance ──
-import CashRegisterPage from './pages/cash/CashRegisterPage';
-import CashDeskPage from './pages/cash/CashDeskPage';
-import OnlineDeskPage from './pages/finance/OnlineDeskPage';
-import WalletDeskPage from './pages/finance/WalletDeskPage';
-import CreditsPage from './pages/credits/CreditsPage';
-import EodDashboardPage from './pages/eod/EodDashboardPage';
-
-// ── Management ──
-import MembersPage from './pages/members/MembersPage';
-import MenuEditorPage from './pages/menu/MenuEditorPage';
-
-// ── Admin ──
-import MainDashboardPage from './pages/dashboard/MainDashboardPage';
-import PcStatusPage from './pages/admin/PcStatusPage';
-import SettingsPage from './pages/admin/SettingsPage';
-import ReportsPage from './pages/admin/ReportsPage';
-import UpdatesPage from './pages/admin/UpdatesPage';
-import AuditTrailPage from './pages/admin/AuditTrailPage';
-
-// ── HR ──
-import EmployeeFormsPage from './pages/hr/EmployeeFormsPage';
+// Locked in the demo for every role: not imported at all, so none of their code is shipped.
+const LOCKED_ROUTES = [
+  'reservations', 'cash-register', 'cash-desk', 'online-desk', 'credits', 'wallet-desk', 'eod',
+  'menu-editor', 'pc-status', 'updates', 'employee-forms',
+];
 
 // ── End of imports ──
 function HomeRedirect() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   if (!isAuthenticated) {
     return <Navigate to="/" replace />;
   }
-  // All roles (Operator, Admin, SuperAdmin) should land on Sessions first
-  return <Navigate to="/app/sessions" replace />;
+  return <Navigate to={firstOpenRoute(user?.role)} replace />;
 }
 
 export default function App() {
@@ -85,22 +58,7 @@ export default function App() {
               <TourProvider>
               <Routes>
                 {/* ══════════ Public Routes ══════════ */}
-                <Route path="/login/operator" element={<OperatorLoginPage />} />
-                <Route path="/login/admin" element={<AdminLoginPage />} />
-                <Route path="/login/superadmin" element={<SuperAdminLoginPage />} />
-                {/* Fallback to clear out stuck /login URLs */}
-                <Route path="/login" element={<Navigate to="/" replace />} />
                 <Route path="/unauthorized" element={<UnauthorizedPage />} />
-                <Route path="/customer-panel" element={<CustomerPanelPage />} />
-                <Route path="/user/select" element={<UserFlowSelectionPage />} />
-                <Route path="/user/member-login" element={<MemberLoginPage />} />
-                <Route path="/user/limited" element={<LimitedUserPage />} />
-                <Route path="/user/member-portal" element={<MemberPortalPage />} />
-                <Route path="/pc-overlay/:pcId/*" element={<UserOverlayApp />} />
-                <Route path="/setup-pc" element={<SetupPcPage />} />
-                <Route path="/setup/:role" element={<SetupPage />} />
-                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-                <Route path="/reset-password" element={<ResetPasswordPage />} />
 
                 {/* ══════════ Protected App Shell ══════════ */}
                 <Route
@@ -119,7 +77,7 @@ export default function App() {
                     path="billing"
                     element={
                       <ProtectedRoute dashboardKey={DASHBOARDS.BILLING_COUNTER}>
-                        <BillingCounterPage />
+                        <DemoGate route="billing"><BillingCounterPage /></DemoGate>
                       </ProtectedRoute>
                     }
                   />
@@ -127,15 +85,7 @@ export default function App() {
                     path="sessions"
                     element={
                       <ProtectedRoute dashboardKey={DASHBOARDS.SESSIONS}>
-                        <SessionsPage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="reservations"
-                    element={
-                      <ProtectedRoute dashboardKey={DASHBOARDS.RESERVATIONS}>
-                        <ReservationsPage />
+                        <DemoGate route="sessions"><SessionsPage /></DemoGate>
                       </ProtectedRoute>
                     }
                   />
@@ -143,75 +93,19 @@ export default function App() {
                     path="food-orders"
                     element={
                       <ProtectedRoute dashboardKey={DASHBOARDS.FOOD_ORDERS}>
-                        <FoodOrdersPage />
+                        <DemoGate route="food-orders"><FoodOrdersPage /></DemoGate>
                       </ProtectedRoute>
                     }
                   />
 
                   {/* ── Finance Dashboards ── */}
-                  <Route
-                    path="cash-register"
-                    element={
-                      <ProtectedRoute dashboardKey={DASHBOARDS.CASH_REGISTER}>
-                        <CashRegisterPage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="cash-desk"
-                    element={
-                      <ProtectedRoute dashboardKey={DASHBOARDS.CASH_DESK}>
-                        <CashDeskPage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="online-desk"
-                    element={
-                      <ProtectedRoute dashboardKey={DASHBOARDS.ONLINE_DESK}>
-                        <OnlineDeskPage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="credits"
-                    element={
-                      <ProtectedRoute dashboardKey={DASHBOARDS.CREDITS}>
-                        <CreditsPage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="wallet-desk"
-                    element={
-                      <ProtectedRoute dashboardKey={DASHBOARDS.WALLET_DESK}>
-                        <WalletDeskPage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="eod"
-                    element={
-                      <ProtectedRoute dashboardKey={DASHBOARDS.EOD}>
-                        <EodDashboardPage />
-                      </ProtectedRoute>
-                    }
-                  />
 
                   {/* ── Management Dashboards ── */}
                   <Route
                     path="members"
                     element={
                       <ProtectedRoute dashboardKey={DASHBOARDS.MEMBERS}>
-                        <MembersPage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="menu-editor"
-                    element={
-                      <ProtectedRoute dashboardKey={DASHBOARDS.MENU_EDITOR}>
-                        <MenuEditorPage />
+                        <DemoGate route="members"><MembersPage /></DemoGate>
                       </ProtectedRoute>
                     }
                   />
@@ -221,7 +115,7 @@ export default function App() {
                     path="dashboard"
                     element={
                       <ProtectedRoute allowedRoles={[ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.OPERATOR]}>
-                        <MainDashboardPage />
+                        <DemoGate route="dashboard"><MainDashboardPage /></DemoGate>
                       </ProtectedRoute>
                     }
                   />
@@ -229,15 +123,7 @@ export default function App() {
                     path="reports"
                     element={
                       <ProtectedRoute allowedRoles={[ROLES.SUPER_ADMIN, ROLES.ADMIN]} dashboardKey={DASHBOARDS.REPORTS}>
-                        <ReportsPage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="pc-status"
-                    element={
-                      <ProtectedRoute allowedRoles={[ROLES.SUPER_ADMIN, ROLES.ADMIN]} dashboardKey={DASHBOARDS.PC_STATUS}>
-                        <PcStatusPage />
+                        <DemoGate route="reports"><ReportsPage /></DemoGate>
                       </ProtectedRoute>
                     }
                   />
@@ -245,15 +131,7 @@ export default function App() {
                     path="settings"
                     element={
                       <ProtectedRoute allowedRoles={[ROLES.SUPER_ADMIN, ROLES.ADMIN]} dashboardKey={DASHBOARDS.SETTINGS}>
-                        <SettingsPage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="updates"
-                    element={
-                      <ProtectedRoute allowedRoles={[ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.OPERATOR]} dashboardKey={DASHBOARDS.UPDATES}>
-                        <UpdatesPage />
+                        <DemoGate route="settings"><SettingsPage /></DemoGate>
                       </ProtectedRoute>
                     }
                   />
@@ -261,23 +139,19 @@ export default function App() {
                     path="audit-trail"
                     element={
                       <ProtectedRoute allowedRoles={[ROLES.SUPER_ADMIN, ROLES.ADMIN]} dashboardKey={DASHBOARDS.SETTINGS}>
-                        <AuditTrailPage />
+                        <DemoGate route="audit-trail"><AuditTrailPage /></DemoGate>
                       </ProtectedRoute>
                     }
                   />
+
+                  {LOCKED_ROUTES.map((path) => (
+                    <Route key={path} path={path} element={<DemoLockedPage route={path} />} />
+                  ))}
 
                   {/* Catch-all inside /app */}
                   <Route path="*" element={<NotFoundPage />} />
 
                   {/* ── HR Module ── */}
-                  <Route
-                    path="employee-forms"
-                    element={
-                      <ProtectedRoute allowedRoles={[ROLES.SUPER_ADMIN, ROLES.ADMIN]}>
-                        <EmployeeFormsPage />
-                      </ProtectedRoute>
-                    }
-                  />
                 </Route>
 
                 {/* ══════════ Root Redirects ══════════ */}

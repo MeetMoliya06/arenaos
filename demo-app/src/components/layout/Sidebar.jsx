@@ -7,7 +7,9 @@
 import { useEffect, useState, useCallback } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { Lock } from 'lucide-react';
 import { ROLES, DASHBOARDS } from '../../config/constants';
+import { isOpenInDemo } from '../../config/demoAccess';
 import api from '../../config/api';
 
 const MIN_SIDEBAR_WIDTH = 180;
@@ -284,14 +286,17 @@ export default function Sidebar({ isOpen, onClose, collapsed = false, width = 24
                 </div>
 
                 {/* Nav Items */}
-                {visibleItems.map((item) => (
+                {visibleItems.map((item) => {
+                  const locked = !isOpenInDemo(user?.role, item.route.split('/').pop());
+                  return (
                   <NavLink
                     key={item.route}
                     to={item.route}
                     data-tour={`nav-${item.route.split('/').pop()}`}
                     onClick={onClose}
+                    title={locked ? 'Locked in the demo' : undefined}
                     className={({ isActive }) =>
-                      `flex items-center gap-2.5 px-3 py-2 rounded-sm text-[12px] font-medium transition-all duration-150 group relative ${
+                      `${locked ? 'opacity-50 ' : ''}flex items-center gap-2.5 px-3 py-2 rounded-sm text-[12px] font-medium transition-all duration-150 group relative ${
                         isActive
                           ? 'bg-accent/8 text-accent border-l-2 border-accent ml-0'
                           : 'text-text-2 hover:text-text hover:bg-bg-3 border-l-2 border-transparent'
@@ -316,11 +321,14 @@ export default function Sidebar({ isOpen, onClose, collapsed = false, width = 24
                     <span className="truncate">{item.label}</span>
 
                     {/* Active indicator dot */}
-                    {location.pathname === item.route && (
+                    {locked ? (
+                      <Lock className="absolute right-3 w-3 h-3 text-text-3" />
+                    ) : location.pathname === item.route && (
                       <span className="absolute right-3 w-1 h-1 rounded-full bg-accent" />
                     )}
                   </NavLink>
-                ))}
+                  );
+                })}
               </div>
             );
           })}

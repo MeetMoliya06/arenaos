@@ -219,14 +219,7 @@ export function AuthProvider({ children }) {
       setError(null);
 
       // Explicitly navigate to the correct login portal
-      let redirectPath = '/';
-      if (role === ROLES.SUPER_ADMIN) {
-        redirectPath = '/login/superadmin';
-      } else if (typeof role === 'string' && role.toLowerCase().includes('admin')) {
-        redirectPath = '/login/admin';
-      } else if (typeof role === 'string' && role.toLowerCase().includes('operator')) {
-        redirectPath = '/login/operator';
-      }
+      const redirectPath = '/';
 
       window.location.href = import.meta.env.BASE_URL.replace(/\/$/, '') + redirectPath;
     }
