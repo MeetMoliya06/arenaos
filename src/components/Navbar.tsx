@@ -15,9 +15,9 @@ const NAV_ITEMS = [
 ];
 
 const SHAPE =
-  'polygon(28px 0, calc(100% - 16px) 0, 100% 16px, 100% calc(100% - 28px), calc(100% - 28px) 100%, 16px 100%, 0 calc(100% - 16px), 0 28px)';
+  'polygon(var(--c1) 0, calc(100% - var(--c2)) 0, 100% var(--c2), 100% calc(100% - var(--c1)), calc(100% - var(--c1)) 100%, var(--c2) 100%, 0 calc(100% - var(--c2)), 0 var(--c1))';
 const SHAPE_INNER =
-  'polygon(28px 0, calc(100% - 16px) 0, 100% 16px, 100% calc(100% - 28px), calc(100% - 28px) 100%, 16px 100%, 0 calc(100% - 16px), 0 28px)';
+  'polygon(var(--c1) 0, calc(100% - var(--c2)) 0, 100% var(--c2), 100% calc(100% - var(--c1)), calc(100% - var(--c1)) 100%, var(--c2) 100%, 0 calc(100% - var(--c2)), 0 var(--c1))';
 
 export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -67,7 +67,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
   return (
     <header className="fixed top-0 left-0 right-0 z-40 px-3 sm:px-6 pt-3 sm:pt-4 pointer-events-none">
       <div
-        className={`relative max-w-7xl mx-auto pointer-events-auto transition-transform duration-300 ${
+        className={`relative max-w-7xl mx-auto pointer-events-auto transition-transform duration-300 [--c1:14px] [--c2:8px] sm:[--c1:28px] sm:[--c2:16px] ${
           scrolled ? 'drop-shadow-[0_10px_30px_rgba(0,0,0,0.55)]' : ''
         }`}
       >
@@ -90,7 +90,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
           style={{ clipPath: SHAPE_INNER }}
         />
 
-        <div className="relative flex items-center justify-between gap-4 px-4 sm:px-8 py-2.5 sm:py-3">
+        <div className="relative flex items-center justify-between gap-2 sm:gap-4 px-5 sm:px-8 py-2.5 sm:py-3">
           {/* Brand */}
           <a
             href="#"
@@ -101,7 +101,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
           </a>
 
           {/* Nav pills */}
-          <nav className="hidden md:flex items-center gap-1 text-sm font-medium text-[#9999A0]">
+          <nav className="hidden md:flex items-center gap-0 lg:gap-1 text-[13px] lg:text-sm font-medium text-[#9999A0] whitespace-nowrap">
             {NAV_ITEMS.map((item) => {
               const isActive = active === item.id;
               return (
@@ -110,7 +110,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
                   href={`#${item.id}`}
                   onClick={(e) => handleNavClick(item.id, e)}
                   onMouseEnter={() => playHover()}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-colors outline-none focus-visible:text-white ${
+                  className={`flex items-center gap-2 px-2.5 lg:px-4 py-2 rounded-full border transition-colors outline-none focus-visible:text-white ${
                     isActive
                       ? 'text-white bg-[#CCFF00]/10 border-[#CCFF00]/30'
                       : 'border-transparent hover:text-white'
@@ -119,7 +119,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
                   {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00]" />}
                   <span>{item.label}</span>
                   {item.badge && (
-                    <span className="px-2 py-0.5 rounded-full bg-[#CCFF00]/15 text-[#CCFF00] text-[10px] font-mono font-semibold tracking-wide">
+                    <span className="hidden lg:inline px-2 py-0.5 rounded-full bg-[#CCFF00]/15 text-[#CCFF00] text-[10px] font-mono font-semibold tracking-wide">
                       {item.badge}
                     </span>
                   )}
@@ -129,9 +129,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
           </nav>
 
           {/* Status + CTA */}
-          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
-            <span className="hidden xl:block w-px h-9 bg-white/10" />
-            <div className="hidden xl:flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/10 text-xs text-[#9999A0]">
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0 min-w-0">
+            <span className="hidden 2xl:block w-px h-9 bg-white/10" />
+            <div className="hidden 2xl:flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/10 text-xs text-[#9999A0]">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#CCFF00] opacity-60" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#CCFF00]" />
@@ -144,7 +144,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
               href="/live-demo/"
               onClick={() => playClick()}
               onMouseEnter={() => playHover()}
-              className="hidden sm:inline-flex items-center justify-center whitespace-nowrap px-3.5 py-2 sm:px-5 sm:py-2.5 border border-white/15 text-white font-semibold text-xs sm:text-sm tracking-tight rounded-lg transition-all hover:bg-white/5 active:scale-[0.98]"
+              className="hidden xl:inline-flex items-center justify-center whitespace-nowrap px-5 py-2.5 border border-white/15 text-white font-semibold text-xs sm:text-sm tracking-tight rounded-lg transition-all hover:bg-white/5 active:scale-[0.98]"
             >
               Try Live Demo
             </a>
@@ -156,7 +156,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
               onMouseEnter={() => playHover()}
               className="group inline-flex items-center justify-center gap-1.5 whitespace-nowrap px-3.5 py-2 sm:px-5 sm:py-2.5 bg-[#CCFF00] hover:bg-[#d8ff33] text-[#08090B] font-bold text-xs sm:text-sm tracking-tight rounded-lg transition-all duration-200 shadow-[0_0_24px_rgba(204,255,0,0.3)] hover:shadow-[0_0_36px_rgba(204,255,0,0.55)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer"
             >
-              <span>Book a Live Demo</span>
+              <span className="lg:hidden">Book Demo</span>
+              <span className="hidden lg:inline">Book a Live Demo</span>
               <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </button>
           </div>

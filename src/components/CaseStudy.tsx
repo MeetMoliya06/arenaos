@@ -870,7 +870,7 @@ export const CaseStudy: React.FC<CaseStudyProps> = ({ onOpenDemo }) => {
                   <span>•</span>
                   <span className="text-emerald-400">LOSS: 0.00%</span>
                   <span>•</span>
-                  <span>OFFLINE BUFFER: READY</span>
+                  <span>ONLINE + OFFLINE: READY</span>
                 </div>
               </div>
 

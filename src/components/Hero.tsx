@@ -72,12 +72,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemo }) => {
             </div>
 
             {/* Proof strip */}
-            <div className="pt-6 border-t border-white/[0.08] flex flex-wrap items-center gap-x-4 sm:gap-x-5 gap-y-2 text-sm sm:text-base text-[#8A8A93]">
+            <div className="pt-6 border-t border-white/[0.08] flex flex-nowrap items-center gap-x-2 sm:gap-x-4 whitespace-nowrap text-[clamp(9.5px,3vw,16px)] text-[#8A8A93]">
               <span><strong className="text-white font-semibold">240+</strong> PCs</span>
-              <span className="hidden sm:inline text-white/20">•</span>
+              <span className="text-white/20">•</span>
               <span><strong className="text-white font-semibold">₹0</strong> free minutes lost</span>
-              <span className="hidden sm:inline text-white/20">•</span>
-              <span><strong className="text-white font-semibold">Works</strong> offline</span>
+              <span className="text-white/20">•</span>
+              <span><strong className="text-white font-semibold">Works</strong> online + offline</span>
             </div>
 
           </div>

@@ -32,7 +32,7 @@ const LEAKS = [
     icon: WifiOff,
     title: 'Internet stops, billing stops',
     without: 'Online tools freeze when the internet goes. Customers walk out without paying.',
-    with: 'ArenaOS keeps working with no internet. It sends everything later.',
+    with: 'ArenaOS works online and offline. With no internet it keeps going and sends everything later.',
   },
 ];
 

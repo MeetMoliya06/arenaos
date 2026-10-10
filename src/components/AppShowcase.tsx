@@ -867,7 +867,7 @@ const MultiBranchScene: React.FC = () => {
           </div>
           <div className="text-right text-[10px] text-[#5C5C66] font-mono">
             <div>PING: <span className="text-[#CCFF00]">{branches[activeBranch].ping}</span></div>
-            <div>OFFLINE: <span className="text-[#CCFF00]">Ready</span></div>
+            <div>MODE: <span className="text-[#CCFF00]">Online + Offline</span></div>
           </div>
         </div>
 

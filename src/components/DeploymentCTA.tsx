@@ -149,7 +149,7 @@ export const DeploymentCTA: React.FC<DeploymentCTAProps> = ({ isModal = false, o
               </div>
               <div className="flex items-center gap-2 text-white">
                 <span className="w-1.5 h-1.5 rounded-full bg-arena-lime" />
-                <span>Local server at each branch, works offline</span>
+                <span>Local server at each branch, works online + offline</span>
               </div>
               <div className="flex items-center gap-2 text-white">
                 <span className="w-1.5 h-1.5 rounded-full bg-arena-lime" />

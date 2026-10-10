@@ -40,8 +40,8 @@ const MODULES: ModuleInfo[] = [
   {
     id: 'multi-branch', code: '06', title: 'All branches together',
     tagline: 'See every branch from Head Office.',
-    description: 'Head Office sees live PC status, active sessions and shifts across Adajan, Katargam, Citylight and Varachha. Each branch also keeps working if its internet goes down, then catches up.',
-    stats: [{ label: 'Branches', value: '4' }, { label: 'Offline mode', value: 'Yes' }],
+    description: 'Head Office sees live PC status, active sessions and shifts across Adajan, Katargam, Citylight and Varachha. Each branch works online and offline, and catches up when its internet comes back.',
+    stats: [{ label: 'Branches', value: '4' }, { label: 'Mode', value: 'Online + Offline' }],
     features: [],
   },
 ];
