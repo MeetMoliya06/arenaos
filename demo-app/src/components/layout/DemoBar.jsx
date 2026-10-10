@@ -1,9 +1,11 @@
-import { RotateCcw, Repeat, ArrowUpRight } from 'lucide-react';
+import { RotateCcw, Repeat, ArrowUpRight, Compass } from 'lucide-react';
+import { useTour } from '../tour/TourContext';
 
 // Demo build only: a small floating control so visitors can always reset, change role,
 // or get back to the marketing site. Everything runs on in-browser sample data.
 export default function DemoBar() {
   const base = import.meta.env.BASE_URL;
+  const tour = useTour();
 
   const switchRole = () => {
     try {
@@ -22,6 +24,9 @@ export default function DemoBar() {
         <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" /> Live demo
         <span className="hidden sm:inline text-text-3 normal-case tracking-normal">· sample data</span>
       </span>
+      <button onClick={tour.enabled ? tour.stop : tour.start} className={btn} title={tour.enabled ? 'End the guided tour' : 'Start a guided tour'}>
+        <Compass className="w-3 h-3" /> <span className="hidden sm:inline">{tour.enabled ? 'End tour' : 'Take tour'}</span>
+      </button>
       <button onClick={() => window.location.reload()} className={btn} title="Reload with fresh sample data">
         <RotateCcw className="w-3 h-3" /> <span className="hidden sm:inline">Reset</span>
       </button>

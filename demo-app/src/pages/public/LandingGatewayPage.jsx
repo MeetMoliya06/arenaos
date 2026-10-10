@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { MonitorStop, Shield, ShieldAlert, ArrowLeft, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { MonitorStop, Shield, ShieldAlert, ArrowLeft, Sparkles, Compass } from 'lucide-react';
 import { DEMO_USERS } from '../../mock/seed';
+import { armTour } from '../../components/tour/TourContext';
 
 // Demo build: one-click entry. No credentials — pick a role and land inside the real product UI,
 // running on seeded data entirely in the browser.
@@ -25,9 +27,11 @@ const ROLES = [
 
 export default function LandingGatewayPage() {
   const navigate = useNavigate();
+  const [pendingRole, setPendingRole] = useState(null); // role waiting on the "guided tour?" answer
 
-  const enter = (role) => {
+  const enter = (role, guided) => {
     try {
+      if (guided) armTour(); else sessionStorage.removeItem('arenaos_tour');
       localStorage.setItem('user', JSON.stringify(role.user));
       if (role.id === 'superadmin') localStorage.removeItem('activeBranchId');
       else localStorage.setItem('activeBranchId', role.user.branchId);
@@ -67,7 +71,7 @@ export default function LandingGatewayPage() {
               key={role.id}
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.1 }}
               whileHover={{ scale: 1.03, translateY: -5 }} whileTap={{ scale: 0.97 }}
-              onClick={() => enter(role)}
+              onClick={() => setPendingRole(role)}
               className="card group relative flex flex-col items-center text-center p-8 bg-bg-2/80 backdrop-blur-xl border-border/60 shadow-xl shadow-black/50 hover:border-accent hover:shadow-[0_0_20px_rgba(204, 255, 0,0.15)] cursor-pointer transition-all duration-300"
             >
               {role.badge && (
@@ -83,6 +87,43 @@ export default function LandingGatewayPage() {
           ))}
         </div>
       </div>
+
+      <AnimatePresence>
+        {pendingRole && (
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/75 backdrop-blur-sm"
+            onClick={() => setPendingRole(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 10 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95 }}
+              role="dialog" aria-label="Guided tour"
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-lg rounded-2xl border border-accent/40 bg-bg-2 p-8 text-center shadow-2xl shadow-black/70"
+            >
+              <Compass className="w-12 h-12 text-accent mx-auto mb-4" />
+              <h2 className="font-heading text-2xl font-bold text-text mb-2">Want a guided tour?</h2>
+              <p className="text-text-2 text-base leading-relaxed mb-7">
+                We'll walk you through the {pendingRole.title.toLowerCase()} view step by step and show you where to click.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={() => enter(pendingRole, true)}
+                  className="flex-1 py-3 rounded-lg bg-accent text-black font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-opacity"
+                >
+                  Yes, guide me
+                </button>
+                <button
+                  onClick={() => enter(pendingRole, false)}
+                  className="flex-1 py-3 rounded-lg border border-border text-text-2 hover:text-text hover:border-text-3 font-semibold text-sm uppercase tracking-wider transition-colors"
+                >
+                  No, I'll explore
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -19,7 +19,7 @@ export default function PcGrid({ pcs, walkinRequests, selectedPcId, onSelectPc, 
   }
 
   return (
-    <div className={`grid ${GRID_COLS[size] || GRID_COLS.md} gap-3`}>
+    <div data-tour="pc-grid" className={`grid ${GRID_COLS[size] || GRID_COLS.md} gap-3`}>
       {pcs.map((pc) => {
         const walkinReq = walkinRequests?.find(r => r.pcId === pc.name || r.pcId === pc.id);
         return (

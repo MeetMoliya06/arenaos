@@ -224,7 +224,7 @@ export default function StartSessionForm({ pc, onSuccess }) {
       )}
 
       {/* Customer Name */}
-      <div className="space-y-1.5">
+      <div data-tour="start-name" className="space-y-1.5">
         <label className="text-[10px] font-mono font-semibold text-text-2 uppercase tracking-wider flex items-center gap-1">
           <User className="w-3 h-3" /> Customer Name *
         </label>
@@ -239,7 +239,7 @@ export default function StartSessionForm({ pc, onSuccess }) {
       </div>
 
       {/* Branch-Wise Plan Selection */}
-      <div className="space-y-1.5">
+      <div data-tour="start-plan" className="space-y-1.5">
         <label className="text-[10px] font-mono font-semibold text-text-2 uppercase tracking-wider flex items-center justify-between">
           <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> Select Plan</span>
           {loadingPlans && <Loader2 className="w-3 h-3 animate-spin text-accent" />}
@@ -275,6 +275,7 @@ export default function StartSessionForm({ pc, onSuccess }) {
       {/* Submit */}
       <button
         type="submit"
+        data-tour="start-submit"
         disabled={loading}
         className="w-full py-2.5 rounded border border-pc-active/50 bg-pc-active/10 text-pc-active font-heading font-bold uppercase tracking-widest text-sm hover:bg-pc-active/20 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
       >

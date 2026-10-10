@@ -197,6 +197,7 @@ export default function Topbar({ onToggleSidebar, sidebarOpen, onLogoutClick }) 
         {isSuperAdmin && branches.length > 0 && (
           <div className="branch-menu-wrap relative hidden md:block">
             <button
+              data-tour="branch-switcher"
               onClick={(e) => { e.stopPropagation(); setShowBranchMenu(!showBranchMenu); }}
               className="flex items-center gap-2 px-3 py-1.5 bg-bg-3 border border-border rounded-sm text-xs hover:border-accent transition-colors"
             >

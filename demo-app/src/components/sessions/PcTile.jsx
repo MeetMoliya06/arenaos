@@ -214,6 +214,7 @@ const PcTile = memo(({ pc, walkinReq, isSelected, onSelect, onQuickStart, onRefr
       type="button"
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
+      data-pc-state={pc.state}
       onClick={() => onSelect?.(pc)}
       onDoubleClick={handleDoubleClick}
       draggable={isActive}

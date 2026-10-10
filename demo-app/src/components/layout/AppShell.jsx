@@ -155,7 +155,7 @@ export default function AppShell() {
             Left empty while a handover is outstanding. This operator has no shift yet, so every
             page behind the modal would fire calls the server is right to refuse, and they would
             load into a dashboard nobody is meant to be looking at. */}
-        <main className="flex-1 min-w-0 overflow-auto">
+        <main data-tour="main" className="flex-1 min-w-0 overflow-auto">
           <div className="p-3 sm:p-4 max-w-[1600px]">
             {!pendingTakeover && (
               <>

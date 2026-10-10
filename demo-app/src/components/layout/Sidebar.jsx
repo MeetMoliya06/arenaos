@@ -288,6 +288,7 @@ export default function Sidebar({ isOpen, onClose, collapsed = false, width = 24
                   <NavLink
                     key={item.route}
                     to={item.route}
+                    data-tour={`nav-${item.route.split('/').pop()}`}
                     onClick={onClose}
                     className={({ isActive }) =>
                       `flex items-center gap-2.5 px-3 py-2 rounded-sm text-[12px] font-medium transition-all duration-150 group relative ${

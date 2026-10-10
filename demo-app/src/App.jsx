@@ -10,6 +10,7 @@ import { SocketProvider } from './contexts/SocketContext';
 import { BranchProvider } from './contexts/BranchContext';
 import { ActivityLogProvider } from './contexts/ActivityLogContext';
 import { ToastProvider } from './components/ui/Toast';
+import { TourProvider } from './components/tour/TourContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import AppShell from './components/layout/AppShell';
 import { ROLES, DASHBOARDS } from './config/constants';
@@ -81,6 +82,7 @@ export default function App() {
           <SocketProvider>
             <BranchProvider>
               <ToastProvider>
+              <TourProvider>
               <Routes>
                 {/* ══════════ Public Routes ══════════ */}
                 <Route path="/login/operator" element={<OperatorLoginPage />} />
@@ -282,6 +284,7 @@ export default function App() {
                 <Route path="/" element={<LandingGatewayPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
+              </TourProvider>
               </ToastProvider>
             </BranchProvider>
           </SocketProvider>
