@@ -98,7 +98,7 @@ export default function ExtendSessionModal({ pc, onClose, onActionSuccess }) {
             <div>
               <h2 className="font-heading font-bold text-text uppercase tracking-wider text-base flex items-center gap-2">
                 <RefreshCw className="w-4 h-4 text-neon-blue" />
-                Extend Session — {pc.name}
+                Extend Session: {pc.name}
               </h2>
               <p className="text-text-3 text-[10px] font-mono mt-0.5">
                 Current charge rate: ₹{pc.ratePerHour}/hr

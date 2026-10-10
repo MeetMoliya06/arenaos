@@ -23,14 +23,14 @@ const SUMMARIES = {
   login: () => 'logged in',
   logout: () => 'logged out',
   failed_login: (d) => `tried to log in and failed${d?.reason ? ` (${d.reason})` : ''}`,
-  account_locked: (d) => `was locked out${d?.reason ? ` — ${d.reason}` : ''}`,
+  account_locked: (d) => `was locked out${d?.reason ? `: ${d.reason}` : ''}`,
   password_reset: () => 'reset their password',
   forced_logout: () => 'was signed out by an admin',
   admin_switch_in: (d) => `switched into ${d?.operatorName ?? 'an operator'}'s session`,
   admin_switch_out: () => 'ended an admin override session',
 
   session_start: (d) => `started a session on ${d?.PcNumber ?? 'a PC'}${d?.DurationMinutes ? ` for ${d.DurationMinutes} min` : ''}${d?.ExpectedAmount ? `, ${money(d.ExpectedAmount)}` : ''}`,
-  session_stop: (d) => `stopped the session on ${d?.PcNumber ?? 'a PC'}${d?.TotalAmount !== undefined ? ` — billed ${money(d.TotalAmount)}` : ''}`,
+  session_stop: (d) => `stopped the session on ${d?.PcNumber ?? 'a PC'}${d?.TotalAmount !== undefined ? `, billed ${money(d.TotalAmount)}` : ''}`,
   session_extend: (d) => `extended ${d?.PcNumber ?? 'a PC'} by ${d?.AdditionalMinutes ?? '?'} min (+${money(d?.AdditionalAmount)})`,
   session_transfer: (d) => `moved a session from ${d?.from ?? '?'} to ${d?.to ?? '?'}`,
 
@@ -41,11 +41,11 @@ const SUMMARIES = {
 
   bill_create: () => 'opened a bill',
   bill_complete: (d) => `completed bill ${d?.BillNumber ?? ''}`.trim(),
-  payment_process: (d) => `took a payment — ${d?.PaymentType ?? 'payment'}, ${money(d?.Total)}`,
+  payment_process: (d) => `took a payment: ${d?.PaymentType ?? 'payment'}, ${money(d?.Total)}`,
   discount_apply: (d) => `applied a ${d?.DiscountType === 'Percentage' ? `${d?.Value}%` : money(d?.Value)} discount${d?.Reason ? ` (${d.Reason})` : ''}`,
-  credit_clear: (d) => `cleared ${d?.CustomerName ?? 'a'}'s credit — ${money(d?.Amount)}${d?.PaymentType ? ` (${d.PaymentType})` : ''}`,
+  credit_clear: (d) => `cleared ${d?.CustomerName ?? 'a'}'s credit: ${money(d?.Amount)}${d?.PaymentType ? ` (${d.PaymentType})` : ''}`,
 
-  food_order_place: (d) => `placed food order ${d?.OrderNumber ?? ''} — ${d?.ItemCount ?? '?'} item(s), ${money(d?.Total)}`.trim(),
+  food_order_place: (d) => `placed food order ${d?.OrderNumber ?? ''}: ${d?.ItemCount ?? '?'} item(s), ${money(d?.Total)}`.trim(),
   food_order_status_change: (d) => `marked a food order ${(d?.Status ?? 'updated').toLowerCase()}${d?.Reason ? ` (${d.Reason})` : ''}`,
 
   cash_opening: () => 'opened the cash drawer',
@@ -94,7 +94,7 @@ const SUMMARIES = {
     // asked). `outcome` is only present on the second kind.
     if (d?.outcome) {
       const verb = d.outcome === 'succeeded' ? 'went through' : 'failed';
-      const reason = d?.message ? ` — ${d.message}` : '';
+      const reason = d?.message ? `: ${d.message}` : '';
       return `asked a branch, from Head Office, to ${label}, which ${verb}${reason}`;
     }
 
@@ -121,7 +121,7 @@ const FAILURE_LABELS = {
 const FAILURE_SUMMARIES = {
   ...Object.fromEntries(Object.entries(FAILURE_LABELS).map(([action, label]) => [
     action,
-    (d) => `tried to ${label} and it failed${d?.error ? ` — ${d.error}` : ''}`,
+    (d) => `tried to ${label} and it failed${d?.error ? `: ${d.error}` : ''}`,
   ])),
 };
 
@@ -163,7 +163,7 @@ export function summarize(action, details, success = true) {
     .map(([k, v]) => `${k}: ${typeof v === 'object' ? JSON.stringify(v) : v}`)
     .join(', ');
 
-  return pairs ? `${titleCase(action)} — ${pairs}` : titleCase(action);
+  return pairs ? `${titleCase(action)}: ${pairs}` : titleCase(action);
 }
 
 // Display-only overrides for action codes whose auto-generated (titleCase) label would still

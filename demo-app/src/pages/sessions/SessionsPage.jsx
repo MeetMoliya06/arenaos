@@ -269,7 +269,7 @@ export default function SessionsPage() {
         const remaining = alert.remainingBalance ?? alert.RemainingBalance ?? 0;
         const mins = alert.minutesRemaining ?? alert.MinutesRemaining ?? 0;
         toast.warning(`${memberName} on ${pcName}: ₹${Number(remaining).toFixed(2)} gaming balance left (~${mins} min)`);
-        logActivity(`${pcName}: ${memberName} low gaming balance — ₹${Number(remaining).toFixed(2)} left (~${mins} min). Offer a top-up.`, 'warn');
+        logActivity(`${pcName}: ${memberName} low gaming balance: ₹${Number(remaining).toFixed(2)} left (~${mins} min). Offer a top-up.`, 'warn');
         return;
       }
 

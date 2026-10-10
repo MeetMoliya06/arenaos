@@ -60,7 +60,7 @@ export default function LandingGatewayPage() {
             LIVE PRODUCT DEMO
           </motion.h1>
           <p className="text-text-2 max-w-xl mx-auto text-sm leading-relaxed">
-            This is the real ERP running a gaming café chain in Surat — 4 branches, 100+ stations — loaded with sample data.
+            This is the real ERP running a gaming café chain in Surat (4 branches, 100+ stations), loaded with sample data.
             Pick a role and click around. Nothing is saved; refresh to reset.
           </p>
         </div>

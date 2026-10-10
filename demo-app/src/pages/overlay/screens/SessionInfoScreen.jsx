@@ -158,7 +158,7 @@ export default function SessionInfoScreen() {
                 ) : (
                   <>
                     <CheckCircle2 className="w-4 h-4" />
-                    I've Topped Up — Resume
+                    I've Topped Up: Resume
                   </>
                 )}
               </button>
@@ -317,7 +317,7 @@ export default function SessionInfoScreen() {
             </p>
             <p className="text-text-2 font-body text-sm mt-1">
               <strong className="text-text">₹{formatMoney(lowBalanceWarning.remaining)}</strong> remaining
-              {lowBalanceWarning.minutes > 0 && <> — about <strong className="text-text">{lowBalanceWarning.minutes} min</strong> of play left</>}.
+              {lowBalanceWarning.minutes > 0 && <>, about <strong className="text-text">{lowBalanceWarning.minutes} min</strong> of play left</>}.
               {' '}Please top up at the counter to keep playing.
             </p>
           </div>

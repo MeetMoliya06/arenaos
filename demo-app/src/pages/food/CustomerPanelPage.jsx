@@ -471,7 +471,7 @@ export default function CustomerPanelPage() {
                   <option value="">Guest Walk-In (Not Linked)</option>
                   {activeSessions.map(s => (
                     <option key={s.id} value={s.id}>
-                      {s.pcName} — {s.customerName}
+                      {s.pcName}: {s.customerName}
                     </option>
                   ))}
                 </select>

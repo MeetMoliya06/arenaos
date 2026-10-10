@@ -46,7 +46,7 @@ if (!document.getElementById('emp-print-style')) {
 const Field = ({ label, value }) => (
   <div className="print-field space-y-0.5">
     <label className="text-[10px] font-bold uppercase tracking-widest text-text-3 block">{label}</label>
-    <p className="text-sm font-semibold text-text">{value || '—'}</p>
+    <p className="text-sm font-semibold text-text">{value || '-'}</p>
   </div>
 );
 
@@ -121,12 +121,12 @@ function UploadField({ label, accept, value, onChange, onError, previewClass, hi
     const file = e.target.files?.[0];
     e.target.value = '';
     if (!file) return;
-    if (file.size > MAX_UPLOAD_BYTES) { onError('File is too large — please choose one under 5 MB'); return; }
+    if (file.size > MAX_UPLOAD_BYTES) { onError('File is too large, please choose one under 5 MB'); return; }
     try {
       const dataUrl = await fileToDataUrl(file);
       onChange(dataUrl);
     } catch {
-      onError('Could not process that file — try a different image');
+      onError('Could not process that file, try a different image');
     }
   };
 
@@ -183,7 +183,7 @@ function EmployeeDetailView({ employee, onBack }) {
         {/* Print-only header */}
         <div className="hidden print:block text-center mb-6">
           <h1 className="text-2xl font-bold">ArenaOS</h1>
-          <p className="text-sm text-gray-500">Employee Joining Form — Official Record</p>
+          <p className="text-sm text-gray-500">Employee Joining Form: Official Record</p>
         </div>
 
         <div className="bg-accent/5 border border-accent/20 rounded-xl p-5 flex flex-wrap gap-6 items-center">
@@ -346,7 +346,7 @@ function DeleteEmployeeModal({ employee, onClose, onDeleted }) {
       const { operatorSuspended, operatorName } = res.data?.data || {};
       toast.success(
         operatorSuspended
-          ? `${employee.fullName} removed — the linked operator account (${operatorName}) has been suspended`
+          ? `${employee.fullName} removed, the linked operator account (${operatorName}) has been suspended`
           : `${employee.fullName} removed`
       );
       onDeleted();
@@ -374,7 +374,7 @@ function DeleteEmployeeModal({ employee, onClose, onDeleted }) {
           </div>
           <p className="text-sm text-text-3">
             {employee.operatorId
-              ? 'This record has a linked system account. Deleting it will also suspend that operator login — nobody will be able to sign in with it until an admin reactivates it from Settings.'
+              ? 'This record has a linked system account. Deleting it will also suspend that operator login, nobody will be able to sign in with it until an admin reactivates it from Settings.'
               : 'This will remove the HR record. No linked system account was found for it, so nothing else is affected.'}
           </p>
         </div>
@@ -526,7 +526,7 @@ export default function EmployeeFormsPage() {
     <div className="h-full flex flex-col">
       <PageHeader
         title="Employee Forms"
-        subtitle="Digital HR joining forms — Admin & SuperAdmin only"
+        subtitle="Digital HR joining forms: Admin & SuperAdmin only"
         icon="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
         badge="HR"
       />
@@ -638,10 +638,10 @@ export default function EmployeeFormsPage() {
                           </div>
                           {emp.fullName}
                         </td>
-                        <td className="p-4 text-text-2">{emp.positionTitle || '—'}</td>
-                        <td className="p-4 text-text-2">{emp.department || '—'}</td>
-                        <td className="p-4 text-text-2 font-mono">{emp.phone || '—'}</td>
-                        <td className="p-4 text-text-2">{emp.startDate || '—'}</td>
+                        <td className="p-4 text-text-2">{emp.positionTitle || '-'}</td>
+                        <td className="p-4 text-text-2">{emp.department || '-'}</td>
+                        <td className="p-4 text-text-2 font-mono">{emp.phone || '-'}</td>
+                        <td className="p-4 text-text-2">{emp.startDate || '-'}</td>
                         <td className="p-4">
                           <span className={`text-[10px] font-bold px-2 py-1 rounded border uppercase ${
                             emp.status === 'Active' ? 'bg-neon-green/10 text-neon-green border-neon-green/30' : 'bg-neon-orange/10 text-neon-orange border-neon-orange/30'
@@ -715,7 +715,7 @@ export default function EmployeeFormsPage() {
                     onChange={(v) => setForm(f => ({ ...f, photoDataUrl: v }))}
                     onError={(msg) => toast.error(msg)}
                     previewClass="w-24 h-28"
-                    hint="JPEG/PNG, under 5 MB — will be printed on the joining form."
+                    hint="JPEG/PNG, under 5 MB, will be printed on the joining form."
                   />
                 </div>
               </div>

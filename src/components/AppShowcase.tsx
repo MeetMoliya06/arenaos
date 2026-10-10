@@ -151,7 +151,7 @@ export const AppShowcase: React.FC = () => {
 
           {/* Center title */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[11px] text-[#6B6B77] font-medium tracking-wide truncate max-w-[200px]">
-            ArenaOS — Live Demo
+            ArenaOS: Live Demo
           </div>
 
           {/* Play/Pause */}
@@ -332,7 +332,7 @@ const PCSessionScene: React.FC = () => {
         <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 px-3.5 py-1.5 bg-[#181920] border border-[#CCFF00] text-[#CCFF00] text-xs font-mono rounded shadow-lg animate-[fadeSlideIn_0.3s_ease]">
           <span className="flex items-center gap-1.5">
             <ShieldCheck className="w-3.5 h-3.5" />
-            {isLocked ? 'Hardware Lock Engaged — KB/Mouse disabled' : 'Rig Unlocked — Session resumed'}
+            {isLocked ? 'Hardware Lock Engaged: KB/Mouse disabled' : 'Rig Unlocked: Session resumed'}
           </span>
         </div>
       )}
@@ -437,7 +437,7 @@ const WalletScene: React.FC = () => {
         <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 px-3.5 py-1.5 bg-[#181920] border border-[#CCFF00] text-[#CCFF00] text-xs font-mono rounded shadow-lg animate-[fadeSlideIn_0.3s_ease]">
           <span className="flex items-center gap-1.5">
             <CheckCircle className="w-3.5 h-3.5" />
-            ₹500 credited via UPI — bonus ₹50 added
+            ₹500 credited via UPI, bonus ₹50 added
           </span>
         </div>
       )}
@@ -733,7 +733,7 @@ const BillingScene: React.FC = () => {
             {paymentStep === 'done' && (
               <div className="flex items-center gap-2 text-[#CCFF00] text-xs animate-[fadeSlideIn_0.3s_ease]">
                 <CheckCircle className="w-4 h-4" />
-                <span className="font-medium">PAID — Receipt #TX9842 printed</span>
+                <span className="font-medium">PAID: Receipt #TX9842 printed</span>
               </div>
             )}
           </div>
@@ -816,7 +816,7 @@ const MultiBranchScene: React.FC = () => {
         <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 px-3.5 py-1.5 bg-[#181920] border border-[#CCFF00] text-[#CCFF00] text-xs font-mono rounded shadow-lg animate-[fadeSlideIn_0.3s_ease]">
           <span className="flex items-center gap-1.5">
             <Globe2 className="w-3.5 h-3.5" />
-            All 4 branches synced — 250 rigs online
+            All 4 branches synced, 250 rigs online
           </span>
         </div>
       )}

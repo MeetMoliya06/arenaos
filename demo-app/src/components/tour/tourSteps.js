@@ -3,14 +3,14 @@
 // Step fields
 //   target   CSS selector to spotlight (omit for a centred card)
 //   route    page the step belongs to; the tour navigates there if the visitor isn't on it
-//   advance  'next'  — visitor presses Next
-//            'click' — visitor clicks the highlighted element (their click still does its normal job)
-//            'route' — visitor clicks a link and the tour moves on once the URL matches `route` of the next step
+//   advance  'next'  : visitor presses Next
+//            'click' : visitor clicks the highlighted element (their click still does its normal job)
+//            'route' : visitor clicks a link and the tour moves on once the URL matches `route` of the next step
 //   hint     small italic line telling the visitor which action is expected
 
 const welcome = (who) => ({
   title: 'Welcome to ArenaOS',
-  body: `A 1-minute walkthrough of the ${who} view. You'll do the real actions yourself — I'll just point.`,
+  body: `A 1-minute walkthrough of the ${who} view. You'll do the real actions yourself, I'll just point.`,
 });
 
 const operator = [
@@ -122,7 +122,7 @@ const superadmin = [
   {
     route: '/app/dashboard', target: '[data-tour="nav-audit-trail"]', placement: 'right', advance: 'route', nextRoute: '/app/audit-trail',
     title: 'Every action is recorded',
-    body: 'Discounts, voids, price changes — who did what and when. Open Audit Trail.',
+    body: 'Discounts, voids, price changes: who did what and when. Open Audit Trail.',
     hint: 'Click Audit Trail',
   },
   {

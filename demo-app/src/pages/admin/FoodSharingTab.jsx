@@ -66,7 +66,7 @@ export default function FoodSharingTab() {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Delete this food group? Its branches go back to being fully independent — their existing menus are untouched.')) return;
+    if (!window.confirm('Delete this food group? Its branches go back to being fully independent, their existing menus are untouched.')) return;
     try {
       await deleteFoodGroup(id);
       toast.success('Food group deleted');
@@ -84,7 +84,7 @@ export default function FoodSharingTab() {
           <p className="text-text-2 text-xs mt-1">
             Link branches that share one pantry so their menu and stock count are the same
             number everywhere, instead of two independently-tracked numbers. A branch not in
-            any group here is fully independent, exactly as before — PCs, cash and shifts are
+            any group here is fully independent, exactly as before: PCs, cash and shifts are
             never affected either way.
           </p>
         </div>

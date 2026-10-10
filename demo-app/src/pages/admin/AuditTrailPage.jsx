@@ -240,7 +240,7 @@ export default function AuditTrailPage() {
                           day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit',
                         })}
                       </td>
-                      <td className="py-2 px-3 text-text-2 whitespace-nowrap">{row.branchName ?? '—'}</td>
+                      <td className="py-2 px-3 text-text-2 whitespace-nowrap">{row.branchName ?? '-'}</td>
                       <td className="py-2 px-3 text-text whitespace-nowrap">
                         {row.userName}
                         <span className="text-text-3 text-[10px] ml-1">{row.userRole}</span>

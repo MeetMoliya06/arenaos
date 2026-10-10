@@ -109,7 +109,7 @@ export default function TourOverlay() {
         </div>
         <h3 className="font-heading text-xl font-bold text-text pr-8">{step.title}</h3>
         <p className="text-base text-text-2 leading-relaxed mt-2">
-          {waiting ? 'Waiting for this part of the screen — try the previous step, or skip ahead.' : step.body}
+          {waiting ? 'Waiting for this part of the screen. Try the previous step, or skip ahead.' : step.body}
         </p>
         {step.hint && !waiting && (
           <p className="mt-3 text-sm font-mono text-accent">👆 {step.hint}</p>

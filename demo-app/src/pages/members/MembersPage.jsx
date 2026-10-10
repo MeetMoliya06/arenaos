@@ -41,7 +41,7 @@ function StatusBadge({ status }) {
 }
 
 function relTime(dateStr) {
-  if (!dateStr) return '—';
+  if (!dateStr) return '-';
   const diff = Date.now() - new Date(dateStr).getTime();
   const days = Math.floor(diff / 86400000);
   if (days === 0) return 'Today';

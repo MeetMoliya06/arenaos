@@ -759,7 +759,7 @@ export default function SettingsPage() {
               defaultValue={branchDrawer.data?.foodGroupId || ''}
               className="form-control"
             >
-              <option value="">Don't share — keep independent</option>
+              <option value="">Don't share, keep independent</option>
               {foodGroups.map(g => (
                 <option key={g.id} value={g.id}>
                   {g.name} ({g.branches.map(b => b.name).join(', ') || 'no branches yet'})
@@ -869,7 +869,7 @@ export default function SettingsPage() {
               <div>
                 <h3 className="font-heading text-lg font-bold text-text uppercase tracking-wider flex items-center gap-2">
                   <Monitor className="w-5 h-5 text-accent" />
-                  Manage PC Fleet — {pcModal.branch?.name}
+                  Manage PC Fleet: {pcModal.branch?.name}
                 </h3>
                 <p className="text-text-2 text-xs mt-0.5">Define gaming rigs, zones, specs, and local configurations</p>
               </div>

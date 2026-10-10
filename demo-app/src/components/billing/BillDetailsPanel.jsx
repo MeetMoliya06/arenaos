@@ -222,7 +222,7 @@ export default function BillDetailsPanel({ bill, onBillUpdate, onPaymentSuccess,
       if (result?.queued) {
         toast.success(result.message || 'Sent to the branch. It collects this payment within a few seconds.');
       } else {
-        toast.success('Transaction saved — PC released!');
+        toast.success('Transaction saved: PC released!');
       }
       onPaymentSuccess?.();
     } catch (err) {
@@ -542,7 +542,7 @@ export default function BillDetailsPanel({ bill, onBillUpdate, onPaymentSuccess,
                     : 'text-neon-orange bg-neon-orange/10 border-neon-orange/20'
               }`}>
                 {Math.abs(splitDiff) <= 0.01
-                  ? `✓ Balanced — ₹${total}`
+                  ? `✓ Balanced: ₹${total}`
                   : splitDiff > 0
                     ? `₹${splitDiff.toFixed(0)} short`
                     : `₹${Math.abs(splitDiff).toFixed(0)} over`}

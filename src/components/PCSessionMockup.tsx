@@ -35,7 +35,7 @@ export const PCSessionMockup: React.FC = () => {
         <div className="flex flex-wrap justify-between items-start gap-4">
           <div>
             <div className="text-xs text-arena-lime mb-1">
-              Active session — {activeZone}
+              Active session: {activeZone}
             </div>
             <div className="font-semibold text-2xl md:text-3xl text-white">
               {isLocked ? 'System locked' : 'Current user: @ghost_strike'}

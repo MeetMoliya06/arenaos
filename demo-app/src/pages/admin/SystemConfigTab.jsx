@@ -96,7 +96,7 @@ function WalletTopUpSettingsCard() {
       <h3 className="text-sm font-semibold mb-1 text-accent flex items-center gap-2">
         <Wallet size={14} /> Member Amount Top-Up Settings
       </h3>
-      <p className="text-xs text-text-2 mb-4">Controls every Gaming Member Amount top-up across all branches — the minimum amount allowed and the default bonus % applied automatically.</p>
+      <p className="text-xs text-text-2 mb-4">Controls every Gaming Member Amount top-up across all branches, the minimum amount allowed and the default bonus % applied automatically.</p>
       <div className="grid grid-cols-2 gap-4">
         <div className="form-group">
           <label>Minimum Gaming Top-Up (₹)</label>
@@ -244,7 +244,7 @@ export default function SystemConfigTab() {
           </div>
 
           <p className="text-xs text-text-2 mb-2">
-            Save your sender + app password above first, then send a test to confirm it actually works — a wrong password otherwise fails silently, with no error anywhere.
+            Save your sender + app password above first, then send a test to confirm it actually works, a wrong password otherwise fails silently, with no error anywhere.
           </p>
           <TestEmailButton defaultTo={currentRules.emailNotifications?.sender} />
         </div>

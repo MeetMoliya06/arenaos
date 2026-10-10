@@ -336,7 +336,7 @@ export default function Sidebar({ isOpen, onClose, collapsed = false, width = 24
             </div>
           )}
           <div className="text-[9px] text-text-3 font-mono tracking-wide px-1">
-            {appVersion ? `v${appVersion}` : 'v—'} · SOP Compliant
+            {appVersion ? `v${appVersion}` : 'v-'} · SOP Compliant
           </div>
         </div>
         </div>

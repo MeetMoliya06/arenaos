@@ -209,7 +209,7 @@ export default function PaymentEngineModal({ bill, onClose, onPaymentSuccess }) 
       if (result?.queued) {
         toast.success(result.message || 'Sent to the branch. It collects this payment within a few seconds.');
       } else {
-        toast.success('Payment processed — PC released!');
+        toast.success('Payment processed: PC released!');
       }
       onPaymentSuccess?.();
       onClose();
@@ -238,7 +238,7 @@ export default function PaymentEngineModal({ bill, onClose, onPaymentSuccess }) 
                   Process Payment
                 </h2>
                 <p className="text-[10px] text-text-3 font-mono mt-0.5">
-                  {bill.billNumber} — {bill.pcNumber ? `Station ${bill.pcNumber}` : 'Walk-in'}
+                  {bill.billNumber}: {bill.pcNumber ? `Station ${bill.pcNumber}` : 'Walk-in'}
                 </p>
               </div>
             </div>

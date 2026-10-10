@@ -173,13 +173,13 @@ const AdminPcCard = ({ pc }) => {
             <div className="flex justify-between items-center">
               <span className="text-text-3 font-mono">Reserved By:</span>
               <span className="font-semibold text-pc-reserved">
-                {pc.customerName || '—'}
+                {pc.customerName || '-'}
               </span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-text-3 font-mono">Time:</span>
               <span className="font-mono font-bold text-pc-reserved">
-                {pc.nextReservationTime ? new Date(pc.nextReservationTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }) : '—'}
+                {pc.nextReservationTime ? new Date(pc.nextReservationTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }) : '-'}
               </span>
             </div>
           </>
@@ -277,7 +277,7 @@ export default function PcStatusPage() {
     <div className="space-y-4">
       <PageHeader
         title="PC Status"
-        subtitle="Full PC fleet overview — all branches, all states"
+        subtitle="Full PC fleet overview, all branches, all states"
         icon="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
         badge="ADMIN ONLY"
       />

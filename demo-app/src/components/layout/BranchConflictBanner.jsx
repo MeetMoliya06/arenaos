@@ -65,12 +65,12 @@ export default function BranchConflictBanner() {
             <span className="font-bold">{c.branchName}</span> has two PCs both reporting as itself
             right now: <span className="font-mono">{c.reportedByMachine}</span> and{' '}
             <span className="font-mono">{c.conflictingMachine}</span>. Each is keeping its own
-            records and syncing them under this one branch — their takings are being merged and
+            records and syncing them under this one branch, their takings are being merged and
             cannot be separated afterwards, and every figure on screen for this branch is being
             overwritten several times a minute by whichever PC reported last.{' '}
             {isSuperAdmin
               ? 'Stop the ArenaOS API service on whichever one is not the real counter PC.'
-              : 'Tell Head Office — one of these two machines is not the real counter PC.'}
+              : 'Tell Head Office, one of these two machines is not the real counter PC.'}
           </p>
         </div>
       ))}

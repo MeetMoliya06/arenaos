@@ -48,7 +48,7 @@ function refreshPcs() {
     const s = pc.activeSessionId && find.session(pc.activeSessionId);
     // Prepaid time ran out → flag, like the real clock-expiry warning.
     if (s && s.status === 'Active' && s.endTime && Date.now() > new Date(s.endTime).getTime()) {
-      pc.hasOverrunWarning = true; pc.overrunWarningMessage = 'Time is up — extend or stop the session.';
+      pc.hasOverrunWarning = true; pc.overrunWarningMessage = 'Time is up, extend or stop the session.';
     } else { pc.hasOverrunWarning = false; pc.overrunWarningMessage = null; }
   });
 }
@@ -160,7 +160,7 @@ POST('/sessions/:id/stop', (c) => {
     s.status = 'Completed'; bill.isDeferred = true;
     Object.assign(pc, { state: 'Idle', activeSessionId: null, activeBillId: null, sessionStartTime: null, sessionEndTime: null, customerName: null, customerType: null, totalAmount: 0, foodAmount: 0, lastCustomerName: s.customerName, lastMemberId: s.memberId });
   } else { s.status = 'AwaitingBilling'; pc.state = 'AwaitingBilling'; pc.totalAmount = bill.totalAmount; }
-  logActivity(pc.branchId, 'SessionStopped', `${pc.name}: Session stopped — ₹${bill.totalAmount}`, { pcId: pc.id, sessionId: s.id });
+  logActivity(pc.branchId, 'SessionStopped', `${pc.name}: Session stopped: ₹${bill.totalAmount}`, { pcId: pc.id, sessionId: s.id });
   pcEvt(); billEvt(bill.id); return ok(s);
 });
 POST('/sessions/:id/extend', (c) => {
@@ -192,7 +192,7 @@ POST('/bills/:id/pay', (c) => ok(payBill(find.bill(c.params.id) || fail(404, 'Bi
 POST('/bills/:id/discount', (c) => {
   const b = find.bill(c.params.id) || fail(404, 'Bill not found');
   Object.assign(b, { discountType: c.body.discountType, discountValue: Number(c.body.discountValue), discountReason: c.body.reason }); recalcBill(b);
-  logAudit(b.branchId, 'DiscountApplied', `${b.billNumber}: ${c.body.discountType} ${c.body.discountValue} — ${c.body.reason}`);
+  logAudit(b.branchId, 'DiscountApplied', `${b.billNumber}: ${c.body.discountType} ${c.body.discountValue}: ${c.body.reason}`);
   billEvt(b.id); return ok(b);
 });
 POST('/bills/:id/request-wallet-approval', () => ok({}));
@@ -306,7 +306,7 @@ GET('/cash/active', (c) => ok(registerDto(reqBranch(c))));
 POST('/cash/transactions', (c) => {
   const b = reqBranch(c); const amt = Number(c.body.amount);
   db.cashTx[b].unshift({ id: uid('ct'), billId: null, pcNumber: null, cashAmount: amt, cashReceived: amt, changeReturned: 0, actualCashCollected: amt, gamingAmount: 0, foodAmount: 0, transactionType: c.body.transactionType, customerName: c.body.reason, createdAt: iso() });
-  logAudit(b, 'cash_transaction', `${c.body.transactionType} ₹${amt} — ${c.body.reason}`); bus.emit('/hubs/cash', 'CashRegisterUpdated'); return ok(registerDto(b));
+  logAudit(b, 'cash_transaction', `${c.body.transactionType} ₹${amt}: ${c.body.reason}`); bus.emit('/hubs/cash', 'CashRegisterUpdated'); return ok(registerDto(b));
 });
 POST('/cash-desk/verify-start', (c) => { const r = registerFor(reqBranch(c)); r.status = 'Verifying'; return ok(registerDto(reqBranch(c))); });
 POST('/cash-desk/denomination', (c) => {
@@ -326,11 +326,11 @@ GET('/reports/cash-reconciliation', (c) => {
 // System desks (ledgers)
 GET('/system-desks/cash/active', (c) => { const t = cashTotals(reqBranch(c)); return ok({ shiftId: 'shift-demo-1', fromDate: c.query.fromDate, toDate: c.query.toDate, totalCashSales: t.sales, transactions: [...(db.cashTx[reqBranch(c)] || [])] }); });
 GET('/system-desks/online/active', (c) => {
-  const b = reqBranch(c); const tx = db.bills.filter((x) => x.branchId === b && x.status === 'Completed').flatMap((x) => x.payments.filter((p) => p.onlineAmount > 0).map((p) => ({ id: p.id, timestamp: p.createdAt, description: `${x.pcNumber || 'Counter'} — ${x.customerName}`, amount: p.onlineAmount, paymentMethod: 'UPI' })));
+  const b = reqBranch(c); const tx = db.bills.filter((x) => x.branchId === b && x.status === 'Completed').flatMap((x) => x.payments.filter((p) => p.onlineAmount > 0).map((p) => ({ id: p.id, timestamp: p.createdAt, description: `${x.pcNumber || 'Counter'}: ${x.customerName}`, amount: p.onlineAmount, paymentMethod: 'UPI' })));
   return ok({ shiftId: 'shift-demo-1', totalOnlineSales: tx.reduce((x, t) => x + t.amount, 0), transactions: tx.sort((a, b2) => new Date(b2.timestamp) - new Date(a.timestamp)) });
 });
 GET('/system-desks/wallet/active', (c) => {
-  const b = reqBranch(c); const tx = db.walletTx.filter((t) => t.branchId === b).map((t) => ({ id: t.id, timestamp: t.createdAt, description: `${find.member(t.memberId)?.fullName || 'Member'} — ${t.action === 'TopUp' ? 'Wallet top-up' : (t.reason || 'Deduction')}`, amount: t.amount, action: t.action === 'TopUp' ? 'TopUp' : 'Deduction', pcName: null, durationMinutes: null }));
+  const b = reqBranch(c); const tx = db.walletTx.filter((t) => t.branchId === b).map((t) => ({ id: t.id, timestamp: t.createdAt, description: `${find.member(t.memberId)?.fullName || 'Member'}: ${t.action === 'TopUp' ? 'Wallet top-up' : (t.reason || 'Deduction')}`, amount: t.amount, action: t.action === 'TopUp' ? 'TopUp' : 'Deduction', pcName: null, durationMinutes: null }));
   return ok({ shiftId: 'shift-demo-1', fromDate: c.query.fromDate, toDate: c.query.toDate, totalWalletTopUps: tx.filter((t) => t.action === 'TopUp').reduce((x, t) => x + t.amount, 0), totalWalletDeductions: tx.filter((t) => t.action !== 'TopUp').reduce((x, t) => x + t.amount, 0), transactions: tx });
 });
 

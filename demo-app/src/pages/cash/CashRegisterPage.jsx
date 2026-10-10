@@ -478,7 +478,7 @@ export default function CashRegisterPage() {
                           {denominations.length === 0 ? (
                             <span className="text-text-3 italic">
                               {r.closedAt
-                                ? `Counted ₹${r.physicalCashCounted.toFixed(2)} — breakdown not recorded.`
+                                ? `Counted ₹${r.physicalCashCounted.toFixed(2)}, breakdown not recorded.`
                                 : 'No denomination count recorded.'}
                             </span>
                           ) : (
@@ -545,7 +545,7 @@ export default function CashRegisterPage() {
                 disabled={isReopening}
                 className="btn-secondary py-2 px-4 text-xs font-bold uppercase tracking-wider disabled:opacity-50"
               >
-                {isReopening ? 'Undoing...' : 'Undo — this was a mistake'}
+                {isReopening ? 'Undoing...' : 'Undo, this was a mistake'}
               </button>
               <p className="text-text-3 text-[11px] mt-2 max-w-sm">
                 Only use this if "last shift of the day" was ticked by accident. The drawer
@@ -571,7 +571,7 @@ export default function CashRegisterPage() {
           <div className="mb-6">
             <PageHeader
               title="Cash Register"
-              subtitle="Read-only — Super Admin cannot open, count, or close a register"
+              subtitle="Read-only: Super Admin cannot open, count, or close a register"
               icon="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
               badge="VIEW ONLY"
             />

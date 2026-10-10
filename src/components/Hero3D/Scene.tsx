@@ -559,7 +559,7 @@ export const Hero3DScene: React.FC = () => {
       gpu: 'RTX 4070 Ti',
       status: 'OFFLINE',
       rate: '₹110/hr',
-      user: '—',
+      user: '-',
     },
 
     {
@@ -2904,7 +2904,7 @@ export const Hero3DScene: React.FC = () => {
   if (!webGlSupported) {
     return (
       <div className="w-full h-full flex items-center justify-center bg-[#08090B] border border-white/10 rounded-xl p-6 text-sm text-arena-muted">
-        3D preview unavailable —
+        3D preview unavailable:
         hardware acceleration disabled
       </div>
     );

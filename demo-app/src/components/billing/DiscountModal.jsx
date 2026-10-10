@@ -40,7 +40,7 @@ export default function DiscountModal({ bill, onClose, onSuccess }) {
         discountValue: numericValue,
         reason: reason.trim(),
       });
-      toast.success(`Discount applied — new total ₹${previewTotal.toFixed(0)}`);
+      toast.success(`Discount applied, new total ₹${previewTotal.toFixed(0)}`);
       onSuccess?.();
       onClose();
     } catch (err) {

@@ -59,14 +59,14 @@ export default function QuickStartModal({ pc, onClose, onActionSuccess }) {
           <div className="px-4 py-3 border-b border-border bg-bg-3 flex items-center justify-between">
             <h2 className="font-heading font-bold text-text uppercase tracking-wider text-sm flex items-center gap-2">
               <Zap className="w-4 h-4 text-pc-active" />
-              Quick Start — {pc.name}
+              Quick Start: {pc.name}
             </h2>
             <button onClick={onClose} className="p-1 text-text-3 hover:text-text rounded transition-colors">
               <X className="w-4 h-4" />
             </button>
           </div>
           <form onSubmit={handleStart} className="p-4 space-y-3">
-            <p className="text-text-3 text-[10px] font-mono">Pay-As-You-Go session — billed live by elapsed time.</p>
+            <p className="text-text-3 text-[10px] font-mono">Pay-As-You-Go session, billed live by elapsed time.</p>
             {error && (
               <div className="p-2.5 bg-neon-red/10 border border-neon-red/20 rounded text-neon-red text-xs">
                 {error}

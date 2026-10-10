@@ -193,7 +193,7 @@ export default function UpdatesPage() {
       `Remove version ${version} entirely?\n\n` +
       'This deletes its record and its installer file. No branch will be offered it again, ' +
       'and the previous version becomes "Newest update" in its place.\n\n' +
-      'This cannot be undone from here — only re-adding it the same way it was added the first time.'
+      'This cannot be undone from here, only re-adding it the same way it was added the first time.'
     )) return;
 
     setBusy('remove');
@@ -212,7 +212,7 @@ export default function UpdatesPage() {
     setBusy('publish');
     try {
       await api.post('/versions/create', { version, releaseNotes });
-      setNotice('Saved. Nothing has gone out to the branches yet — approve it when you are ready.');
+      setNotice('Saved. Nothing has gone out to the branches yet, approve it when you are ready.');
       await load();
     } catch (err) {
       setError(err.response?.data?.error || 'Could not save this update.');
@@ -329,7 +329,7 @@ function OwnerView({ latest, branches, busy, onApprove, onUnapprove, onRemove, o
               <span className="font-mono text-3xl font-bold">{latest.currentVersion}</span>
               {latest.approvedForRollout ? (
                 <span className="badge badge-active flex items-center gap-1">
-                  <CheckCircle2 className="w-3 h-3" /> Approved — branches have been told
+                  <CheckCircle2 className="w-3 h-3" /> Approved, branches have been told
                 </span>
               ) : (
                 <span className="badge badge-awaiting flex items-center gap-1">
@@ -372,7 +372,7 @@ function OwnerView({ latest, branches, busy, onApprove, onUnapprove, onRemove, o
                   {busy === 'unapprove'
                     ? <Loader2 className="w-4 h-4 animate-spin" />
                     : <XCircle className="w-4 h-4" />}
-                  Un-approve — stop offering this to branches
+                  Un-approve, stop offering this to branches
                 </button>
                 <p className="text-text-3 text-xs mt-2">
                   Keeps the record and the installer, just stops any branch from being sent
@@ -533,7 +533,7 @@ function BranchCard({ branch, latest, busy, onSetAutoUpdate, onInstallVersion })
       </div>
 
       <div className="flex items-center gap-2 font-mono text-sm">
-        <span>{branch.currentVersion || '—'}</span>
+        <span>{branch.currentVersion || '-'}</span>
         {genuinelyWaiting && branch.latestApprovedVersion && (
           <>
             <span className="text-text-3">→</span>
@@ -602,7 +602,7 @@ function BranchCard({ branch, latest, busy, onSetAutoUpdate, onInstallVersion })
                   if (!window.confirm(
                     `Send version ${target} to ${branch.branchName}?\n\n` +
                     'It will download this, check it against the hash Head Office published, ' +
-                    'and install it — stopping and restarting its own services to do so.\n\n' +
+                    'and install it, stopping and restarting its own services to do so.\n\n' +
                     'If that fails partway, Head Office loses its only way to reach this branch ' +
                     'remotely until someone is physically there, or on remote desktop to it.\n\n' +
                     'Only continue if you mean it.'
@@ -699,7 +699,7 @@ function BranchView({ latest, release, branch, busy, onSetAutoUpdate }) {
         {branchIsAhead && (
           <p className="text-text-2 text-sm mt-4">
             This branch is running <span className="font-mono">{current}</span>, ahead of{' '}
-            <span className="font-mono">{offered}</span> — the version currently offered for
+            <span className="font-mono">{offered}</span>, the version currently offered for
             new installs. There is nothing to do here. If this branch needs to go back to an
             older version, that has to be sent from Head Office directly; this screen cannot do
             it, and pressing anything below will not either.
@@ -735,7 +735,7 @@ function BranchView({ latest, release, branch, busy, onSetAutoUpdate }) {
                 ? 'Leave this on and updates install by themselves, in the background. Nobody ' +
                   'playing will be interrupted, and you do not need to watch this page.'
                 : 'This is off, so updates wait for you to press Update Now. Turning it on is ' +
-                  'usually better — nothing installs until the owner has approved it anyway.'}
+                  'usually better, nothing installs until the owner has approved it anyway.'}
             </p>
           </div>
 
@@ -759,7 +759,7 @@ function BranchView({ latest, release, branch, busy, onSetAutoUpdate }) {
               <p className="text-text-3 text-xs mt-2 leading-relaxed">
                 {checking
                   ? 'Looking now. If there is an update it downloads in the background and the ' +
-                    'app restarts itself when it is ready — that can take a few minutes on a ' +
+                    'app restarts itself when it is ready, that can take a few minutes on a ' +
                     'slow line. You can carry on working.'
                   : 'This branch looks for updates by itself every half a minute, and again ' +
                     'as soon as the PC is switched on. Press this if you do not want to wait ' +
@@ -860,7 +860,7 @@ function UpdateProgress({ branch, latest }) {
 
       {stuck && (
         <p className="text-xs text-neon-orange leading-relaxed">
-          This has not moved since {when(branch.updateStageChangedAt)}. It may have stopped —
+          This has not moved since {when(branch.updateStageChangedAt)}. It may have stopped,
           tell the owner if it stays like this. Your branch keeps working normally in the meantime.
         </p>
       )}

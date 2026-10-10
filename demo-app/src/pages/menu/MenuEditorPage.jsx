@@ -393,7 +393,7 @@ export default function MenuEditorPage() {
                         </span>
                         {isOversold && (
                           <div className="text-[9px] font-bold uppercase text-neon-red mt-0.5">
-                            Oversold — recount
+                            Oversold, recount
                           </div>
                         )}
                       </td>

@@ -163,7 +163,7 @@ export default function ShiftTakeoverModal({ pending, onCompleted }) {
                 <p>
                   Count first, then you will be shown what the system expected. Any money missing
                   is recorded against <strong className="text-text">{pending.outgoingOperatorName}</strong>'s
-                  shift, not yours — you start from what is actually in the drawer.
+                  shift, not yours, you start from what is actually in the drawer.
                 </p>
               </div>
 
@@ -212,7 +212,7 @@ export default function ShiftTakeoverModal({ pending, onCompleted }) {
                         <input
                           type="number"
                           min="0"
-                          placeholder="—"
+                          placeholder="-"
                           value={stock[item.id] ?? ''}
                           onChange={(e) => setStock((prev) => ({ ...prev, [item.id]: e.target.value }))}
                           className="w-20 bg-bg border border-border text-text font-mono text-sm rounded-lg py-1.5 px-2 text-center focus:outline-none focus:ring-1 focus:border-accent focus:ring-accent/30"
@@ -292,7 +292,7 @@ export default function ShiftTakeoverModal({ pending, onCompleted }) {
                 />
                 <p className="text-text-3 text-[11px] leading-relaxed">
                   This goes to the owner with both figures. The difference is recorded against{' '}
-                  {comparison.outgoingOperatorName}'s shift — you are starting from what is
+                  {comparison.outgoingOperatorName}'s shift, you are starting from what is
                   actually in the drawer.
                 </p>
               </div>

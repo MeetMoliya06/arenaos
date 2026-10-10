@@ -214,7 +214,7 @@ export default function Topbar({ onToggleSidebar, sidebarOpen, onLogoutClick }) 
                       sync
                         ? ok
                           ? `Synced with Head Office ${formatSyncAge(sync.secondsSinceLastSeen)}`
-                          : `Not reaching Head Office — last synced ${formatSyncAge(sync.secondsSinceLastSeen)}`
+                          : `Not reaching Head Office, last synced ${formatSyncAge(sync.secondsSinceLastSeen)}`
                         : 'Has never reported to Head Office'
                     }
                   />
@@ -267,7 +267,7 @@ export default function Topbar({ onToggleSidebar, sidebarOpen, onLogoutClick }) 
                           sync
                             ? ok
                               ? `Synced with Head Office ${formatSyncAge(sync.secondsSinceLastSeen)}`
-                              : `Not reaching Head Office — last synced ${formatSyncAge(sync.secondsSinceLastSeen)}`
+                              : `Not reaching Head Office, last synced ${formatSyncAge(sync.secondsSinceLastSeen)}`
                             : 'Has never reported to Head Office'
                         }
                       />

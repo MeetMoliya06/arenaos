@@ -620,7 +620,7 @@ export default function ReservationsPage() {
             {isMemberBooking && form.pcId && (
               <div className="flex items-center gap-2 rounded border border-neon-purple/30 bg-neon-purple/10 px-3 py-2">
                 <CheckCircle className="w-3.5 h-3.5 text-neon-purple flex-shrink-0" />
-                <span className="text-[10px] text-neon-purple font-mono">Member session — plan is selected when member logs in on the PC</span>
+                <span className="text-[10px] text-neon-purple font-mono">Member session, plan is selected when member logs in on the PC</span>
               </div>
             )}
 
@@ -662,8 +662,8 @@ export default function ReservationsPage() {
                     expected to hold. */}
                 <p className="text-[10px] text-text-3">
                   {form.depositMethod === 'online'
-                    ? 'Paid online — not counted in the cash drawer.'
-                    : 'Paid as cash — added to the cash drawer.'}
+                    ? 'Paid online, not counted in the cash drawer.'
+                    : 'Paid as cash, added to the cash drawer.'}
                 </p>
               </div>
             )}

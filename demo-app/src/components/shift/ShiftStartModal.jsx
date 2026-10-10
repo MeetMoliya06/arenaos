@@ -276,8 +276,8 @@ export default function ShiftStartModal({ onComplete }) {
                       {mismatch
                         ? 'Explain the difference before the drawer opens'
                         : isFirstOfDay
-                        ? 'Nobody has opened it yet today — count what you put in and enter it'
-                        : 'Count what is physically there and enter it — this gets checked against what the last shift left'}
+                        ? 'Nobody has opened it yet today, count what you put in and enter it'
+                        : 'Count what is physically there and enter it, this gets checked against what the last shift left'}
                     </p>
                   </div>
                 </div>
@@ -364,7 +364,7 @@ export default function ShiftStartModal({ onComplete }) {
                     </div>
                     <p className="text-[11px] text-text-3 italic">
                       {isFirstOfDay
-                        ? "This branch's fixed float is pre-filled below. Every shift after yours inherits the drawer rather than being asked again — there is one drawer and it runs through the trading day. Change the number only if what you're actually putting in differs."
+                        ? "This branch's fixed float is pre-filled below. Every shift after yours inherits the drawer rather than being asked again, there is one drawer and it runs through the trading day. Change the number only if what you're actually putting in differs."
                         : "Count what's physically in the drawer. If it doesn't match what the last shift left, you'll be asked why."}
                     </p>
                   </div>

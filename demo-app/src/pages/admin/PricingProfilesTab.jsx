@@ -164,7 +164,7 @@ export default function PricingProfilesTab() {
             <div className="form-group">
               <label>Free Buffer / Grace Period (minutes) *</label>
               <input type="number" step="1" min="0" name="bufferMinutes" required defaultValue={drawer.data?.bufferMinutes ?? 10} className="form-control" placeholder="e.g. 10" />
-              <p className="text-[10px] text-text-3 mt-1">Customers who end their session within this many minutes are charged ₹0. Applies live everywhere — session, PC cards, billing counter, member overlay.</p>
+              <p className="text-[10px] text-text-3 mt-1">Customers who end their session within this many minutes are charged ₹0. Applies live everywhere, session, PC cards, billing counter, member overlay.</p>
             </div>
 
             <div className="form-group">

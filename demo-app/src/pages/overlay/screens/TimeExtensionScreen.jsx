@@ -45,7 +45,7 @@ export default function TimeExtensionScreen() {
       <div className="p-6 text-center h-full flex flex-col items-center justify-center">
         <Clock className="w-16 h-16 text-text-3 mb-4 opacity-50" />
         <h2 className="font-heading text-xl font-bold text-text-2 tracking-wide uppercase">Not Needed</h2>
-        <p className="text-text-3 font-body text-sm mt-2">Your session is Pay-As-You-Go — it already runs for as long as you play, with no fixed time to extend.</p>
+        <p className="text-text-3 font-body text-sm mt-2">Your session is Pay-As-You-Go, it already runs for as long as you play, with no fixed time to extend.</p>
       </div>
     );
   }

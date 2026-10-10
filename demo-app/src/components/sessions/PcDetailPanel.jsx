@@ -124,7 +124,7 @@ export default function PcDetailPanel({
     try {
       await api.post(`/sessions/${pc.activeSessionId}/${action}`, payload);
       if (payload.deferPayment) {
-        toast.success('Session stopped. Bill moved to Review Billing — PC is now free.');
+        toast.success('Session stopped. Bill moved to Review Billing: PC is now free.');
         logActivity(`${pc.name}: Session stopped. [ Usage: ₹${formatMoney(liveCharge)}, Total: ₹${formatMoney(liveCharge)} ] Bill moved to Review Billing.`, 'warn');
       } else if (action === 'stop') {
         toast.success(`Session successfully ${action}ed!`);

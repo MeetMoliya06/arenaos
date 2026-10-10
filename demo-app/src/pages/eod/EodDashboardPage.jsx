@@ -52,7 +52,7 @@ function shiftGroupLabel(group) {
   const end = group.logoutTime
     ? new Date(group.logoutTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })
     : 'still on shift';
-  return `${group.operatorName} — ${start} to ${end}`;
+  return `${group.operatorName}: ${start} to ${end}`;
 }
 
 export default function EodDashboardPage() {
@@ -751,7 +751,7 @@ export default function EodDashboardPage() {
                                     <div className="max-w-md space-y-2.5 font-sans normal-case">
                                       <div className="flex items-center justify-between">
                                         <div className="text-[10px] font-bold text-accent uppercase tracking-widest">
-                                          Correct Payment Method — {bill.customer}, ₹{bill.totalRevenue.toFixed(2)}
+                                          Correct Payment Method: {bill.customer}, ₹{bill.totalRevenue.toFixed(2)}
                                         </div>
                                         <button type="button" onClick={() => setEditingBillId(null)} className="text-text-3 hover:text-text">
                                           <X className="w-4 h-4" />
@@ -1001,7 +1001,7 @@ export default function EodDashboardPage() {
                           <td className="py-2.5 px-4 font-mono">{d.to}</td>
                           <td className="py-2.5 px-4 text-right font-mono font-bold">{d.minutes}</td>
                           <td className="py-2.5 px-4 text-center font-mono">
-                            {isPowerCut ? d.sessionsAffected : '—'}
+                            {isPowerCut ? d.sessionsAffected : '-'}
                           </td>
                           <td className="py-2.5 px-4 text-text-2">{d.impact}</td>
                         </tr>
@@ -1053,7 +1053,7 @@ export default function EodDashboardPage() {
                           <td colSpan={13} className="py-2 px-4 text-[10px] font-bold uppercase tracking-wider text-text-2 font-sans">
                             {shiftGroupLabel(group)}
                             <span className="text-text-3 font-normal normal-case ml-2">
-                              — ₹{group.bills.reduce((sum, b) => sum + (b.totalRevenue || 0), 0).toFixed(2)} across {group.bills.length} entr{group.bills.length === 1 ? 'y' : 'ies'}
+                             : ₹{group.bills.reduce((sum, b) => sum + (b.totalRevenue || 0), 0).toFixed(2)} across {group.bills.length} entr{group.bills.length === 1 ? 'y' : 'ies'}
                             </span>
                           </td>
                         </tr>
@@ -1154,7 +1154,7 @@ export default function EodDashboardPage() {
                             <div className="max-w-md space-y-2.5 font-sans normal-case">
                               <div className="flex items-center justify-between">
                                 <div className="text-[10px] font-bold text-accent uppercase tracking-widest">
-                                  Correct Payment Method — {bill.customer}, ₹{bill.totalRevenue.toFixed(2)}
+                                  Correct Payment Method: {bill.customer}, ₹{bill.totalRevenue.toFixed(2)}
                                 </div>
                                 <button type="button" onClick={() => setEditingBillId(null)} className="text-text-3 hover:text-text">
                                   <X className="w-4 h-4" />
